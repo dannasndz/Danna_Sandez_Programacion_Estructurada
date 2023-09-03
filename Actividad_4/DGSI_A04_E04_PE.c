@@ -1,8 +1,8 @@
 
-//Danna Sandez Islas 373080
-// 03 de septiembre de 2023
-// Numero mayor con condiciones anidadas
-// SD_ACT04_03
+// Danna Sandez Islas 373080
+//  03 de septiembre de 2023
+//  Numero mayor con condiciones anidadas
+//  SD_ACT04_03
 
 #include <stdio.h>
 
@@ -30,21 +30,30 @@ int main()
         mayor = 2;
     }
     else
-        (n3 > mayor);
     {
-        mayor = n3;
-        if (n4 > mayor)
+        if (n3 > mayor)
         {
-            mayor = n4;
+            mayor = n3;
         }
         else
-            (n5 > mayor);
         {
-            mayor = n5;
-            if (n6 > mayor)
-                ;
+            if (n4 > mayor)
             {
-                mayor = n6;
+                mayor = n4;
+            }
+            else
+            {
+                if (n5 > mayor)
+                {
+                    mayor = n5;
+                }
+                else
+                {
+                    if (n6 > mayor)
+                    {
+                        mayor = n6;
+                    }
+                }
             }
         }
     }

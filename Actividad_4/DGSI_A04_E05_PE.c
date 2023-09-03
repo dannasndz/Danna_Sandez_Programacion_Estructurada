@@ -1,7 +1,7 @@
-//Danna Sandez Islas 373080
-// 03 de septiembre de 2023
-// Menu de llamadas con condiciones anidadas
-// SD_ACT04_05
+// Danna Sandez Islas 373080
+//  03 de septiembre de 2023
+//  Menu de llamadas con condiciones anidadas
+//  SD_ACT04_05
 #include <stdio.h>
 
 int main()
@@ -20,32 +20,37 @@ int main()
         ST = 3;
     }
     else
-        (TIPO == 2);
     {
-        printf("LLAMADA NACIONAL\n");
-        printf("¿CUANTOS MINUTOS HABLÓ?\n");
-        scanf("%f", &MIN);
-        if (MIN <= 3)
+        if (TIPO == 2)
         {
-            ST = 7;
+            printf("LLAMADA NACIONAL\n");
+            printf("¿CUANTOS MINUTOS HABLÓ?\n");
+            scanf("%f", &MIN);
+            if (MIN <= 3)
+            {
+                ST = 7;
+            }
+            else
+            {
+                ST = 7 + ((MIN - 3) * 2);
+            }
         }
         else
         {
-            ST = 7 + ((MIN - 3) * 2);
-        }
-    }
-    if (TIPO == 3)
-    {
-        printf("LLAMADA INTERNACIONAL\n");
-        printf("¿CUANTOS MINUTOS HABLÓ?\n");
-        scanf("%f", &MIN);
-        if (MIN <= 2)
-        {
-            ST = 9;
-        }
-        else
-        {
-            ST = 9 + ((MIN - 2) * 4);
+            if (TIPO == 3)
+            {
+                printf("LLAMADA INTERNACIONAL\n");
+                printf("¿CUANTOS MINUTOS HABLÓ?\n");
+                scanf("%f", &MIN);
+                if (MIN <= 2)
+                {
+                    ST = 9;
+                }
+                else
+                {
+                    ST = 9 + ((MIN - 2) * 4);
+                }
+            }
         }
     }
 
