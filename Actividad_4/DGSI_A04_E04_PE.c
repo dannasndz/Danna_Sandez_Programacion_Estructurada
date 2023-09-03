@@ -49,7 +49,7 @@ int main()
     }
 
 
-printf("El numero mayor es %.2f", mayor);
+printf("El numero mayor es: %.2f", mayor);
 
 return 0;
 }

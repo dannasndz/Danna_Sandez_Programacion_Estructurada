@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 int main()
 {
     int player, computer;
@@ -16,6 +15,7 @@ int main()
     printf("1-Piedra \n");
     printf("2-Papel \n");
     printf("3-Tijera \n");
+    printf("SELECCIONA UNA OPCION NUMERICA \n");
     scanf("%d", &player);
 
     srand(time(NULL));

@@ -12,6 +12,7 @@ int main()
     printf("2-LLAMADA NACIONAL\n");
     printf("3-LLAMADA INTERNACIONAL\n");
     printf("¿QUE TIPO DE LLAMADA DESEA?\n");
+    printf("SELECCIONA UNA OPCION NUMERICA \n");
     scanf("%f", &TIPO);
 
     if (TIPO == 1)

@@ -16,12 +16,13 @@ int main (){
     printf("1-Piedra \n");
     printf("2-Papel \n");
     printf("3-Tijera \n");
+    printf("SELECCIONA UNA OPCION NUMERICA \n");
     scanf("%d", &player);
 
     srand(time(NULL));
     computer = rand() % 3 + 1; //numero random entre 1-3
 
-    if (player<=0 && player>=4)
+    if (player<1 && player>3)
     {
         printf("ERROR, OPCION INCORRECTA \n");
         return 1;
