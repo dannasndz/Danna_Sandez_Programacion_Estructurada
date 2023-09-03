@@ -29,36 +29,27 @@ int main()
     {
         mayor = 2;
     }
-    else
+    if (n3 > mayor)
     {
-        if (n3 > mayor)
-        {
-            mayor = n3;
-        }
-        else
-        {
-            if (n4 > mayor)
-            {
-                mayor = n4;
-            }
-            else
-            {
-                if (n5 > mayor)
-                {
-                    mayor = n5;
-                }
-                else
-                {
-                    if (n6 > mayor)
-                    {
-                        mayor = n6;
-                    }
-                }
-            }
-        }
+        mayor = n3;
+    }
+    if (n4 > mayor)
+    {
+        mayor = n4;
     }
 
-    printf("El numero mayor es %.2f", mayor);
+    if (n5 > mayor)
+    {
+        mayor = n5;
+    }
 
-    return 0;
+    if (n6 > mayor)
+    {
+        mayor = n6;
+    }
+
+
+printf("El numero mayor es %.2f", mayor);
+
+return 0;
 }
