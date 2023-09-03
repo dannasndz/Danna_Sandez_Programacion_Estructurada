@@ -26,7 +26,6 @@ int main()
     }
     else
     {
-
         salarioNorm = salarioxhora * jn;
         horasExtra = horas - jn;
 
@@ -35,9 +34,11 @@ int main()
             pagoD = (horasExtra * (salarioxhora * 2));
         }
         else
-            (horasExtra >= 10);
         {
-            pagoT = (horasExtra * (salarioxhora * 3));
+            if (horasExtra >= 10)
+            {
+                pagoT = (horasExtra * (salarioxhora * 3));
+            }
         }
         salarioExtra = pagoD + pagoT;
         salarioTotal = salarioNorm + salarioExtra;
