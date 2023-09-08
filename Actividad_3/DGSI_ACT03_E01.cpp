@@ -24,7 +24,7 @@ int main()
 void menu()
 {
     int op;
-
+    printf("\n");
     printf("  Seleccione una opcion numerica: \n");
     printf("\n");
     printf("1- 3 calificaciones con promedio \n");
@@ -35,6 +35,7 @@ void menu()
     printf("6- 3 numeros en forma ascendete \n");
     printf("7- Horoscopo \n");
     printf("8- Salir \n");
+    printf("Ingresa tu opcion:");
     scanf("%d", &op);
 
     switch (op)
@@ -65,11 +66,12 @@ void menu()
         break;
     default: // mensaje en caso de seleccion de opcion incorrecta
         printf("OPCION INCORRECTA, POR FAVOR SELECCIONA UNA OPCION CORRECTA \n");
+        getch();
+        printf("\n");
+        menu();
         break;
     }
-    getch();
-    printf("\n");
-    menu();
+
 }
 
 void cali_op(void)
@@ -312,7 +314,7 @@ void num_medio(void)
     }
     else
     {
-        if (num2 > num1 && num1 > num3)
+        if (num2 < num1 && num1 < num3)
         {
             printf("El numero %.2f es el de en medio", num1);
         }
@@ -363,7 +365,9 @@ void horoscopo(void)
 {
     int mes, dia;
 
+    printf("\n");
     printf("  HOROSCOPO SEMANAL!!\n");
+    printf("\n");
     printf("Ingresa tu dia de nacimiento: \n");
     scanf("%d", &dia);
     printf("Ingresa tu mes de nacimiento de forma NUMERICA: \n");
