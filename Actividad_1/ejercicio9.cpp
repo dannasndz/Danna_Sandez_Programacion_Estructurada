@@ -13,7 +13,7 @@ int main()
     printf("Ingrese el primer numero: \n");
     scanf("%f", &num1);
     printf("Ingrese el segundo numero: \n");
-    scanf("%f", &nnm2);
+    scanf("%f", &num2);
     printf("Ingrese el tercer numero: \n");
     scanf("%f", &num3);
 
