@@ -16,12 +16,12 @@ void horoscopo(void);
 int main()
 {
     srand(time(NULL));
-    menu();
+    menu();  // funcion menu donde el usuario puede seleccionar la opcion de su gusto
 
     return 0;
 }
 
-void menu()
+void menu()  // funcion menu 
 {
     int op;
     printf("\n");
@@ -38,7 +38,7 @@ void menu()
     printf("Ingresa tu opcion:");
     scanf("%d", &op);
 
-    switch (op)
+    switch (op)  // switch segun sea la opcion seleccionada se abren casos para mandar llamar a las funciones que desarrollan los puntos
     {
     case 1: // FUNCION PARA 3 CALIFICACIONES CON PROMEDIO, OPTIMIZADO
         cali_op();
@@ -74,7 +74,7 @@ void menu()
 
 }
 
-void cali_op(void)
+void cali_op(void)  // Fu
 {
     float cal1, cal2, cal3;
     float prom;
@@ -431,7 +431,7 @@ void horoscopo(void)
             {
                 printf(" --ARIES--\n");
                 printf("\n");
-                printf("Cuidado con los escaloes o pisos resbalosos, puede que sufras algun accidente en esta semana. Tu color de la semana es el morado! \n");
+                printf("Cuidado con los escalones o pisos resbalosos, puede que sufras algun accidente en esta semana. Tu color de la semana es el morado! \n");
             }
             break;
         case 4: // mes de abril
@@ -439,7 +439,7 @@ void horoscopo(void)
             {
                 printf(" --ARIES--\n");
                 printf("\n");
-                printf("Cuidado con los escaloes o pisos resbalosos, puede que sufras algun accidente en esta semana. Tu color de la semana es el morado! \n");
+                printf("Cuidado con los escalones o pisos resbalosos, puede que sufras algun accidente en esta semana. Tu color de la semana es el morado! \n");
             }
             else
             {
