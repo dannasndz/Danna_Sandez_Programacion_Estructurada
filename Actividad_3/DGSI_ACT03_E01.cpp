@@ -447,7 +447,7 @@ void horoscopo(void)
                 {
                     printf(" --TAURO--\n");
                     printf("\n");
-                    printf("En terminos economicos recibiras dinero de diversas fuentes, eres un iman del dinero!. Tu color de la semana es el morado! \n");
+                    printf("En terminos economicos recibiras dinero de diversas fuentes, eres un iman del dinero!. Tu color de la semana es el blanco! \n");
                 }
                 else
                 {
