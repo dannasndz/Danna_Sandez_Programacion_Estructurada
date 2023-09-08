@@ -3,9 +3,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
-#define __null
 
-void menu();
+void menu(void);
 void cali_op(void);
 void chin_anidado(void);
 void chin_op(void);
@@ -16,7 +15,6 @@ void horoscopo(void);
 
 int main()
 {
-    int time();
     srand(time(NULL));
     menu();
 
@@ -28,6 +26,7 @@ void menu()
     int op;
 
     printf("  Seleccione una opcion numerica: \n");
+    printf("\n");
     printf("1- 3 calificaciones con promedio \n");
     printf("2- Chinchampu anidado \n");
     printf("3- Chinchampu switch \n");
@@ -68,9 +67,12 @@ void menu()
         printf("OPCION INCORRECTA, POR FAVOR SELECCIONA UNA OPCION CORRECTA \n");
         break;
     }
+    getch();
+    printf("\n");
+    menu();
 }
 
-void cali_op()
+void cali_op(void)
 {
     float cal1, cal2, cal3;
     float prom;
@@ -119,9 +121,12 @@ void cali_op()
             printf("Excelente");
         }
     }
+    getch();
+    printf("\n");
+    menu();
 }
 
-void chin_anidado()
+void chin_anidado(void)
 {
     int player, computer;
 
@@ -188,7 +193,7 @@ void chin_anidado()
     menu();
 }
 
-void chin_op()
+void chin_op(void)
 {
     int player, computer;
 
@@ -214,13 +219,13 @@ void chin_op()
             switch (computer)
             {
             case 1:
-                printf("EMPATE!, WOW, piensas igual que el computador! :0");
+                printf("EMPATE!, WOW, piensas igual que el computador! :0 \n");
                 break;
             case 2:
-                printf("Perdiste!, piedra pierde contra papel! :(");
+                printf("Perdiste!, piedra pierde contra papel! :( \n");
                 break;
             case 3:
-                printf("Ganaste!, piedra gana contra tijera! :D");
+                printf("Ganaste!, piedra gana contra tijera! :D \n");
                 break;
             }
             break;
@@ -228,13 +233,13 @@ void chin_op()
             switch (computer)
             {
             case 1:
-                printf("Ganaste!, papel gana contra piedra! :D");
+                printf("Ganaste!, papel gana contra piedra! :D \n");
                 break;
             case 2:
-                printf("EMPATE!, WOW, piensas igual que el computador! :0");
+                printf("EMPATE!, WOW, piensas igual que el computador! :0 \n");
                 break;
             case 3:
-                printf("Perdiste!, papel pierde contra tijera! :(");
+                printf("Perdiste!, papel pierde contra tijera! :( \n");
                 break;
             }
             break;
@@ -242,13 +247,13 @@ void chin_op()
             switch (computer)
             {
             case 1:
-                printf("Perdiste!, tijera pierde contra piedra! :(");
+                printf("Perdiste!, tijera pierde contra piedra! :( \n");
                 break;
             case 2:
-                printf("Ganaste!, tijera gana contra papel! :D");
+                printf("Ganaste!, tijera gana contra papel! :D \n");
                 break;
             case 3:
-                printf("EMPATE, WOW, piensas igual que el computador! :0");
+                printf("EMPATE, WOW, piensas igual que el computador! :0 \n");
                 break;
             }
             break;
@@ -259,7 +264,7 @@ void chin_op()
     menu();
 }
 
-void num_mayor()
+void num_mayor(void)
 {
     float n1, n2, n3;
 
