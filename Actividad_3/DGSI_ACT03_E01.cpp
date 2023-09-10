@@ -4,6 +4,8 @@
 #include <time.h>
 #include <conio.h>
 
+// prototipo de funciones
+
 void menu(void);
 void cali_op(void);
 void chin_anidado(void);
@@ -13,13 +15,17 @@ void num_medio(void);
 void num_asc(void);
 void horoscopo(void);
 
-int main()
+// FUNCION PRINCIPAL
+
+int main() 
 {
     srand(time(NULL));
     menu();  // funcion menu donde el usuario puede seleccionar la opcion de su gusto
 
     return 0;
 }
+
+// DESARROLLO DE FUNCIONES
 
 void menu()  // funcion menu 
 {
@@ -35,8 +41,9 @@ void menu()  // funcion menu
     printf("6- 3 numeros en forma ascendete \n");
     printf("7- Horoscopo \n");
     printf("8- Salir \n");
-    printf("Ingresa tu opcion:");
+    printf("Ingresa tu opcion: ");
     scanf("%d", &op);
+    printf("\n");
 
     switch (op)  // switch segun sea la opcion seleccionada se abren casos para mandar llamar a las funciones que desarrollan los puntos
     {
@@ -74,7 +81,7 @@ void menu()  // funcion menu
 
 }
 
-void cali_op(void)  // Fu
+void cali_op(void)  // Funcion  de calificaciones optimizado
 {
     float cal1, cal2, cal3;
     float prom;
@@ -87,6 +94,7 @@ void cali_op(void)  // Fu
     scanf("%f", &cal3);
 
     prom = (cal1 + cal2 + cal3) / 3;
+
     if (prom < 80)
     {
         if (prom < 60)
@@ -125,10 +133,10 @@ void cali_op(void)  // Fu
     }
     getch();
     printf("\n");
-    menu();
+    menu();  // envia al usuario al menu cuando finaliza la tarea
 }
 
-void chin_anidado(void)
+void chin_anidado(void)  // chinchampu anidado
 {
     int player, computer;
 
@@ -138,11 +146,13 @@ void chin_anidado(void)
     printf("2-Papel \n");
     printf("3-Tijera \n");
     printf("SELECCIONA UNA OPCION NUMERICA \n");
+    printf("Ingresa tu opcion:");
     scanf("%d", &player);
+    printf("\n");
 
-    computer = rand() % 3 + 1;
+    computer = rand() % 3 + 1;  // se crea una jugada aleatoria para el computador entre priedra, papel o tijera
 
-    if (player <= 0 && player >= 4)
+    if (player <= 0 && player >= 4)  // en caso de que el usuario seleccione una opcion incorrecta
     {
         printf("ERROR OPCION INCORRECTA \n");
     }
@@ -192,10 +202,10 @@ void chin_anidado(void)
     }
     getch();
     printf("\n");
-    menu();
+    menu();  // envia al usuario al menu
 }
 
-void chin_op(void)
+void chin_op(void) //chinchampu optimizado 
 {
     int player, computer;
 
@@ -205,56 +215,59 @@ void chin_op(void)
     printf("2-Papel \n");
     printf("3-Tijera \n");
     printf("SELECCIONA UNA OPCION NUMERICA \n");
+    printf("Ingresa tu opcion:");
     scanf("%d", &player);
+    printf("\n");
 
     computer = rand() % 3 + 1; // numero random entre 1-3
 
-    if (player < 1 && player > 3)
+    // PROGRAMA
+    if (player < 1 && player > 3) 
     {
         printf("ERROR, OPCION INCORRECTA \n");
     }
     else
     {
-        switch (player)
+        switch (player)  // segun la opcion del usuario se despliegan los siguientes casos
         {
-        case 1:
-            switch (computer)
+        case 1: // usuario escogio piedra
+            switch (computer) // segun la opcion aleatoria del computador se despliegan los siguientes casos
             {
-            case 1:
+            case 1: // computador escogio piedra
                 printf("EMPATE!, WOW, piensas igual que el computador! :0 \n");
                 break;
-            case 2:
+            case 2: // computador escogio papel
                 printf("Perdiste!, piedra pierde contra papel! :( \n");
                 break;
-            case 3:
+            case 3: // computador escogio tijera
                 printf("Ganaste!, piedra gana contra tijera! :D \n");
                 break;
             }
             break;
-        case 2:
-            switch (computer)
+        case 2:  // usuario escogio papel
+            switch (computer) // segun la opcion aleatoria del computador se despliegan los siguientes casos
             {
-            case 1:
+            case 1: // computador escogio piedra
                 printf("Ganaste!, papel gana contra piedra! :D \n");
                 break;
-            case 2:
+            case 2: // computador escogio papel
                 printf("EMPATE!, WOW, piensas igual que el computador! :0 \n");
                 break;
-            case 3:
+            case 3: // computador escogio tijera
                 printf("Perdiste!, papel pierde contra tijera! :( \n");
                 break;
             }
             break;
-        case 3:
-            switch (computer)
+        case 3: // usuario escogio tijera
+            switch (computer) // segun la opcion aleatoria del computador se despliegan los siguientes casos
             {
-            case 1:
+            case 1: // computador escogio piedra
                 printf("Perdiste!, tijera pierde contra piedra! :( \n");
                 break;
-            case 2:
+            case 2: // usuario escogio papel
                 printf("Ganaste!, tijera gana contra papel! :D \n");
                 break;
-            case 3:
+            case 3: // usuario escogio tijera
                 printf("EMPATE, WOW, piensas igual que el computador! :0 \n");
                 break;
             }
@@ -263,50 +276,57 @@ void chin_op(void)
     }
     getch();
     printf("\n");
-    menu();
+    menu(); // envia al usuario a la funcion menu 
 }
 
-void num_mayor(void)
+void num_mayor(void) // funcion numero mayor
 {
     float n1, n2, n3;
 
-    printf("Ingrese un numero: \n");
+    printf("   NUMERO MAYOR \n");
+    printf("Ingrese un numero: ");
     scanf("%f", &n1);
-    printf("Ingrese un numero: \n");
+    printf("Ingrese un numero: ");
     scanf("%f", &n2);
-    printf("Ingrese un numero: \n");
-    scanf("%f", &n3);
+    printf("Ingrese un numero: ");
+    scanf("%f", &n3); 
+    printf("\n");
+
+    // PROGRAMA
 
     if (n1 > n2 && n1 > n3)
     {
-        printf("El numero mayor es %f", n1);
+        printf("El numero mayor es %.2f", n1);
     }
     else
     {
         if (n2 > n1 && n2 > n3)
         {
-            printf("El numero mayor es %f", n2);
+            printf("El numero mayor es %.2f", n2);
         }
         else
         {
-            printf("El numero mayor es %f", n3);
+            printf("El numero mayor es %.2f", n3);
         }
     }
     getch();
     printf("\n");
-    menu();
+    menu(); // envia al usuario a la funcion menu 
 }
 
-void num_medio(void)
+void num_medio(void) // funcion numero medio 
 {
     float num1, num2, num3;
-
-    printf("Ingrese el primer numero: \n");
+    printf("  NUMERO DEL MEDIO \n");
+    printf("Ingrese el primer numero: ");
     scanf("%f", &num1);
-    printf("Ingrese el segundo numero: \n");
+    printf("Ingrese el segundo numero: ");
     scanf("%f", &num2);
-    printf("Ingrese el tercer numero: \n");
+    printf("Ingrese el tercer numero: ");
     scanf("%f", &num3);
+    printf("\n");
+
+    // PROGRAMA
 
     if (num1 < num2 && num2 < num3)
     {
@@ -325,21 +345,25 @@ void num_medio(void)
     }
     getch();
     printf("\n");
-    menu();
+    menu(); // envia al usuario a la funcion menu 
 }
 
-void num_asc(void)
+void num_asc(void) // funcion numeros en ascendente 
 {
     float n1, n2, n3;
 
-    printf("Ingrese el primer numero: \n");
+    // Variables locales
+    printf("Ingrese el primer numero: ");
     scanf("%f", &n1);
-    printf("Ingrese el segundo numero: \n");
+    printf("Ingrese el segundo numero: ");
     scanf("%f", &n2);
-    printf("Ingrese el tercer numero: \n");
+    printf("Ingrese el tercer numero: ");
     scanf("%f", &n3);
+    printf("\n");
 
     printf("NUMEROS EN ASCENDETE \n");
+
+    // PROGRAMA 
 
     if (n1 < n2 && n2 < n3)
     {
@@ -358,11 +382,13 @@ void num_asc(void)
     }
     getch();
     printf("\n");
-    menu();
+    menu(); // envia al usuario a la funcion menu 
 }
 
-void horoscopo(void)
+void horoscopo(void) // funcion horoscopos 
 {
+    // variables locales
+
     int mes, dia;
 
     printf("\n");
@@ -373,7 +399,9 @@ void horoscopo(void)
     printf("Ingresa tu mes de nacimiento de forma NUMERICA: \n");
     scanf("%d", &mes);
 
-    if ((mes < 1 && mes > 12) || (dia < 1 && dia > 31))
+    // programa 
+
+    if ((mes < 1 || mes > 12) || (dia < 1 || dia > 31)) // en caso de que el usuario ingrese mal la fecha 
     {
         printf("La fecha que ingresaste es incorrecta, por favor intentalo de nuevo! \n");
     }
@@ -411,7 +439,7 @@ void horoscopo(void)
                     printf("\n");
                     printf("En cuestiones del amor, si estas solter@ nuevos prospectos se avecinan, pero si tienes pareja puede que salgan a la luz algunos secretos. Tu color de la semana es rojo!\n");
                 }
-                else
+                else // else en caso de que el usuario ingrese mal la fecha 
                 {
                     printf("Febrero de 2023 no tiene mas de 28 dias! Escribe correctamente tu fecha de nacimiento por favor. /n");
                 }
@@ -449,7 +477,7 @@ void horoscopo(void)
                     printf("\n");
                     printf("En terminos economicos recibiras dinero de diversas fuentes, eres un iman del dinero!. Tu color de la semana es el blanco! \n");
                 }
-                else
+                else // else en caso de que el usuario ingrese mal la fecha 
                 {
                     printf("Abril no tiene mas de 30 dias! Escribe correctamente tu fecha de nacimiento por favor. /n");
                 }
@@ -487,7 +515,7 @@ void horoscopo(void)
                     printf("\n");
                     printf("Nuevas oportunidades de labor se te avesinan! Atento a las señales. Tu color de la semana es el dorado! \n");
                 }
-                else
+                else // else en caso de que el usuario ingrese mal la fecha 
                 {
                     printf("Junio no tiene mas de 30 dias! Escribe correctamente tu fecha de nacimiento por favor. /n");
                 }
@@ -539,7 +567,7 @@ void horoscopo(void)
                     printf("\n");
                     printf("Se sienten las vibras muy pesadas a tu alrededor, cuida mucho tu circulo social. Tu color de la semana es guinda!\n");
                 }
-                else
+                else // else en caso de que el usuario ingrese mal la fecha 
                 {
                     printf("Septiembre no tiene mas de 30 dias! Escribe correctamente tu fecha de nacimiento por favor. /n");
                 }
@@ -577,7 +605,7 @@ void horoscopo(void)
                     printf("\n");
                     printf("Realiza acciones caritativas, tomate tiempos de reflexion sobre tus acciones, te ayudara mucho. Tu color de la semana es naranja!\n");
                 }
-                else
+                else // else en caso de que el usuario ingrese mal la fecha 
                 {
                     printf("Noviembre no tiene mas de 30 dias! Escribe correctamente tu fecha de nacimiento por favor. /n");
                 }
@@ -604,5 +632,5 @@ void horoscopo(void)
     }
     getch();
     printf("\n");
-    menu();
+    menu(); // envia al usuario a la funcion menu 
 }
