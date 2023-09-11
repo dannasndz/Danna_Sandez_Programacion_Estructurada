@@ -58,15 +58,17 @@ void menu(void) // Funcion menu
     }
 }
 
-void num_desc(void)
+void num_desc(void)  // funcion que imprime los numeros descendientes de N 
 {
+    // variables locales
     int n, i;
     i=0;
     printf(" NUMEROS MENORES DE FORMA DESCENDENTE !\n");
     printf("Ingresa el numero que mas te guste: ");
     scanf("%d",&n);
-
-    if (n>0)
+    printf("\n");
+    // desarrollo de funcion
+    if (n>0) // mientras N sea mayor a 0 se cumple 
     {
         printf("Los numeros descendientes de %d son: \n", n);
         while (i<n)
@@ -81,15 +83,16 @@ void num_desc(void)
         printf("El numero que ingresaste no tiene enteros positivos menores! ");
         getch();
         printf("\n");
-        num_desc();
+        num_desc(); // envia al usuario a la funcion de nuevo para que ingrese una opcion correcta
     }
     getch();
     printf("\n");
-    menu();
+    menu(); // envia al menu al usuario
 }
 
-void par_impar(void)
+void par_impar(void) // funcion que genera 40 numeros aleatorios e imprime si son par, impar, cuantos parese impares hay y la suma de ellos
 {
+    // variables locales
     int num,p,ip,sp, sip;
     sp=0;
     sip=0;
@@ -97,22 +100,22 @@ void par_impar(void)
     ip=0;
 
     printf("Generador de 40 numeros aleatorios!! \n");
-
+    // desarrollo de funcion
     for (int i = 0; i < 40; i++)
     {
-        num= rand()% 201;
+        num= rand()% 201; // generar numeros aleatorios entre 0 y 200
         printf ("%d -- ", num);
-        if (num%2==0)
+        if (num%2==0) // condicion para saber si es par
         {
             printf("Es par \n");
-            sp=sp+num;
-            p++;
+            sp=sp+num; // acumulador de numeros pares
+            p++; // contador de numeros impares
         }
         else
         {
             printf("Es impar \n");
-            sip=sip+num;
-            ip++;
+            sip=sip+num; // acumulador de numeros impares
+            ip++; // contador de numero impares
         }
     }
     printf("\n");
@@ -122,19 +125,21 @@ void par_impar(void)
     printf("La suma de los numeros impares es: %d \n", sip);
     getch();
     printf("\n");
-    menu();
+    menu(); // envia al usuario a la funcion menu 
 }
 
-void mayor_menor(void)
+void mayor_menor(void) // funcion que genera 35 numeros aleatorios entre 100 y 200 e imprime el mayor y menor 
 {
+    // variables y constantes locales
     #define N 35
     int i,num;
     int menor=201;
     int mayor=99;
-    i=0;
+    i=0; // contador 
+    // desarrollo de funcion 
     while (i<N)
     {
-        num= rand()% 101 + 100;
+        num= rand()% 101 + 100; // generador de numeros aleatorios entre 100 y 200
         if (num>mayor)
         {
             mayor=num;
@@ -149,18 +154,22 @@ void mayor_menor(void)
     printf("El numero menor es: %d \n",menor);
     getch();
     printf("\n");
-    menu();
+    menu(); // envia al usuario a la funcion menu 
 }
 
-void tabla(void)
+void tabla(void) // funcion que genera tablas de multiplicar 
 {
+    // variable local
     int num;
+
     printf("        Generador Tabla de Multiplicar! \n");
     printf("Elige un numero dentro del 1 y el 20 para generar la tabla: ");
     scanf("%d",&num);
     printf("\n");
 
-    if (num>=1 && num<=20)
+    // desarrollo de funcion
+
+    if (num>=1 && num<=20) // si el numero que ingreso el usuario cumple la condicion entra a hacer la tabla
     {
         printf("Tabla del %d \n",num);
         for (int i = 1; i < 11; i++)
@@ -168,14 +177,14 @@ void tabla(void)
             printf(" %d x %d = %d\n", i,num, (i*num));
         }
     }
-    else
+    else // si no 
     {
         printf("El numero que escogiste no entra dentro de 1 y 20! Por favor intentalo de nuevo con un numero correcto \n");
         getch();
         printf("\n");
-        tabla();
+        tabla(); // envia al usuario a la funcion tabla para que pueda ingresar un numero correcto
     }
     getch();
     printf("\n");
-    menu();
+    menu();  // envia al usuario a la funcion menu
 }
