@@ -8,6 +8,7 @@ void menu(void);
 void num_desc(void);
 void par_impar(void);
 void mayor_menor(void);
+void tabla(void);
 
 // FUNCION PRINCIPAL
 int main()
@@ -43,10 +44,10 @@ void menu(void) // Funcion menu
         par_impar();
         break;
     case 3: // usuario eligio numero mayor y numero menor
-
+        mayor_menor();
         break;
     case 4: // usuario eligio tabla de multiplicar
-
+        tabla();
         break;
     default: // el usuario eligio una opcion incorrecta
         printf("La opcion que elegiste es incorrecta! Por favor seleccione una opcion que este dentro del menu. ");
@@ -128,11 +129,53 @@ void mayor_menor(void)
 {
     #define N 35
     int i,num;
+    int menor=201;
+    int mayor=99;
     i=0;
     while (i<N)
     {
         num= rand()% 101 + 100;
-        
+        if (num>mayor)
+        {
+            mayor=num;
+        }
+        else
+        {
+            menor=num;
+        }
+        i++;
     }
-    
+    printf("El numero mayor es: %d \n", mayor);
+    printf("El numero menor es: %d \n",menor);
+    getch();
+    printf("\n");
+    menu();
+}
+
+void tabla(void)
+{
+    int num;
+    printf("        Generador Tabla de Multiplicar! \n");
+    printf("Elige un numero dentro del 1 y el 20 para generar la tabla: ");
+    scanf("%d",&num);
+    printf("\n");
+
+    if (num>=1 && num<=20)
+    {
+        printf("Tabla del %d \n",num);
+        for (int i = 1; i < 11; i++)
+        {
+            printf(" %d x %d = %d\n", i,num, (i*num));
+        }
+    }
+    else
+    {
+        printf("El numero que escogiste no entra dentro de 1 y 20! Por favor intentalo de nuevo con un numero correcto \n");
+        getch();
+        printf("\n");
+        tabla();
+    }
+    getch();
+    printf("\n");
+    menu();
 }
