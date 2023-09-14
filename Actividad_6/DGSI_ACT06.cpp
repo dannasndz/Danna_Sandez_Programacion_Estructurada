@@ -59,7 +59,7 @@ for (int i = 0; i < n; i++)
 
 void factorial(void)
 {
-    int num, i,a,r,s;
+    int num, i,a,s;
     printf(" FACTORIAL ! \n");
     printf("Que numero deseas utilizar? \n");
     scanf("%d", &num);
