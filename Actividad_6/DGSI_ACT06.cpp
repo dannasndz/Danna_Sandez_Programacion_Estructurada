@@ -1,3 +1,8 @@
+// Danna Sandez Islas 373080
+//  18 de septiembre de 2023
+//  Actividad 06
+//  SD_ACT06
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -14,6 +19,7 @@ void factDoWhile(void);
 void digFor(void);
 void digWhile(void);
 void digDoWhile(void);
+
 // PARTE 2 PROTOTIPO DE FUNCIONES
 void menu2(void);
 void tablas(void);
@@ -33,23 +39,24 @@ int main()
     printf("3- Salir\n");
     scanf("%d", &op);
     system("CLS");
+
     switch (op)
     {
-    case 1:
+    case 1: // usuario eligio parte 1
         menu();
         break;
-    case 2:
+    case 2: // usuario eligio parte 2
         menu2();
         break;
-    case 3:
+    case 3: // usuario eligio salir
         printf("Gracias, nos vemos pronto!");
         break;
 
-    default:
+    default: // mensaje en caso de error
         printf("La opcion que ingresaste es incorrecta. Ingresa una opcion correcta por favor \n");
         getch();
         system("CLS");
-        main();
+        main(); // envia al usuario a la funcion main
         break;
     }
 
@@ -58,8 +65,9 @@ int main()
 
 // PARTE 1 DESARROLLO DE FUNCIONES
 
-void menu(void)
+void menu(void) // funcion menu para la PARTE 1 de la actividad
 {
+    //variable local
     int op;
     system("CLS");
     printf("Bienvenido a la Parte 1 de la practica!\n");
@@ -72,12 +80,12 @@ void menu(void)
     printf(" Ingrese la opcion NUMERICA que desea: ");
     scanf("%d", &op);
 
-    system("CLS");
-
+    system("CLS"); //limpia pantalla
+  
     switch (op)
     {
         int op;
-    case 1:
+    case 1: // usuario eligio fibonacci
         printf("Que fibonacci desea utiliza? \n");
         printf("\n");
         printf("1- Fibonacci Ciclo FOR \n");
@@ -89,24 +97,24 @@ void menu(void)
 
         switch (op)
         {
-        case 1:
+        case 1: // usuario eligio ciclo for
             fibFor();
             break;
-        case 2:
+        case 2: // usuario eligio ciclo while
             fibWhile();
             break;
-        case 3:
+        case 3: // usuario eligio ciclo do while
             fibDoWhile();
             break;
-        default:
+        default: // mensaje en caso de error
             printf("La opcion que ingresaste es incorrecta. Por favor ingresa una opcion correcta! \n");
             getch();
-            system("CLS");
-            main();
+            system("CLS"); // limpia pantalla
+            main();        // envia al usuario a la funcion main
             break;
         }
         break;
-    case 2:
+    case 2: // usuario eligio factorial
         printf("Que Factorial desea utiliza? \n");
         printf("\n");
         printf("1- Factorial Ciclo FOR \n");
@@ -118,25 +126,25 @@ void menu(void)
 
         switch (op)
         {
-        case 1:
+        case 1: // usuario eligio ciclo for
             factFor();
             break;
-        case 2:
+        case 2: // usuario eligio ciclo while
             factWhile();
             break;
-        case 3:
+        case 3: // usuario eligio ciclo do while
             factDoWhile();
             break;
 
-        default:
+        default: // mensaje en caso de error
             printf("La opcion que ingresaste es incorrecta. Por favor ingresa una opcion correcta! \n");
             getch();
             system("CLS");
-            main();
+            main(); // envia al usuario a la funcion main
             break;
         }
         break;
-    case 3:
+    case 3: // usuario eligio digitos
         printf("Que Contador de Digitos desea utiliza? \n");
         printf("\n");
         printf("1- Contador Ciclo FOR \n");
@@ -148,123 +156,134 @@ void menu(void)
 
         switch (op)
         {
-        case 1:
+        case 1: // usuario eligio ciclo for
             digFor();
             break;
-        case 2:
+        case 2: // usuario eligio ciclo whiles
             digWhile();
             break;
-        case 3:
+        case 3: // usuario eligio ciclo do while
             digDoWhile();
             break;
-        default:
+        default: // mensaje en caso de error
             printf("La opcion que ingresaste es incorrecta. Por favor ingresa una opcion correcta! \n");
             getch();
             system("CLS");
-            main();
+            main(); // envia al usuario a la funcion main
             break;
         }
         break;
-    case 4:
-    printf("Gracias, nos vemos");
-    getch();
-    system("CLS");
-    main();
-    break;
-    default:
+    case 4: // usuario eligio salir del menu
+        printf("Gracias, nos vemos");
+        getch();
+        system("CLS");
+        main(); // envia al usuario a la funcion main
+        break;
+    default: // mensaje en caso de error
         printf("La opcion que ingresaste es incorrecta. Ingresa una opcion correcta por favor \n");
         getch();
         system("CLS");
-        menu();
+        menu(); // envia al usuario a la funcion menu
         break;
     }
 }
 
-void fibFor(void)
+void fibFor(void) // funcion fibonacci con el ciclo FOR
 {
+    // variables locales
     int n, a = -1, s = 1, res;
 
     printf(" Cuantas veces desea que se realice el programa Fibonacci? \n");
     scanf("%d", &n);
-
+    // desarrollo de funcion
     for (int i = 0; i < n; i++)
     {
         res = a + s;
-        printf("%d", res);
+        printf("%d", res); // valores que imprime
         a = s;
         s = res;
     }
     getch();
     system("CLS");
-    menu();
+    menu(); // envia al usuario a la funcion menu
 }
 
-void fibWhile(void) // funcion fibonacci
+void fibWhile(void) // funcion fibonacci con el ciclo WHILE
 {
+    // variables locales
     int n, a = -1, s = 1, res;
 
     printf(" Cuantas veces desea que se realice el programa Fibonacci? \n");
     scanf("%d", &n);
+    // desarrollo de funcion
     int i = 0;
     while (i < n)
     {
         res = a + s;
-        printf("%d", res);
+        printf("%d", res); // valores que imprime
         a = s;
         s = res;
         i++;
     }
     getch();
     system("CLS");
-    menu();
+    menu(); // envia al usuario a la funcion menu
 }
 
-void fibDoWhile(void)
+void fibDoWhile(void) // funcion fibonacci con ciclo DO WHILE
 {
+    // variables locales
     int n, a = -1, s = 1, res;
 
     printf(" Cuantas veces desea que se realice el programa Fibonacci? \n");
     scanf("%d", &n);
+
+    // desarrollo de funcion
     int i = 0;
     do
     {
         i++;
         res = a + s;
-        printf("%d", res);
+        printf("%d", res); // valores que imprime
         a = s;
         s = res;
     } while (i < n);
     getch();
     system("CLS");
-    menu();
+    menu(); // envia al usuario a la funcion menu
 }
 
-void factFor(void)
+void factFor(void) // funcion factorial con el ciclo FOR
 {
+    // variables locales
+
     int num, a, s;
     printf(" FACTORIAL ! \n");
     printf("Que numero deseas utilizar? \n");
     scanf("%d", &num);
 
+    // desarrollo de funcion
     a = num * (num - 1);
     for (int i = 2; i < num; i++)
     {
         s = a * (num - i);
         a = s;
     }
-    printf("El factorial de %d es: %d", num, a);
+    printf("El factorial de %d es: %d", num, a); // valor que imprime
     getch();
     system("CLS");
-    menu();
+    menu(); // envia al usuario a la funcion menu
 }
 
-void factWhile(void)
+void factWhile(void) // funcion factorial con el ciclo WHILE
 {
+    // variables locales
     int num, i, a, s;
     printf(" FACTORIAL ! \n");
     printf("Que numero deseas utilizar? \n");
     scanf("%d", &num);
 
+    // desarrollo de funcion
     i = 2;
     a = num * (num - 1);
     while (i < num)
@@ -274,20 +293,21 @@ void factWhile(void)
 
         i++;
     }
-    printf("El factorial de %d es: %d", num, a);
+    printf("El factorial de %d es: %d", num, a); // valor que imprime
     getch();
     system("CLS");
-    menu();
+    menu(); // envia al usuario a la funcion menu
 }
 
-void factDoWhile(void)
+void factDoWhile(void) // funcion factorial con el ciclo DO WHILE
 {
+    // variables locales
     int num, i, a, s;
 
     printf(" FACTORIAL ! \n");
     printf("Que numero deseas utilizar? \n");
     scanf("%d", &num);
-
+    // desarrollo de funcion
     i = 2;
     a = num * (num - 1);
     do
@@ -297,75 +317,81 @@ void factDoWhile(void)
         i++;
     } while (i < num);
 
-    printf("El factorial de %d es: %d", num, a);
+    printf("El factorial de %d es: %d", num, a); // valor que imprime
     getch();
     system("CLS");
-    menu();
+    menu(); // envia al usuario a la funcion menu
 }
 
-void digFor(void)
+void digFor(void) // funcion contador de digitos con el ciclo FOR
 {
+    // variables locales
     int num, x = 1;
     int i;
     printf("Contador de digitos! \n");
     printf("Ingrese un numero por favor: ");
     scanf("%d", &num);
 
+    // desarrollo de funcion
     for (i = 0; num >= x; i++)
     {
         x = x * 10;
     }
-    printf("La cantidad de digitos que tiene %d es: %d", num, i);
+    printf("La cantidad de digitos que tiene %d es: %d", num, i); // valor que imprime
     getch();
     system("CLS");
-    menu();
+    menu(); // envia al usuario a la funcion menu
 }
 
-void digWhile(void)
+void digWhile(void) // funcion contador de digitos con el ciclo  WHILE
 {
+    // variables locales
     int num;
     printf("Contador de digitos! \n");
     printf("Ingrese un numero por favor: ");
     scanf("%d", &num);
-
+    // variables locales para el ciclo do whils
     int dig = 0, x = 1;
-
+    // desarollo de funcion
     while (num >= x)
     {
         x = x * 10;
         dig++;
     }
-    printf("La cantidad de digitos que tiene %d es: %d", num, dig);
+    printf("La cantidad de digitos que tiene %d es: %d", num, dig); // valor que imprime
     getch();
     system("CLS");
-    menu();
+    menu(); // envia al usuario a la funcion menu
 }
 
-void digDoWhile(void)
+void digDoWhile(void) // funcion contador de digitos con el ciclo DO WHILE
 {
+    // variables locales
     int num;
     printf("Contador de digitos! \n");
     printf("Ingrese un numero por favor: ");
     scanf("%d", &num);
-
+    // variables locales para el ciclo do while
     int dig = 0, x = 1;
     do
     {
         dig++;
         x = x * 10;
     } while (num >= x);
-    printf("La cantidad de digitos que tiene %d es: %d", num, dig);
+    printf("La cantidad de digitos que tiene %d es: %d", num, dig); // valor que imprime
     getch();
     system("CLS");
-    menu();
+    menu(); // envia al usuario a la funcion menu
 }
 
 // PARTE DOS, DESARROLLO DE FUNCIONES
 
-int validar(char mensj[], int ri, int rf)
+int validar(char mensj[], int ri, int rf) // funcion para validar argumentos dados por el usuario
 {
+    // variables locales
     int num;
-    char cadena[1000];
+    char cadena[1000]; // cadena que va a leer dependiendo el mensaje que ingrese el usuario
+    // desarrollo de funcion
     do
     {
         printf("%s", mensj);
@@ -375,10 +401,10 @@ int validar(char mensj[], int ri, int rf)
 
     } while (num < ri || num > rf);
 
-    return num;
+    return num; // retorna el valor que haya tomado num, entre los rangos dados por el usuario
 }
 
-void menu2(void)
+void menu2(void) // funcion menu de PARTE 2 de la actividad
 {
     int op;
     system("CLS");
@@ -398,86 +424,90 @@ void menu2(void)
 
     switch (op)
     {
-    case 1:
+    case 1: // usuario eligio derecho a examen de nivelacion
         calif();
         break;
-    case 2:
+    case 2: // usuario eligio tablas
         tablas();
         break;
-    case 3:
+    case 3: // usuario eligio media aritmetica
         numeros();
         break;
-    case 4:
+    case 4: // usuario eligio turistas
         pasajeros();
         break;
-    case 5:
+    case 5: // usuario eligio cursamiento de materias
         asignatura();
         break;
-    case 6:
+    case 6: // usuario eligio salir del menu2
         printf("Gracias, nos vemos pronto!");
         getch();
         system("CLS");
-        main();
+        main(); // envia al usuario a la funcion main
         break;
-    default:
+    default: // mensaje en caso de error
         printf("La opcion que ingresaste es incorrecta. Ingresa una opcion correcta por favor \n");
         getch();
         system("CLS");
-        menu2();
+        menu2(); // envia al usuario a la funcion menu2
         break;
     }
 }
 
-void calif(void)
+void calif(void) // funcion que lee calificaciones e imprime cuantos no tienen derecho a examen
 {
+    // variables locales
     int cal;
-    int sde = 0;
-
+    int sde = 0; // contador de alumno sin derecho a examen
+    // desarrollo de funcion
     for (int i = 0; i < 40; i++)
     {
-        printf("Hola alumno numero %d\n", i + 1);
+        printf("Hola alumno numero %d\n", i + 1); // imprime mensaje que indica el numero que alumno al que se le pedira la calificacion
         int suma = 0;
-        for (int j = 0; j < 5; j++)
+        for (int j = 0; j < 5; j++) // ciclo FOR para pedir 5 calificaciones
         {
-            cal = validar("Ingresa tu calificacion:", 0, 100);
-            suma += cal;
+            cal = validar("Ingresa tu calificacion:", 0, 100); // se manda a llamar a la funcion validar y le ingresamos sus parametros.
+            suma += cal;                                       // las calificaciones se guardan en un acumulador para despues generar un promedio
         }
-        int prom = (suma / 2);
-        if (prom < 50)
+        int prom = (suma / 5); // promedio
+        if (prom < 50)         // condicion para verificar si el alumno tendra o no derecho a examen
         {
-            sde++;
+            sde++; // si prom es menor a 50 no tiene derecho a examen, SE INCREMENTA sde
         }
         system("CLS");
     }
-    printf("La cantidad de alumnos sin derecho a examen es: %d", sde);
+    printf("La cantidad de alumnos sin derecho a examen es: %d", sde); // imprime la cantidad de alumnos sin derecho a examen
     getch();
-    menu2();
+    menu2(); // manda al usuario a la funcion menu2
 }
 
-void tablas(void)
+void tablas(void) // funcion que genera las tablas de multiplicar del 1-10
 {
+    // variables locales
     int num = 1;
-
-    while (num < 11)
+    // desarrollo de funcion
+    while (num < 11) // ciclo que incrementara el numero de la tabla que sera
     {
-        printf("Tabla del %d \n", num);
-        for (int i = 1; i < 11; i++)
+        printf("Tabla del %d \n", num); // mensaje que indica el numero de tabla que es
+        for (int i = 1; i < 11; i++) // ciclo que genera tablas de 1 al 10
         {
             printf(" %d x %d = %d\n", num, i, (i * num));
         }
         getch();
-        system("CLS");
-        num++;
+        system("CLS"); // limpia pantalla
+        num++; // incrementa numero 
     }
     getch();
-    menu2();
+    menu2(); // envia al usuario a la funcion menu2
 }
 
-void numeros(void)
+void numeros(void) // funcion que lee n numeros dados por el usuario, los suma y desplega su media aritmetica
 {
+    // variables locales
     int n, ri, rf;
     int num, media;
     int suma = 0;
+
     printf("Cuantos numeros deseas ingresar? \n");
     scanf("%d", &n);
     printf("Cual es el rango menor que te gustaria usar?\n");
@@ -486,85 +516,88 @@ void numeros(void)
     scanf("%d", &rf);
     system("CLS");
 
-    for (int i = 0; i < n; i++)
+    // desarrollo de funcion
+    for (int i = 0; i < n; i++) // ciclo que generara n cantidad de numeros
     {
-        num = validar("Ingresa un numero: ", ri, rf);
-        suma += num;
+        num = validar("Ingresa un numero: ", ri, rf); // el numero se manda a la funcion validar donde checa si cumple con los rangos dados
+        suma += num; // acumulador donde se guardan los numeros generados para proximamente realizar la media
         getch();
-        system("CLS");
+        system("CLS"); // limpia pantalla
     }
-    media = suma / n;
-    printf("La suma de los %d numeros es: %d\n", n, suma);
-    printf("La media aritmetica de los %d numeros es: %d", n, media);
+    media = suma / n; // media aritmetica
+    printf("La suma de los %d numeros es: %d\n", n, suma); // imprime la suma
+    printf("La media aritmetica de los %d numeros es: %d", n, media); // imprime la media
     getch();
-    menu2();
+    menu2(); // envia al usuario a la funcion menu2
 }
 
-void pasajeros(void)
+void pasajeros(void) // funcion que lee el peso de los pasajeros, imprime el promedio de peso y si se cumplio con la condicion de 10 pasajeros o peso maximo
 {
+    // variables locales
     int peso = 0;
     int prom = 0;
     int per;
-    int sobrep = 700 + (700 * .15);
+    int sobrep = 700 + (700 * .15); // sobrepeso maximo capaz en el barco
 
-    for (per = 0; per < 10; per++)
+    for (per = 0; per < 10; per++) // ciclo para contar el numero de pasajeron que van entrando
     {
         int pasaj;
 
-        pasaj = validar("Ingresa tu peso: ", 0, 300);
-        peso += pasaj;
+        pasaj = validar("Ingresa tu peso: ", 0, 300); // variable pasajero guarda el peso del pasajero y valida si cumple con los rangos
+        peso += pasaj; // acumulador de peso de pasajero
         getch();
-        system("CLS");
+        system("CLS"); // limpia pantalla
 
-        if (peso == sobrep)
+        if (peso == sobrep) // condicion para saber si se cumplio con el peso maximo
         {
-            printf("El peso maximo de los turistas ha llegado al limite!\n");
-            break;
+            printf("El peso maximo de los turistas ha llegado al limite!\n"); // imprime bandera
+            break; // termina el ciclo
         }
-        if (per == 9)
+        if (per == 9) // capacidad maxima de turistas en el barco
         {
-            printf("La capacidad maxima de turistas ha llegado al limite!\n");
+            printf("La capacidad maxima de turistas ha llegado al limite!\n"); // imprime bandera
         }
     }
-    prom = peso / per;
-    printf("El promedio de peso de los pasajeros es: %d", prom);
+    prom = peso / per; // genera promedio de los pesos
+    printf("El promedio de peso de los pasajeros es: %d", prom); // imprime el promedio de los pesos
     getch();
-    menu2();
+    menu2(); // envia al usuario a la funcion menu2
 }
 
-void asignatura(void)
+void asignatura(void) // funcion que lee calificaciones de un alumno y genera su promedio para saber si aprobo, recursa materia o baja temporal
 {
+    // vairables locales
     float prom = 0;
-    for (int mat = 0; mat < 3; mat++)
+    for (int mat = 0; mat < 3; mat++) // ciclo que cuanta las veces que ha cursado la materia
     {
-        printf("Cantidad de veces que ha cursado la materia: %d\n", mat + 1);
-        int ac = 0;
-        for (int i = 0; i < 3; i++)
+        printf("Cantidad de veces que ha cursado la materia: %d\n", mat + 1); // mensaje que imprime las veces que ha cursado la materia
+        int ac = 0; // acumulador de calificaciones para el promedio
+        for (int i = 0; i < 3; i++) // ciclo para generar 3 calificacions
         {
-            int cal;
-            cal = validar("Ingresa tu calificacion del parcial: ", 0, 100);
-            ac += cal;
+            int cal; 
+            cal = validar("Ingresa tu calificacion del parcial: ", 0, 100); // variable cal guarda la calificacion del alumno, con la funcion validar, checa si entra dentro de los rangos dados
+            ac += cal; // acumula la calificacion
         }
-        prom = ac / 3;
-        printf("Tu promedio es: %.2f\n", prom);
-        if (mat == 2)
+        prom = ac / 3; // genera promedio 
+        printf("Tu promedio es: %.2f\n", prom); // imprime promedio
+        if (mat == 2) // condicion para saber si es baja temporal
         {
             printf("Has alcanzado el numero maximo de intentos\n");
             printf("BAJA TEMPORAL\n");
-            break;
+            break; // fin del ciclo
         }
-        if (prom < 60)
+        if (prom < 60) // condicion para saber si repite materia
         {
             printf("REPETIR MATERIA\n");
             getch();
-            system("CLS");
+            system("CLS"); // limpia pantalla
         }
-        else
+        else // no cumple con la condicion anterior significa que aprobo
         {
             printf("APROBADO\n");
-            break;
+            break; // fin del ciclo
         }
     }
     getch();
-    menu2();
+    menu2(); // envia al usuario a la funcion menu2
 }
