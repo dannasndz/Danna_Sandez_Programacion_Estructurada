@@ -461,7 +461,7 @@ void caracter(char cadena[]) // cantidad de caracteres
     {
         caract++;
     }
-    printf("La cadena %s tiene %d caracteres", cadena, caract);
+    printf("La cadena: %s, tiene %d caracteres", cadena, caract);
 }
 
 void inversa(char cadena[]) // cadena inversa
