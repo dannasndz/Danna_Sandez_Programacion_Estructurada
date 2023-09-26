@@ -36,8 +36,10 @@ int validar(char palabra[]);
 // Funcion principal
 int main()
 {
+    // variables locales
     int op;
     char cadena[100];
+
     printf("A que parte de la practica deseas ingresar? \n");
     printf("1- Parte 1\n");
     printf("2- Parte 2\n");
@@ -46,7 +48,7 @@ int main()
     scanf("%d", &op);
     system("CLS");
 
-    if (op == 1 || op == 2)
+    if (op == 1 || op == 2) // leer cadena
     {
         printf("Ingrese una palabra: ");
         fflush(stdin);
@@ -118,8 +120,8 @@ int main()
             break;
         }
         break;
-    case 2:
-        // parte 2
+    parte2:
+    case 2: // parte 2
         printf("BIENVENIDO A LA PARTE 2 DE LA PRACTICA!\n\n");
         printf("  Que funcion desea utilizar?\n");
         printf("1- Cadena a MAYUSCULAS\n");
@@ -156,23 +158,31 @@ int main()
             sinEspacio(cadena);
             break;
         case 7:
-            alfabetico(cadena); // incompleta
+            alfabetico(cadena); 
             break;
         case 8:
             completa(cadena);
             break;
-
+        case 9:
+            palindromo(cadena);
+            break;
+        case 0:
+            printf("Gracias por usar el programa hasta luego!");
+            break;
         default:
+            printf("La opcion que ingresaste es incorrecta. Ingresa una opcion correcta por favor \n");
+            system("PAUSE");
+            system("CLS");
+            goto parte2;
             break;
         }
-
         break;
-    case 3:
-        // salir
+    case 3: // salir
+        printf("Gracias por usar el programa hasta luego!");
         break;
     default:
         printf("La opcion que ingresaste es incorrecta. Ingresa una opcion correcta por favor \n");
-        getch();
+        system("PAUSE");
         system("CLS");
         main(); // envia al usuario a la funcion main
         break;
@@ -183,7 +193,7 @@ int main()
 
 /***** PARTE 1 *****/
 
-void salida1(char cadena[])
+void salida1(char cadena[]) // mayusculas
 {
     int i;
     for (i = 0; cadena[i] != '\0'; i++)
@@ -199,7 +209,7 @@ void salida1(char cadena[])
     printf("%s", cadena);
 }
 
-void salida2(char cadena[])
+void salida2(char cadena[]) // inverso
 {
     int caracter = 0;
     char aux;
@@ -217,7 +227,7 @@ void salida2(char cadena[])
     printf("%s", cadena);
 }
 
-void salida3(char cadena[])
+void salida3(char cadena[]) // vertical
 {
     int caracter = 0;
 
@@ -228,7 +238,7 @@ void salida3(char cadena[])
     }
 }
 
-void salida4(char cadena[])
+void salida4(char cadena[]) // vertical inverso
 {
     int caracter = 0;
     char aux;
@@ -250,7 +260,7 @@ void salida4(char cadena[])
     }
 }
 
-void salida5(char cadena[])
+void salida5(char cadena[]) // eliminar letra final
 {
     int caracter = 0;
     while (cadena[caracter] != '\0')
@@ -267,7 +277,7 @@ void salida5(char cadena[])
     }
 }
 
-void salida6(char cadena[])
+void salida6(char cadena[]) // eliminar letra final inverso
 {
     int caracter = 0;
     char aux;
@@ -292,7 +302,7 @@ void salida6(char cadena[])
     }
 }
 
-void salida7(char cadena[])
+void salida7(char cadena[]) // eliminar letra inicial
 {
     int caracter = 0;
     while (cadena[caracter] != '\0')
@@ -309,7 +319,7 @@ void salida7(char cadena[])
     }
 }
 
-void salida8(char cadena[])
+void salida8(char cadena[]) // eliminar letra inicial inversa
 {
     int caracter = 0;
     char aux;
@@ -334,7 +344,7 @@ void salida8(char cadena[])
     }
 }
 
-void salida9(char cadena[])
+void salida9(char cadena[]) // mostrar solo consonantes
 {
     for (int i = 0; cadena[i] != '\0'; i++)
     {
@@ -364,7 +374,7 @@ void salida9(char cadena[])
     }
 }
 
-void salida10(char cadena[])
+void salida10(char cadena[]) // mostrar solo vocales
 {
     for (int i = 0; cadena[i] != '\0'; i++)
     {
@@ -384,7 +394,7 @@ void salida10(char cadena[])
 
 /****** PARTE 2 ******/
 
-void mayus(char cadena[])
+void mayus(char cadena[]) // mayusculas
 {
     int i;
     for (i = 0; cadena[i] != '\0'; i++)
@@ -400,7 +410,7 @@ void mayus(char cadena[])
     printf("%s", cadena);
 }
 
-void min(char cadena[])
+void min(char cadena[]) // minusculas
 {
     int i;
     for (i = 0; cadena[i] != '\0'; i++)
@@ -416,34 +426,35 @@ void min(char cadena[])
     printf("%s", cadena);
 }
 
-void capital(char cadena[])
+void capital(char cadena[]) // convertir a Capital
 {
     int i;
-    for (i = 0; cadena[i] <= cadena[0]; i++)
+    // primera letra mayuscula
+    if (cadena[0] >= 'a')
     {
-        if (cadena[i] >= 'a')
+        if (cadena[0] <= 'z')
         {
-            if (cadena[i] <= 'z')
-            {
-                cadena[i] = cadena[i] - 32;
-            }
+            cadena[0] = cadena[0] - 32;
         }
-        printf("%c", cadena[i]);
     }
     for (i = 1; cadena[i] != '\0'; i++)
     {
-        if (cadena[i] >= 'A')
+        if (cadena[i] == ' ')
         {
-            if (cadena[i] <= 'Z')
+            i++;
+            if (cadena[i] >= 'a')
             {
-                cadena[i] = cadena[i] + 32;
+                if (cadena[i] <= 'z')
+                {
+                    cadena[i] = cadena[i] - 32;
+                }
             }
         }
-        printf("%c", cadena[i]);
     }
+    printf("%s", cadena);
 }
 
-void caracter(char cadena[])
+void caracter(char cadena[]) // cantidad de caracteres
 {
     int caract = 0;
     while (cadena[caract] != '\0')
@@ -453,7 +464,7 @@ void caracter(char cadena[])
     printf("La cadena %s tiene %d caracteres", cadena, caract);
 }
 
-void inversa(char cadena[])
+void inversa(char cadena[]) // cadena inversa
 {
     int caracter = 0;
     char aux;
@@ -471,38 +482,47 @@ void inversa(char cadena[])
     printf("%s", cadena);
 }
 
-void sinEspacio(char cadena[])
+void sinEspacio(char cadena[]) // convertir cadena sin espacios 
 {
-    char cadenaSE[100];
+    char SE[100];
     int i, j;
     for (i = 0, j = 0; cadena[i] != '\0'; i++)
     {
         if (cadena[i] != ' ')
         {
-            cadenaSE[j] = cadena[i];
-            printf("%c", cadenaSE[j]);
+            SE[j] = cadena[i];
+            printf("%c", SE[j]);
             j++;
         }
     }
 }
 
-void alfabetico(char cadena[])
+void alfabetico(char cadena[]) // solo cadena alfabetica y espacio sencillo
 {
+    char res[100];
+    int j=0;
+    if (cadena[0] == ' ')
+    {
+        printf("ERROR");
+        return; // no cumple
+    }
     for (int i = 0; cadena[i] != '\0'; i++)
     {
-        if (((cadena[i] >= 'a') && (cadena[i] <= 'z')) || ((cadena[i] >= 'A') && (cadena[i] <= 'Z')))
+        if ((cadena[i] >= 'a' && cadena[i] <= 'z') || (cadena[i] >= 'A' && cadena[i] <= 'Z') || (cadena[i] == ' ' && cadena[i + 1] != ' '))
         {
-            i++;
-            //  sin doble espacio
-            if ((cadena[i] == ' ') && cadena[i + 1] != ' ')
-            {
-                printf("%c", cadena[i]);
-            }
+            res[j]=cadena[i];
+            printf("%c", res[i]);
+            j++;
+        }
+        else
+        {
+            printf("ERROR");
+            return;
         }
     }
 }
 
-void completa(char cadena[])
+void completa(char cadena[]) // imprimir cadena con todo lo anterior
 {
     mayus(cadena);
     printf("\n");
@@ -515,11 +535,45 @@ void completa(char cadena[])
     inversa(cadena);
 }
 
-void palindromo(char cadena[])
+void palindromo(char cadena[]) // mostrar si la cadena es palindromo o no
 {
+    int res;
+    res = validar(cadena);
+    if (res == 0)
+    {
+        printf("Cadena valida\n");
+        system("PAUSE");
+    }
+    else
+    {
+        printf("Cadena no valida. No puedes ingresar numeros, doble espacio ni minisuculas.\n");
+        system("PAUSE");
+        return;
+    }
+    system("CLS");
+
+    int largo = 0;
+    while (cadena[largo] != '\0')
+    {
+        largo++;
+    }
+
+    int i = 0;
+    int j = largo - 1;
+    while (i < j)
+    {
+        if (cadena[i] != cadena[j])
+        {
+            printf("No es palindromo"); // No es un palíndromo
+            return;
+        }
+        i++;
+        j--;
+    }
+    printf("Si es palindromo");
 }
 
-int validar(char palabra[])
+int validar(char palabra[]) // funcion auxiliar para validar la funcion palindromo
 {
     for (int i = 0; palabra[i] != '\0'; i++)
     {
