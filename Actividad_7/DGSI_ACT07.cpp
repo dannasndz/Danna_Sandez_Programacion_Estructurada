@@ -9,7 +9,7 @@
 
 // prototipo de funciones
 
-char validar(char mensj[], int ri, int rf);
+/***** PARTE 1 *****/
 void salida1(char cadena[]);
 void salida2(char cadena[]);
 void salida3(char cadena[]);
@@ -20,7 +20,18 @@ void salida7(char cadena[]);
 void salida8(char cadena[]);
 void salida9(char cadena[]);
 void salida10(char cadena[]);
-/* PARTE 2 */
+
+/***** PARTE 2 *****/
+void mayus(char cadena[]);
+void min(char cadena[]);
+void capital(char cadena[]);
+void caracter(char cadena[]);
+void inversa(char cadena[]);
+void sinEspacio(char cadena[]);
+void alfabetico(char cadena[]);
+void completa(char cadena[]);
+void palindromo(char cadena[]);
+int validar(char palabra[]);
 
 // Funcion principal
 int main()
@@ -35,7 +46,7 @@ int main()
     scanf("%d", &op);
     system("CLS");
 
-    if (op == 1)
+    if (op == 1 || op == 2)
     {
         printf("Ingrese una palabra: ");
         fflush(stdin);
@@ -46,7 +57,7 @@ int main()
 
     switch (op)
     {
-        parte1:
+    parte1:
     case 1: // Parte 1
         printf("BIENVENIDO A LA PARTE 1 DE LA PRACTICA!\n\n");
         printf("  Que funcion desea utilizar?\n");
@@ -109,6 +120,52 @@ int main()
         break;
     case 2:
         // parte 2
+        printf("BIENVENIDO A LA PARTE 2 DE LA PRACTICA!\n\n");
+        printf("  Que funcion desea utilizar?\n");
+        printf("1- Cadena a MAYUSCULAS\n");
+        printf("2- Cadena a MINUSCULAS\n");
+        printf("3- Cadena a CAPITAL\n");
+        printf("4- Cadena y cantidad de caracteres\n");
+        printf("5- Cadena al reves\n");
+        printf("6- Nueva cadena sin espacios\n");
+        printf("7- Cadena perfecta\n");
+        printf("8- Cadena con todas las anteriores\n");
+        printf("9- Cadena palindromo\n");
+        printf("0- SALIR\n\n");
+        printf("Ingrese una opcion NUMERICA: ");
+        scanf("%d", &op);
+        system("CLS");
+        switch (op)
+        {
+        case 1:
+            mayus(cadena);
+            break;
+        case 2:
+            min(cadena);
+            break;
+        case 3:
+            capital(cadena);
+            break;
+        case 4:
+            caracter(cadena);
+            break;
+        case 5:
+            inversa(cadena);
+            break;
+        case 6:
+            sinEspacio(cadena);
+            break;
+        case 7:
+            alfabetico(cadena); // incompleta
+            break;
+        case 8:
+            completa(cadena);
+            break;
+
+        default:
+            break;
+        }
+
         break;
     case 3:
         // salir
@@ -218,7 +275,7 @@ void salida6(char cadena[])
     {
         caracter++;
     }
-    for (int i = 0; i < caracter / 2; i++)
+    for (int i = 0; i < caracter / 2; i++) // voltear cadena
     {
         aux = cadena[i];
         cadena[i] = cadena[caracter - 1 - i];
@@ -326,3 +383,161 @@ void salida10(char cadena[])
 }
 
 /****** PARTE 2 ******/
+
+void mayus(char cadena[])
+{
+    int i;
+    for (i = 0; cadena[i] != '\0'; i++)
+    {
+        if (cadena[i] >= 97)
+        {
+            if (cadena[i] <= 122)
+            {
+                cadena[i] = cadena[i] - 32;
+            }
+        }
+    }
+    printf("%s", cadena);
+}
+
+void min(char cadena[])
+{
+    int i;
+    for (i = 0; cadena[i] != '\0'; i++)
+    {
+        if (cadena[i] >= 'A')
+        {
+            if (cadena[i] <= 'Z')
+            {
+                cadena[i] = cadena[i] + 32;
+            }
+        }
+    }
+    printf("%s", cadena);
+}
+
+void capital(char cadena[])
+{
+    int i;
+    for (i = 0; cadena[i] <= cadena[0]; i++)
+    {
+        if (cadena[i] >= 'a')
+        {
+            if (cadena[i] <= 'z')
+            {
+                cadena[i] = cadena[i] - 32;
+            }
+        }
+        printf("%c", cadena[i]);
+    }
+    for (i = 1; cadena[i] != '\0'; i++)
+    {
+        if (cadena[i] >= 'A')
+        {
+            if (cadena[i] <= 'Z')
+            {
+                cadena[i] = cadena[i] + 32;
+            }
+        }
+        printf("%c", cadena[i]);
+    }
+}
+
+void caracter(char cadena[])
+{
+    int caract = 0;
+    while (cadena[caract] != '\0')
+    {
+        caract++;
+    }
+    printf("La cadena %s tiene %d caracteres", cadena, caract);
+}
+
+void inversa(char cadena[])
+{
+    int caracter = 0;
+    char aux;
+    while (cadena[caracter] != '\0')
+    {
+        caracter++;
+    }
+    int i;
+    for (i = 0; i < caracter / 2; i++)
+    {
+        aux = cadena[i];
+        cadena[i] = cadena[caracter - 1 - i];
+        cadena[caracter - 1 - i] = aux;
+    }
+    printf("%s", cadena);
+}
+
+void sinEspacio(char cadena[])
+{
+    char cadenaSE[100];
+    int i, j;
+    for (i = 0, j = 0; cadena[i] != '\0'; i++)
+    {
+        if (cadena[i] != ' ')
+        {
+            cadenaSE[j] = cadena[i];
+            printf("%c", cadenaSE[j]);
+            j++;
+        }
+    }
+}
+
+void alfabetico(char cadena[])
+{
+    for (int i = 0; cadena[i] != '\0'; i++)
+    {
+        if (((cadena[i] >= 'a') && (cadena[i] <= 'z')) || ((cadena[i] >= 'A') && (cadena[i] <= 'Z')))
+        {
+            i++;
+            //  sin doble espacio
+            if ((cadena[i] == ' ') && cadena[i + 1] != ' ')
+            {
+                printf("%c", cadena[i]);
+            }
+        }
+    }
+}
+
+void completa(char cadena[])
+{
+    mayus(cadena);
+    printf("\n");
+    min(cadena);
+    printf("\n");
+    capital(cadena);
+    printf("\n");
+    sinEspacio(cadena);
+    printf("\n");
+    inversa(cadena);
+}
+
+void palindromo(char cadena[])
+{
+}
+
+int validar(char palabra[])
+{
+    for (int i = 0; palabra[i] != '\0'; i++)
+    {
+        if (palabra[i] >= '0' && palabra[i] <= '9')
+        {
+            return 1;
+            break;
+        }
+        if (palabra[i] >= 'a' && palabra[i] <= 'z')
+        {
+            return 2;
+            break;
+        }
+        if (palabra[i] == ' ' && palabra[i + 1] == ' ')
+        {
+            return 3;
+            break;
+        }
+    }
+    return 0;
+}
