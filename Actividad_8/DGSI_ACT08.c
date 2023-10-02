@@ -178,7 +178,7 @@ void matriz4x4(int matriz[][4], int vect1[], int vect2[])
             }
             else
             {
-                matriz[i][j - 6] = vect2[k - 6];
+                matriz[i][j] = vect2[k-6];
             }
             k++;
         }
@@ -188,6 +188,7 @@ void matriz4x4(int matriz[][4], int vect1[], int vect2[])
 
 void imprimirMatriz(int matriz[][4])
 {
+    printf("~~~Matriz 4x4~~~\n");
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
