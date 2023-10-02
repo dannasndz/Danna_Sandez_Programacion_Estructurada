@@ -1,8 +1,16 @@
+/*
+    Danna Sandez Islas 373080
+    1 de Octubre de 2023
+    Actividad 08
+    SD_ACT07
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
+/*** PROTOTIPO DE FUNCIONES ***/
+void menu(void);
 int validar(char mensj[], int ri, int rf);
 void llenar(int vector1[]);
 int repetido(int num, int i, int vector2[]);
@@ -12,7 +20,19 @@ void imprimir(int vect1[], int vect2[], int vect3[]);
 void matriz4x4(int matriz[][4], int vect1[], int vect2[]);
 void imprimirMatriz(int matriz[][4]);
 
+/*** Funcion main ***/
 int main()
+{
+
+    menu();
+
+    return 0;
+}
+
+/*** DESAROLLO DE FUNCIONES ***/
+
+/* Funcion menu donde se desarrolla el programa */
+void menu(void)
 {
     srand(time(NULL));
     int vector1[10];
@@ -71,11 +91,10 @@ int main()
         }
     } while (op != 0);
     printf("Gracias por usar el programa. Hasta luego!");
-
-    return 0;
 }
 
-int validar(char mensj[], int ri, int rf) // funcion para validar argumentos dados por el usuario
+/* Funcion para validar argumentos dados por el usuario  */
+int validar(char mensj[], int ri, int rf)
 {
     // variables locales
     int num;
@@ -93,10 +112,13 @@ int validar(char mensj[], int ri, int rf) // funcion para validar argumentos dad
     return num; // retorna el valor que haya tomado num, entre los rangos dados por el usuario
 }
 
+/* Funcion para llenar un vector con datos dados por el usuario */
 void llenar(int vector1[])
 {
+    // variables locales
     int num;
     int i;
+    /* desarrollo de la funcion */
     for (i = 0; i < 10; i++)
     {
         printf("   Posicion [%d] del vector\n", i);
@@ -106,22 +128,26 @@ void llenar(int vector1[])
     }
 }
 
+/* Funcion que verifica si el numero aleatorio dado ya se encuentra dentro del vector*/
 int repetido(int num, int i, int vector2[])
 {
     for (int j = 0; j < i; j++)
     {
         if (num == vector2[j])
         {
-            return 1;
+            return 1; // si el numero ya esta dentro del vector, retorna 1
         }
     }
-    return 0;
+    return 0; // si el numero no se encuentra dentro del vector, retorna 0
 }
 
+/* Funcion para llenar un vector de manera aleatoria sin numeros repetidos */
 void llenar2(int vector2[])
 {
+    // variables locales
     int num;
     int i;
+    /* Desarrollo de funcion */
     for (i = 0; i < 10; i++)
     {
         do
@@ -133,16 +159,24 @@ void llenar2(int vector2[])
     printf("El vector se lleno con numeros aleatorios entre 1-20 exitosamente\n");
 }
 
+/* Funcion para llenar un vector con otros dos vectores */
 void llenar3(int vector3[], int vect2[], int vect1[])
 {
-    for (int i = 0; i < 20 / 2; i++)
+    for (int i = 0; i < 20; i++)
     {
-        vector3[i] = vect1[i];
-        vector3[i + 10] = vect2[i];
+        if (i < 10) // Se llenan las primeras 10 posiciones con el vector 1
+        {
+            vector3[i] = vect1[i];
+        }
+        else // se llenan las ultimas 10 posiciones con el vector 2
+        {
+            vector3[i] = vect2[i - 10];
+        }
     }
     printf("Vector de 20 espacios completo exitosamente!\n");
 }
 
+/* Funcion para imprimir los vectores */
 void imprimir(int vect1[], int vect2[], int vect3[])
 {
     int i;
@@ -152,33 +186,38 @@ void imprimir(int vect1[], int vect2[], int vect3[])
         printf("Vector[%d] --> %d\n", i, vect1[i]);
     }
     system("PAUSE");
-    printf("\n--Vector 2--\n");
+    system("CLS");
+    printf("--Vector 2--\n");
     for (i = 0; i < 10; i++)
     {
         printf("Vector[%d] --> %d\n", i, vect2[i]);
     }
     system("PAUSE");
-    printf("\n--Vector 3--\n");
+    system("CLS");
+    printf("--Vector 3--\n");
     for (i = 0; i < 20; i++)
     {
         printf("Vector[%d] --> %d\n", i, vect3[i]);
     }
 }
 
+/* Funcion para llenar una matriz con 2 vectores */
 void matriz4x4(int matriz[][4], int vect1[], int vect2[])
 {
+    // Variables locales
     int i, j, k = 0;
+    /* Desarrollo de funcion */
     for (i = 0; i < 4; i++)
     {
         for (j = 0; j < 4; j++)
         {
-            if (k < 10)
+            if (k < 10) // Se llenan los primeros 10 espacios con el vector 1
             {
                 matriz[i][j] = vect1[k];
             }
-            else
+            else // Se llenan los ultimos 6 espacios con el vector 2
             {
-                matriz[i][j] = vect2[k-6];
+                matriz[i][j] = vect2[k - 6];
             }
             k++;
         }
@@ -186,9 +225,10 @@ void matriz4x4(int matriz[][4], int vect1[], int vect2[])
     printf("La matriz 4x4 se lleno exitosamene!\n");
 }
 
+/* Funcion para imprimir la matriz */
 void imprimirMatriz(int matriz[][4])
 {
-    printf("~~~Matriz 4x4~~~\n");
+    printf("~~~ Matriz 4x4 ~~~\n");
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
@@ -198,5 +238,3 @@ void imprimirMatriz(int matriz[][4])
         printf("\n");
     }
 }
-
-
