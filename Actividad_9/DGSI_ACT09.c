@@ -5,9 +5,6 @@
     SD_ACT09
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include "bocanada.h"
 #define N 4
 #define M 4
@@ -17,7 +14,7 @@ void llenarVect(int vector[], int n, int ri, int rf);
 int repetidoVect(int num, int i, int vector[]);
 void llenarMatriz4x4(int matriz[][M], int n, int m, int vect[]);
 void printVect(int vector[], int n);
-void printMatriz(int matriz[][M], int n, int m);
+void printMatriz(int n, int m, int matriz[][m]);
 void ordenar(int vector[], int n);
 int busq_seq(int vector[], int n,int ri, int rf);
 
@@ -64,7 +61,7 @@ void menu(void)
             printVect(vector, 15);
             break;
         case 4:
-            printMatriz(matriz, N, M);
+            printMatriz(N,M,matriz);
             break;
         case 5:
             ordenar(vector, 15);
@@ -78,7 +75,7 @@ void menu(void)
             }
             else 
             {
-                printf("Numero en la posicion %d",num);
+                printf("Numero en la posicion %d\n",num);
             }
             break;
         }
@@ -86,6 +83,3 @@ void menu(void)
     } while (op != 0);
     printf("Gracias por usar el programa. Hasta luego!");
 }
-
-
-

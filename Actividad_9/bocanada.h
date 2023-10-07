@@ -10,7 +10,7 @@ void printVect(int vector[], int n);
 // matriz
 void llenarMatriz4x4(int matriz[][M], int n, int m, int vect[]);
 int repetidoMat(int num, int n, int m, int matriz[][m]);
-void printMatriz(int matriz[][M], int n, int m);
+void printMatriz(int n, int m, int matriz[][m]);
 // ordenar, buscar
 void ordenar(int vector[], int n);
 int busq_seq(int vector[], int n, int ri, int rf);
@@ -21,6 +21,7 @@ int busq_seq(int vector[], int n, int ri, int rf);
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 /* -------------------- */
 
 /* ---- Desarrollo de funciones ---- */
@@ -81,7 +82,7 @@ void printVect(int vector[], int n)
     printf("--Vector --\n");
     for (i = 0; i < n; i++)
     {
-        printf("Posicion[%d] --> %d\n", i + 1, vector[i]);
+        printf("Posicion[%d] --> %d\n", i , vector[i]);
     }
 }
 
@@ -115,7 +116,7 @@ int repetidoMat(int num, int n, int m, int matriz[][m])
     return 0; // si el numero no se encuentra dentro del vector, retorna 0
 }
 
-void printMatriz(int matriz[][M], int n, int m)
+void printMatriz(int n, int m, int matriz[][m])
 {
     printf("~~~ Matriz ~~~\n");
     for (int i = 0; i < n; i++)
