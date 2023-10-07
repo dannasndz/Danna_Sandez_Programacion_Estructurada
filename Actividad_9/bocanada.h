@@ -3,12 +3,13 @@
 #define M 4
 // validar
 int validar(char mensj[], int ri, int rf);
-//vectores
+// vectores
 void llenarVect(int vector[], int n, int ri, int rf);
 int repetidoVect(int num, int i, int vector[]);
 void printVect(int vector[], int n);
-//matriz
+// matriz
 void llenarMatriz4x4(int matriz[][M], int n, int m, int vect[]);
+int repetidoMat(int num, int n, int m, int matriz[][m]);
 void printMatriz(int matriz[][M], int n, int m);
 // ordenar, buscar
 void ordenar(int vector[], int n);
@@ -32,7 +33,7 @@ int validar(char mensj[], int ri, int rf)
     char cadena[100];
     // desarrollo de funcion
     do
-    { 
+    {
         printf("%s", mensj);
         fflush(stdin);
         gets(cadena);
@@ -43,7 +44,7 @@ int validar(char mensj[], int ri, int rf)
     return num; // retorna el valor que haya tomado num, entre los rangos dados por el usuario
 }
 
-// Funcion para llenar un vector con datos random 
+// Funcion para llenar un vector con datos random
 void llenarVect(int vector[], int n, int ri, int rf)
 {
     // variables locales
@@ -99,6 +100,21 @@ void llenarMatriz4x4(int matriz[][M], int n, int m, int vect[])
     }
 }
 
+int repetidoMat(int num, int n, int m, int matriz[][m])
+{
+    for (int j = 0; j < n; j++)
+    {
+        for (int k = 0; k < m; k++)
+        {
+            if (num == matriz[j][k])
+            {
+                return 1; // si el numero ya esta dentro del vector, retorna 1
+            }
+        }
+    }
+    return 0; // si el numero no se encuentra dentro del vector, retorna 0
+}
+
 void printMatriz(int matriz[][M], int n, int m)
 {
     printf("~~~ Matriz ~~~\n");
@@ -133,7 +149,7 @@ void ordenar(int vector[], int n)
 int busq_seq(int vector[], int n, int ri, int rf)
 {
     int num;
-    num=validar("Que valor te gustaria buscar entre 100-200?: ",ri,rf);
+    num = validar("Que valor te gustaria buscar entre 100-200?: ", ri, rf);
     int i;
     for (i = 0; i < n; i++)
     {
