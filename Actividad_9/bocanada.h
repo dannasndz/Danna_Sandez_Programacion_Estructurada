@@ -1,4 +1,11 @@
 
+/* ----- Librerias ----- */
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+/* -------------------- */
+
 /* ---- Prototipo de funciones ---- */
 #define M 4
 // validar
@@ -9,20 +16,18 @@ int repetidoVect(int num, int i, int vector[]);
 void printVect(int vector[], int n);
 // matriz
 void llenarMatriz4x4(int matriz[][M], int n, int m, int vect[]);
-int repetidoMat(int num, int n, int m, int matriz[][m]);
-void printMatriz(int n, int m, int matriz[][m]);
+int repetidoMat(int num, int n, int m, int matriz[][M]);
+void printMatriz(int n, int m, int matriz[][M]);
 // ordenar, buscar
 void ordenar(int vector[], int n);
 int busq_seq(int vector[], int n, int ri, int rf);
+// alfabetico
+void mayus(char cadena[]);
+void min(char cadena[]);
+// num aleatorio
+int numAleatorio(int ri, int rf);
 
 /* ---------------------------------------- */
-
-/* ----- Librerias ----- */
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <time.h>
-/* -------------------- */
 
 /* ---- Desarrollo de funciones ---- */
 
@@ -101,7 +106,7 @@ void llenarMatriz4x4(int matriz[][M], int n, int m, int vect[])
     }
 }
 
-int repetidoMat(int num, int n, int m, int matriz[][m])
+int repetidoMat(int num, int n, int m, int matriz[][M])
 {
     for (int j = 0; j < n; j++)
     {
@@ -116,7 +121,7 @@ int repetidoMat(int num, int n, int m, int matriz[][m])
     return 0; // si el numero no se encuentra dentro del vector, retorna 0
 }
 
-void printMatriz(int n, int m, int matriz[][m])
+void printMatriz(int n, int m, int matriz[][M])
 {
     printf("~~~ Matriz ~~~\n");
     for (int i = 0; i < n; i++)
@@ -160,4 +165,45 @@ int busq_seq(int vector[], int n, int ri, int rf)
         }
     }
     return -1;
+}
+
+// alfabetico
+
+void mayus(char cadena[]) // mayusculas
+{
+    int i;
+    for (i = 0; cadena[i] != '\0'; i++)
+    {
+        if (cadena[i] >= 97)
+        {
+            if (cadena[i] <= 122)
+            {
+                cadena[i] = cadena[i] - 32;
+            }
+        }
+    }
+    printf("%s", cadena);
+}
+
+void min(char cadena[]) // minusculas
+{
+    int i;
+    for (i = 0; cadena[i] != '\0'; i++)
+    {
+        if (cadena[i] >= 'A')
+        {
+            if (cadena[i] <= 'Z')
+            {
+                cadena[i] = cadena[i] + 32;
+            }
+        }
+    }
+    printf("%s", cadena);
+}
+
+int numAleatorio(int ri, int rf)
+{
+    int rango = (rf - ri + 1);
+
+    return rand() % rango + ri;
 }
