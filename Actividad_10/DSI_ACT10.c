@@ -21,7 +21,7 @@ typedef struct _datos
 Tdatos datos_manual(void);
 Tdatos datos_autom(void);
 void print_reg(Tdatos registro[], int j);
-/* funciones auxiliares*/
+/**** funciones auxiliares ****/
 int busq_seq(Tdatos registro[], int n, int num);
 int busq_binaria(Tdatos registro[], int left, int right, int number);
 int ordenar(Tdatos registro[], int n);
@@ -54,13 +54,13 @@ int main()
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    persona = datos_autom();
-                    while (busq_seq(registros, i, persona.matricula) != -1)
+                    persona = datos_autom();                                // guardar los datos de registro en una variable tipo tdatos para evaluar
+                    while (busq_seq(registros, i, persona.matricula) != -1) // evaluar si la matricula se repite
                     {
                         persona.matricula = numAleatorio(30000, 399999);
                     }
-                    registros[i++] = persona;
-                    k++;
+                    registros[i++] = persona; // agregar a la persona al registro
+                    k++;                      // contador para numero de registros creados
                 }
                 printf("Registro lleno exitosamente con 10 alumnos!\n");
             }
@@ -68,26 +68,26 @@ int main()
             {
                 printf("El registro llego a su maxima capacidad\n");
             }
-            ordenado = 0;
+            ordenado = 0; // bandera para saber si el registro esta ordenado
             system("PAUSE");
             break;
         case 2: // llenar manualmente registro de alumno
             if (k < 500)
             {
-                persona = datos_manual();
-                while (busq_seq(registros, i, persona.matricula) != -1)
+                persona = datos_manual();                               // agregar el registro a una variable tipo Tdatos
+                while (busq_seq(registros, i, persona.matricula) != -1) // validar la matricula
                 {
                     persona.matricula = validar("Por favor ingresa otra matricula: ", 30000, 399999);
                 }
-                registros[i++] = persona;
-                k++;
+                registros[i++] = persona; // agregar la variable tipo Tdatos al registro
+                k++;                      // contador para numero de registros creados
                 printf("Registro lleno con exito!\n");
             }
             else
             {
                 printf("El registro llego a su maxima capacidad\n");
             }
-            ordenado = 0;
+            ordenado = 0; // bandera para "desactivar" la bandera de registro ordenado
             system("PAUSE");
             break;
         case 3: // eliminar registro por matricula
@@ -98,7 +98,7 @@ int main()
                 encontrado = busq_binaria(registros, 300000, 399999, mat);
                 if (encontrado != -1) // si se encuentra
                 {
-                    registros[i].status = 0;
+                    registros[i].status = 0; // desactivar el status
                     printf("La matricula ahora es inactiva\n");
                 }
                 else // no se encuentra
@@ -170,13 +170,12 @@ int main()
             }
             else
             {
-                ordenado = ordenar(registros, i);
+                ordenado = ordenar(registros, i); // ordenas registro
                 printf("Registro ordenado\n");
             }
             system("PAUSE");
             break;
         case 6: // imprimir registro
-            system("CLS");
             print_reg(registros, i);
             system("PAUSE");
             break;
@@ -186,7 +185,12 @@ int main()
     return 0;
 }
 
-/* desarrollo de funciones */
+/**** desarrollo de funciones ****/
+
+/*
+    funcion para generar 1 registro de datos tipo struct.
+    Retorna una variable tipo struct
+*/
 Tdatos datos_autom(void)
 {
     Tdatos persona;
@@ -233,6 +237,10 @@ Tdatos datos_autom(void)
     return persona;
 }
 
+/*
+    funcion para generar 1 registro manual tipo struct.
+    Retorna una variable tipo struct.
+*/
 Tdatos datos_manual(void)
 {
     Tdatos persona;
@@ -251,10 +259,10 @@ Tdatos datos_manual(void)
         fflush(stdin);
         gets(ape1);
         strcpy(persona.ap_pa, ape1);
-        op = alfabetico(persona.ap_pa);
+        op = alfabetico(persona.ap_pa); // validar solo alfabaticos y espacio sencillo
         system("PAUSE");
     } while (op != 1);
-    mayus(persona.ap_pa);
+    mayus(persona.ap_pa); // convertir a mayusculas
     system("CLS");
 
     do
@@ -264,10 +272,10 @@ Tdatos datos_manual(void)
         fflush(stdin);
         gets(ape2);
         strcpy(persona.ap_ma, ape2);
-        op = alfabetico(persona.ap_ma);
+        op = alfabetico(persona.ap_ma); // validar solo alfabaticos y espacio sencillo
         system("PAUSE");
     } while (op != 1);
-    mayus(persona.ap_ma);
+    mayus(persona.ap_ma); // convertir a mayusculas
 
     system("CLS");
 
@@ -278,10 +286,10 @@ Tdatos datos_manual(void)
         fflush(stdin);
         gets(nom);
         strcpy(persona.nombre, nom);
-        op = alfabetico(persona.nombre);
+        op = alfabetico(persona.nombre); // validar solo alfabaticos y espacio sencillo
         system("PAUSE");
     } while (op != 1);
-    mayus(persona.nombre);
+    mayus(persona.nombre); // convertir a mayusculas
 
     system("CLS");
 
@@ -293,6 +301,10 @@ Tdatos datos_manual(void)
     return persona;
 }
 
+/*
+    Funcion para imprimir arreglo tipo struct.
+    parametros: arreglo tipo struct, contador del arreglo.
+*/
 void print_reg(Tdatos registro[], int j)
 {
     int i;
@@ -308,6 +320,11 @@ void print_reg(Tdatos registro[], int j)
 
 /*  desarrollo de funciones auxiliares */
 
+/*
+    Funcion de busqueda binaria para buscar en un arreglo ya ordenado.
+    Parametros: arreglo tipo struct, intervalo inferior, superior, y numero a buscar.
+    Valor de retorno: -1 si no se encuentra, y medium si se encontro.
+*/
 int busq_binaria(Tdatos registro[], int ri, int rf, int matricula)
 {
     while (ri <= rf)
@@ -333,6 +350,11 @@ int busq_binaria(Tdatos registro[], int ri, int rf, int matricula)
     return -1;
 }
 
+/*
+    Funcion de busqueda secuencial para buscar en un vector que no este ordenado
+    Parametros: arreglo tipo struct, contador del arreglo, valor a buscar.
+    Valor de retorno: i si se encuentra, -1 si no se encuentra
+*/
 int busq_seq(Tdatos registro[], int n, int num)
 {
     int i;
@@ -346,6 +368,11 @@ int busq_seq(Tdatos registro[], int n, int num)
     return -1;
 }
 
+/*
+    Funcion para ordenar un vector.
+    Parametros: arreglo tipo struct, contador del arreglo.
+    Valor de retorno: 1, significa que ya esta ordenado
+*/
 int ordenar(Tdatos registro[], int n)
 {
     int i, j;
@@ -365,6 +392,11 @@ int ordenar(Tdatos registro[], int n)
     return 1;
 }
 
+/*
+    Funcion para validar una cadena unicamente alfabetica, y con espacios sencillos.
+    Parametros: cadena a validar.
+    Valor de retonor: -1 si es incorrecta, 1 si es correcta
+*/
 int alfabetico(char cadena[])
 {
     int i;
