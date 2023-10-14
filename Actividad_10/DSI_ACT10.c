@@ -32,7 +32,7 @@ int main()
     srand(time(NULL));
     Tdatos registros[500], persona;
     int op, encontrado, mat, ordenado;
-    int i = 0;
+    int i = 0, k = 0;
     do
     {
         system("CLS");
@@ -50,7 +50,7 @@ int main()
         switch (op)
         {
         case 1: // llenar registro de alumno automatico 10 veces
-            if (i <= 500)
+            if (k < 500)
             {
                 for (int j = 0; j < 10; j++)
                 {
@@ -60,18 +60,19 @@ int main()
                         persona.matricula = numAleatorio(30000, 399999);
                     }
                     registros[i++] = persona;
+                    k++;
                 }
+                printf("Registro lleno exitosamente con 10 alumnos!\n");
             }
             else
             {
                 printf("El registro llego a su maxima capacidad\n");
             }
             ordenado = 0;
-            printf("Registro lleno exitosamente con 10 alumnos!\n");
             system("PAUSE");
             break;
         case 2: // llenar manualmente registro de alumno
-            if (i <= 500)
+            if (k < 500)
             {
                 persona = datos_manual();
                 while (busq_seq(registros, i, persona.matricula) != -1)
@@ -79,13 +80,14 @@ int main()
                     persona.matricula = validar("Por favor ingresa otra matricula: ", 30000, 399999);
                 }
                 registros[i++] = persona;
+                k++;
+                printf("Registro lleno con exito!\n");
             }
             else
             {
                 printf("El registro llego a su maxima capacidad\n");
             }
             ordenado = 0;
-            printf("Registro lleno con exito!\n");
             system("PAUSE");
             break;
         case 3: // eliminar registro por matricula
