@@ -54,7 +54,7 @@ int main()
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    persona = datos_autom();                                // guardar los datos de registro en una variable tipo tdatos para evaluar
+                    persona = datos_autom(); // guardar los datos de registro en una variable tipo tdatos para evaluar
                     while (busq_seq(registros, i, persona.matricula) != -1) // evaluar si la matricula se repite
                     {
                         persona.matricula = numAleatorio(30000, 399999);
@@ -233,7 +233,6 @@ Tdatos datos_autom(void)
     }
     mayus(persona.nombre); // convertir mayusculas
     persona.edad = numAleatorio(17, 30);
-
     return persona;
 }
 
@@ -318,7 +317,7 @@ void print_reg(Tdatos registro[], int j)
     }
 }
 
-/*  desarrollo de funciones auxiliares */
+/*** DESARROLLO DE FUNCIONES AUXILIARES ***/
 
 /*
     Funcion de busqueda binaria para buscar en un arreglo ya ordenado.
@@ -331,22 +330,22 @@ int busq_binaria(Tdatos registro[], int ri, int rf, int matricula)
     {
         int medium = ri + (rf - ri) / 2;
 
-        // Check if number is present at mid
+        // Checa si el numero se encuentra en medio
         if (registro[medium].matricula == matricula)
         {
             return medium;
         }
 
-        if (registro[medium].matricula < matricula) // If number greater, ignore left half
+        if (registro[medium].matricula < matricula) // si el numero es mayor ignora el lado izquierdo
         {
             ri = medium + 1;
         }
-        else // If number is smaller, ignore right half
+        else // si el numero es menor, ignora el lado derecho 
         {
             rf = medium - 1;
         }
     }
-    // If we reach here, then element was not present
+    // el numero no se encuentra
     return -1;
 }
 
@@ -370,7 +369,7 @@ int busq_seq(Tdatos registro[], int n, int num)
 
 /*
     Funcion para ordenar un vector.
-    Parametros: arreglo tipo struct, contador del arreglo.
+    Parametros: arreglo tipo struct, contador del arreglo y numero a buscar.
     Valor de retorno: 1, significa que ya esta ordenado
 */
 int ordenar(Tdatos registro[], int n)
