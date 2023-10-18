@@ -2,11 +2,54 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef struct _estd
+{
+    char estado[30];
+    char abre[2];
+} testd;
+
+
 /* Prototipo de funciones*/
 
 int validar(char mensj[], int ri, int rf);
 int alfabetico(char cadena[]);
 void mayus(char cadena[]);
+int estados(void);
+
+testd est[]={
+        {"Aguascalientes", "AS"},
+        {"Baja California", "BC"},
+        {"Baja California Sur", "BS"},
+        {"Campeche", "CC"},
+        {"Coahuila", "CL"},
+        {"Colima", "CM"},
+        {"Chiapas", "CS"},
+        {"Chihuahua", "CH"},
+        {"Ciudad de México", "CC"},
+        {"Durango", "DG"},
+        {"Guanajuato", "GT"},
+        {"Guerrero", "GR"},
+        {"Hidalgo", "HG"},
+        {"Jalisco", "JC"},
+        {"México", "MC"},
+        {"Michoacán", "MN"},
+        {"Morelos", "MS"},
+        {"Nayarit", "NT"},
+        {"Nuevo León", "NL"},
+        {"Oaxaca", "OC"},
+        {"Puebla", "PL"},
+        {"Querétaro", "QT"},
+        {"Quintana Roo", "QR"},
+        {"San Luis Potosí", "SP"},
+        {"Sinaloa", "SL"},
+        {"Sonora", "SR"},
+        {"Tabasco", "TC"},
+        {"Tamaulipas", "TS"},
+        {"Tlaxcala", "TL"},
+        {"Veracruz", "VZ"},
+        {"Yucatán", "YN"},
+        {"Zacatecas", "ZS"}
+    };
 
 /*Desarrollo de funciones*/
 
@@ -78,3 +121,16 @@ void mayus(char cadena[]) // mayusculas
     }
 }
 
+int estados(void)
+{
+    int est;
+    char estados[32][50] = {"AGUASCALIENTES", "BAJA CALIFORNIA", "BAJA CALIFORNIA SUR", "CAMPECHE", "COAHUILA", "COLIMA", "CHIAPAS", "CHIHUAHUA", "DISTRITO DE MEXICO", "DURANGO", "GUANAJUATO", "GUERRERO", "HIDALGO", "JALISCO", "MEXICO", "MICHOACAN", "MORELOS", "NAYARIT", "NUEVO LEON", "OAXACA", "PUEBLA", "QUERETARO", "QUINTANA ROO", "SAN LUIS POTOSI", "SINALOA", "SONORA", "TABASCO ", "TAMAULIPAS", "TLAXCALA", "VERACRUZ", "YUCATAN", "ZACATECAS"};
+    int n = sizeof(estados) / sizeof(estados[0]);
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d- %s\n", i, estados[i]);
+    }
+    est = validar("Ingrese una opcion NUMERICA: ", 0, 31);
+
+    return est;
+}
