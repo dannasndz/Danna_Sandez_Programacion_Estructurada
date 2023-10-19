@@ -15,6 +15,7 @@ int validar(char mensj[], int ri, int rf);
 int alfabetico(char cadena[]);
 void mayus(char cadena[]);
 int estados(void);
+int numAleatorio(int ri, int rf);
 
 testd est[]={
         {"Aguascalientes", "AS"},
@@ -133,4 +134,11 @@ int estados(void)
     est = validar("Ingrese una opcion NUMERICA: ", 0, 31);
 
     return est;
+}
+
+int numAleatorio(int ri, int rf)
+{
+    int rango = (rf - ri + 1);
+
+    return rand() % rango + ri;
 }

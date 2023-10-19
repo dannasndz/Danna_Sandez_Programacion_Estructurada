@@ -29,8 +29,10 @@ void print_curp(Tdatos persona);
 /* Funciones auxiliares*/
 void cadena(char mnsj[], char destino[]);
 int dia_n(int mes, int anio);
-int ape(Tdatos persona);
+int ape(char campo[]);
 void print_est(int i);
+int consonante(char campo[]);
+void validEnie(char campo[]);
 
 int main()
 {
@@ -58,6 +60,8 @@ int main()
 
     return 0;
 }
+
+/* Desarrollo de funciones */
 
 Tdatos data_curp(void)
 {
@@ -88,14 +92,9 @@ void print_curp(Tdatos persona)
     mayus(persona.nom.ap_paterno);
     mayus(persona.nom.nombre);
     mayus(persona.nom.ap_materno);
-
-    printf("%c", persona.nom.ap_paterno[0]);
-
-    int n;
     do
     {
-        n = ape(persona);
-    } while (n != 1);
+    } while (ape(persona.nom.ap_paterno) != 1);
 
     printf("%c%c", persona.nom.ap_materno[0], persona.nom.nombre[0]);
     printf("%02d%02d%02d", persona.nacimiento.anio % 100, persona.nacimiento.mes, persona.nacimiento.dia);
@@ -108,25 +107,70 @@ void print_curp(Tdatos persona)
 
         printf("%s", "H");
     }
-    if (persona.estado < 32)
+    if (persona.estado < 33)
     {
         print_est(persona.estado);
     }
     else
     {
-        printf("%s","X");
+        printf("%s", "X");
     }
-    
+    do
+    {
+    } while (consonante(persona.nom.ap_paterno) != 1);
+
+    do
+    {
+    } while (consonante(persona.nom.ap_materno) != 1);
+
+    do
+    {
+    } while (consonante(persona.nom.nombre) != 1);
+    if (persona.nacimiento.anio <= 1999)
+    {
+        printf("%d", 0);
+    }
+    else
+    {
+        printf("%s", "A");
+    }
+
+    printf("%d", numAleatorio(0, 9));
 }
 
-int ape(Tdatos persona)
+/* Desarrollo de funciones auxiliares */
+
+int ape(char campo[])
 {
-    int len = sizeof(persona.nom.ap_paterno) / sizeof(persona.nom.ap_paterno[0]);
+    int len = strlen(campo);
+    if (campo[0] == -92 || campo[0] == -91)
+    {
+        campo[0] = 'X';
+        printf("%c",campo[0]);
+    }
+    else
+    {
+        printf("%c",campo[0]);
+    }
     for (int i = 1; i < len; i++)
     {
-        if (persona.nom.ap_materno[i] == 'a' || 'e' || 'i' || 'o' || 'u')
+        if (campo[i] == 'a' || 'e' || 'i' || 'o' || 'u')
         {
-            printf("%c", persona.nom.ap_paterno[i]);
+            printf("%c", campo[i]);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int consonante(char campo[])
+{
+    int len = strlen(campo);
+    for (int i = 1; i < len; i++)
+    {
+        if (campo[i] != 'a' && campo[i] != 'e' && campo[i] != 'i' && campo[i] != 'o' && campo[i] != 'u' && campo[i] != 'A' && campo[i] != 'E' && campo[i] != 'I' && campo[i] != 'O' && campo[i] != 'U')
+        {
+            printf("%c", campo[i]);
             return 1;
         }
     }
@@ -135,32 +179,32 @@ int ape(Tdatos persona)
 
 int dia_n(int mes, int anio)
 {
-    int diasEnMes;
+    int diasMes;
 
     switch (mes)
     {
     case 2:
         if ((anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0))
         {
-            diasEnMes = 29;
+            diasMes = 29;
         }
         else
         {
-            diasEnMes = 28;
+            diasMes = 28;
         }
         break;
     case 4:
     case 6:
     case 9:
     case 11:
-        diasEnMes = 30;
+        diasMes = 30;
         break;
     default:
-        diasEnMes = 31;
+        diasMes = 31;
         break;
     }
 
-    return validar("Dia de nacimiento DD: ", 1, diasEnMes);
+    return validar("Dia de nacimiento DD: ", 1, diasMes);
 }
 
 void cadena(char mnsj[], char destino[])
@@ -182,5 +226,19 @@ void print_est(int i)
     for (int j = 0; j < 2; j++)
     {
         printf("%c", est[i].abre[j]);
+    }
+}
+
+void validEnie(char campo[])
+{
+    int i, n;
+    n = strlen(campo);
+
+    for (i = 0; i < n; i++)
+    {
+        if (campo[i] == -92 || campo[i] == -91)
+        {
+            campo[i] = 'X';
+        }
     }
 }
