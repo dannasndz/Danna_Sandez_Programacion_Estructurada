@@ -29,12 +29,11 @@ void print_curp(Tdatos persona);
 /* Funciones auxiliares*/
 void cadena(char mnsj[], char destino[]);
 int dia_n(int mes, int anio);
-int ape(char campo[]);
 void print_est(int i);
 int consonante(char campo[]);
 void enie(char campo[]);
-void carctEspecial(char campo[]);
 void apeMa(char campo[]);
+
 
 int main()
 {
@@ -94,11 +93,21 @@ void print_curp(Tdatos persona)
     mayus(persona.nom.ap_paterno);
     mayus(persona.nom.nombre);
     mayus(persona.nom.ap_materno);
+
+    if (nomCompuesto(persona.nom.ap_paterno) == 1)
+    {
+        apeCompuesto(persona.nom.ap_paterno);
+    }
+    else
+    {
+        ape(persona.nom.ap_paterno);
+    }
+    
     // imprime la primer letra del apellido y la siguiente vocal, ya se valida enie aki
-    ape(persona.nom.ap_paterno);
+    //ape(persona.nom.ap_paterno);
     // imprime la primer letra del apellido materno y valida enie
     apeMa(persona.nom.ap_materno);
-    // enie(persona.nom.ap_materno);
+    // enie(persona.nom.ap_materno); hace que imprima dos veces x asi que no creo ponerla
     //  nombre
     if (nomCompuesto(persona.nom.nombre) == 1)
     {
@@ -107,6 +116,7 @@ void print_curp(Tdatos persona)
     }
     else
     {
+        dieresis(persona.nom.nombre);
         carctEspecial(persona.nom.nombre);
         enie(persona.nom.nombre);
     }
@@ -151,39 +161,14 @@ void print_curp(Tdatos persona)
     }
 
     printf("%d", numAleatorio(0, 9));
- 
 }
 
 /* Desarrollo de funciones auxiliares */
 
-int ape(char campo[])
-{
-    int len = strlen(campo);
-    if (campo[0] == -92 || campo[0] == -91)
-    {
-        campo[0] = 'X';
-        printf("%c", campo[0]);
-    }
-    else
-    {
-        carctEspecial(campo);
-        printf("%c", campo[0]);
-    }
-
-    for (int i = 1; i < len; i++)
-    {
-        if (campo[i] == 'a' || 'e' || 'i' || 'o' || 'u')
-        {
-            printf("%c", campo[i]);
-            return 1;
-        }
-    }
-
-    return 0;
-}
 
 void apeMa(char campo[])
 {
+    dieresis(campo);
     if (campo[0] == -92 || campo[0] == -91)
     {
         campo[0] = 'X';
@@ -201,7 +186,7 @@ int consonante(char campo[])
     int len = strlen(campo);
     for (int i = 1; i < len; i++)
     {
-        if (campo[i] != 'a' && campo[i] != 'e' && campo[i] != 'i' && campo[i] != 'o' && campo[i] != 'u' && campo[i] != 'A' && campo[i] != 'E' && campo[i] != 'I' && campo[i] != 'O' && campo[i] != 'U')
+        if (campo[i] != 'A' && campo[i] != 'E' && campo[i] != 'I' && campo[i] != 'O' && campo[i] != 'U' )
         {
             printf("%c", campo[i]);
             return 1;
@@ -275,14 +260,3 @@ void enie(char campo[])
     }
 }
 
-void carctEspecial(char campo[])
-{
-    for (int i = 0; i < 2; i++)
-    {
-        if (campo[i] == '/' || campo[i] == '-' || campo[i] == '.')
-        {
-            campo[i] = 'X';
-           
-        }
-    }
-}

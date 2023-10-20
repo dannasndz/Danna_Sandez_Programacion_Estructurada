@@ -16,6 +16,9 @@ void mayus(char cadena[]);
 int estados(void);
 int numAleatorio(int ri, int rf);
 void mariajose(char text[]);
+int ape(char campo[]);
+void dieresis(char campo[]);
+void carctEspecial(char campo[]);
 
 testd est[] = {
     {"Aguascalientes", "AS"},
@@ -89,7 +92,7 @@ int alfabetico(char cadena[])
 
     while (cadena[i] != '\0')
     {
-        if (!((cadena[i] >= 'a' && cadena[i] <= 'z') || (cadena[i] >= 'A' && cadena[i] <= 'Z') || (cadena[i] == ' ' && cadena[i + 1] != ' ') || cadena[i]== '/'|| cadena[i] == '-' || cadena[i] == '.' || cadena[i] == -92 || cadena[i] == -9))
+        if (!((cadena[i] >= 'a' && cadena[i] <= 'z') || (cadena[i] >= 'A' && cadena[i] <= 'Z') || (cadena[i] == ' ' && cadena[i + 1] != ' ') || cadena[i] == '/' || cadena[i] == '-' || cadena[i] == '.' || cadena[i] == -92 || cadena[i] == -91 || (unsigned char)cadena[i] == 142 || (unsigned char)cadena[i] == 132 || (unsigned char)cadena[i] == 137 || (unsigned char)cadena[i] == 211 || (unsigned char)cadena[i] == 139 || (unsigned char)cadena[i] == 216 || (unsigned char)cadena[i] == 148 || (unsigned char)cadena[i] == 153 || (unsigned char)cadena[i] == 154 || (unsigned char)cadena[i] == 129))
         {
             printf("ERROR\n");
             return -1;
@@ -248,5 +251,136 @@ void mariajose(char text[])
     else
     {
         printf("%c", text[lugar]);
+    }
+}
+
+void apeCompuesto(char cadena[])
+{
+    char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
+    char temp[20];
+    int i = 0;
+    int k = 0;
+    int n = 0;
+    int lugar = 0;
+
+    while (cadena[i] != '\0')
+    {
+        int j = 0;
+        int l = 0;
+        while (cadena[k] != ' ' && cadena[k] != '\0')
+        {
+            temp[j] = cadena[k];
+            j++;
+            k++;
+        }
+        temp[j] = '\0';
+        while (strcmp(temp, contra[l]) == 1)
+        {
+            l++;
+            if (strcmp(temp, contra[l]) == 0)
+            {
+                n = strlen(contra[l]);
+                lugar += n+1;
+            }
+        }
+        if (cadena[k] == ' ')
+        {
+            k++;
+        }
+
+        i++;
+    }
+
+    if (lugar > 0)
+    {
+        printf("%c", cadena[lugar]);
+        int len = strlen(cadena);
+        for (int i = lugar; i < len; i++)
+        {
+            if (cadena[i] == 'A' || cadena[i] == 'E' || cadena[i] == 'I' || cadena[i] == 'O' || cadena[i] == 'U')
+            {
+                printf("%c", cadena[i]);
+                return;
+            }
+        }
+    }
+}
+
+int ape(char campo[])
+{
+    int len = strlen(campo);
+    dieresis(campo);
+    if (campo[0] == -92 || campo[0] == -91)
+    {
+        campo[0] = 'X';
+        printf("%c", campo[0]);
+    }
+    else
+    {
+        carctEspecial(campo);
+        printf("%c", campo[0]);
+    }
+
+    for (int i = 1; i < len; i++)
+    {
+        if (campo[i] == 'a' || 'e' || 'i' || 'o' || 'u')
+        {
+            printf("%c", campo[i]);
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+void carctEspecial(char campo[])
+{
+    for (int i = 0; i < 2; i++)
+    {
+        if (campo[i] == '/' || campo[i] == '-' || campo[i] == '.')
+        {
+            campo[i] = 'X';
+        }
+    }
+}
+
+void dieresis(char campo[])
+{
+    int len = strlen(campo);
+    int i;
+    for (i = 0; i < len; i++)
+    {
+        if ((unsigned char)campo[i] == 142)
+        {
+            campo[i] = 'A';
+        }
+        else
+        {
+            if ((unsigned char)campo[i] == 211)
+            {
+                campo[i] = 'E';
+            }
+            else
+            {
+                if ((unsigned char)campo[i] == 216)
+                {
+                    campo[i] = 'I';
+                }
+                else
+                {
+                    if ((unsigned char)campo[i] == 153)
+                    {
+                        campo[i] = 'O';
+                    }
+                    else
+                    {
+                        if ((unsigned char)campo[i] == 154)
+                        {
+                            campo[i] = 'U';
+                        }
+                    }
+                }
+            }
+        }
     }
 }
