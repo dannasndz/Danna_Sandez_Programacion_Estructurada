@@ -16,6 +16,7 @@ char nom_mujer[20][30] = {"Ana", "Maria", "Sofia", "Luisa", "Laura", "Isabel", "
 char ape[104][100] = {"Gomez", "Rodriguez", "Lopez", "Martinez", "Perez", "Fernandez", "Gonzalez", "Diaz", "Hernandez", "Torres", "Garcia", "Ramirez", "Sanchez", "Flores", "Vargas", "Mendoza", "Castillo", "Rojas", "Gutierrez", "Ortega","Haro", "Solano", "Sandez", "Lopez", "Meza", "Perez", "torres", "ramirez", "ruiz", "morales","jimenez", "soto", "herrera", "delgado", "castro", "rios", "medina", "vargas", "mendoza", "reyes", "blanco", "navarro", "guzman", "romero", "ortega", "jimenez", "soto", "herrera", "delgado", "castro", "rios", "medina", "silva", "castro", "rios", "montoya", "pena", "vidal", "aguilar", "cordero", "mora", "sosa", "rosales", "lugo", "serrano", "caceres", "robles", "salazar", "leon", "gallegos", "cordova", "del valle", "navarro", "paredes", "zamora", "valdez", "duran", "cisneros", "gutierrez", "salinas", "avila", "rivas", "pizarro", "guerra", "espinoza", "calderon", "pantoja", "miranda", "rojas", "segura", "villanueva", "roldan", "benitez", "luna", "valencia", "cervantes", "Escobar","Zuniga","barrios"};
 
 
+
 /* desarrollo de funciones */
 int numAleatorio(int ri, int rf)
 {
