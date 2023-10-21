@@ -71,8 +71,16 @@ Tdatos data_curp(void)
     cadena("Nombre: ", humano.nom.nombre);
 
     // fecha de nacimiento
-    humano.nacimiento.anio = validar("Año de nacimiento AAAA: ", 1930, 2023);
-    humano.nacimiento.mes = validar("Mes de nacimiento MM:  ", 1, 12);
+    humano.nacimiento.anio = validar("Año de nacimiento AAAA: ", 1893, 2023);
+    if (humano.nacimiento.anio == 2023)
+    {
+        humano.nacimiento.anio = validar("Mes de nacimiento MM: ", 1, 10);
+    }
+    else
+    {
+        humano.nacimiento.mes = validar("Mes de nacimiento MM:  ", 1, 12);
+    }
+
     humano.nacimiento.dia = dia_n(humano.nacimiento.mes, humano.nacimiento.anio);
     system("CLS");
     // sexo
@@ -81,6 +89,7 @@ Tdatos data_curp(void)
     // Estado
     printf("   ----ESTADO----\n");
     humano.estado = estados();
+    system("CLS");
 
     return humano;
 }
@@ -109,7 +118,6 @@ void print_curp(Tdatos persona)
     {
         carctEspecial(persona.nom.ap_paterno, clave);
         ape(persona.nom.ap_paterno, clave);
-     
     }
 
     // imprimir letra inicial del segundo apellido
@@ -130,13 +138,13 @@ void print_curp(Tdatos persona)
     }
     else
     {
-        clave[2]='X';
+        clave[2] = 'X';
     }
 
     if (nomCompuesto(persona.nom.nombre) == 1) // tiene nombre compuesto
     {
         nomComp = 1;
-        //carctEspecial(persona.nom.nombre, clave); AQUI KITE QUE VALIDE LOS CRT ESPECIALES
+        // carctEspecial(persona.nom.nombre, clave); AQUI KITE QUE VALIDE LOS CRT ESPECIALES
         enie(persona.nom.nombre);
         dieresis(persona.nom.nombre);
         mariajose(persona.nom.nombre, clave);
@@ -149,7 +157,7 @@ void print_curp(Tdatos persona)
         clave[3] = persona.nom.nombre[0];
     }
     // verificar si es una clave antisonante
-    if (antisonante(clave)==1)
+    if (antisonante(clave) == 1)
     {
         for (int i = 0; i < 4; i++)
         {
@@ -216,7 +224,7 @@ void print_curp(Tdatos persona)
     }
     // imprimir primer consonante del nombre
     if (nomComp == 1) // nombre
-    {                 
+    {
         consCompuesto(persona.nom.nombre);
     }
     else

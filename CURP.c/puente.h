@@ -25,7 +25,7 @@ void apeCompuesto(char cadena[], char clave[]);
 void apeCompuestoMa(char cadena[], char clave[]);
 void nomCompuesto2(char cadena[], char clave[]);
 void dieresis(char campo[]);
-void carctEspecial(char campo[], char clave[]);
+void carctEspecial(char cadena[], char clave[]);
 int cons2(char campo[], int lugar);
 void enie(char campo[]);
 void consCompuesto(char cadena[]);
@@ -141,7 +141,7 @@ int estados(void)
     {
         printf("%d- %s\n", i, estados[i]);
     }
-    est = validar("Ingrese una opcion NUMERICA: ", 0, 33);
+    est = validar("Ingrese una opcion NUMERICA: ", 0, 32);
 
     return est;
 }
@@ -236,10 +236,12 @@ void mariajose(char text[], char clave[])
     int flag = 0;
     int lugar = 0;
     int flag2 = 0;
+    int nombre = 0;
 
     while (text[i] != '\0' && flag2 == 0)
     {
         int j = 0;
+        nombre = 0;
         while (text[k] != ' ' && text[k] != '\0')
         {
             temp2[j] = text[k];
@@ -251,36 +253,42 @@ void mariajose(char text[], char clave[])
         if (strcmp(temp2, "MARIA") == 0)
         {
             lugar += 6;
+            nombre = 1;
         }
         else
         {
             if (strcmp(temp2, "JOSE") == 0)
             {
                 lugar += 5;
+                nombre = 1;
             }
             else
             {
                 if (strcmp(temp2, "MA") == 0)
                 {
                     lugar += 3;
+                    nombre = 1;
                 }
                 else
                 {
                     if (strcmp(temp2, "J.") == 0)
                     {
                         lugar += 3;
+                        nombre = 1;
                     }
                     else
                     {
                         if (strcmp(temp2, "MA.") == 0)
                         {
                             lugar += 4;
+                            nombre = 1;
                         }
                         else
                         {
                             if (strcmp(temp2, "J") == 0)
                             {
                                 lugar += 2;
+                                nombre = 1;
                             }
                             else
                             {
@@ -311,8 +319,17 @@ void mariajose(char text[], char clave[])
     }
     else
     {
-        //clave[3] = text[lugar];
-        nomClave(text, clave, lugar);
+        if (nombre == 1)
+        {
+            clave[3] = text[lugar];
+        }
+        else
+        {
+            if (nomCompuesto(text) == 1)
+            {
+                nomClave(text, clave, lugar);
+            }
+        }
     }
 }
 
@@ -415,7 +432,9 @@ int ape(char campo[], char clave[])
             return 1;
         }
     }
-    if (campo[i - 1] != '\n')
+    
+    clave[1] = 'X';
+    /*if (campo[i - 1] != '\0')
     {
         if (campo[i - 1] != 'A' || campo[i - 1] != 'E' || campo[i - 1] != 'I' || campo[i - 1] != 'O' || campo[i - 1] != 'U')
         {
@@ -423,9 +442,8 @@ int ape(char campo[], char clave[])
             clave[1] = campo[i - 1];
             return 1;
         }
-    }
-
-    return 0;
+    }*/
+    return 1;
 }
 
 void apeMa(char campo[], char clave[])
@@ -451,16 +469,24 @@ void enie(char campo[])
     }
 }
 
-void carctEspecial(char campo[], char clave[])
+void carctEspecial(char cadena[], char clave[])
 {
-    int n = strlen(campo);
-    for (int i = 0; i < n; i++)
+    /* int n = strlen(campo);
+     for (int i = 0; i < n; i++)
+     {
+         if ((campo[i] == 47 || campo[i] == 45 || campo[i] == 46))
+         {
+             campo[i] = 'X';
+             clave[2] = campo[i]; /// le agregue esto
+         }
+     }*/
+    int i = 0;
+    for (i = 0; cadena[i] != '\0'; i++)
     {
-        if ((campo[i] == 47 || campo[i] == 45 || campo[i] == 46))
+        if (cadena[i] == '/' || cadena[i] == '-')
         {
-            campo[i] = 'X';
-            printf("ola");
-            clave[i] = campo[i]; /// le agregue esto
+            cadena[i] = 'X';
+            clave[i] = cadena[i];
         }
     }
 }
@@ -700,7 +726,7 @@ void consCompuesto(char cadena[])
 
 void apeCompuestoMa(char cadena[], char clave[])
 {
-    char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
+    char contra[23][4] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
     char temp[20];
     int i = 0;
     int k = 0;
@@ -841,20 +867,20 @@ int antisonante(char clave[])
 
         i++;
     } while (encontrado == 1 && i < 81);
+    return 0;
 }
 
 void nomClave(char cadena[], char clave[], int lugar)
 {
-    char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
+    char contra[23][4] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
     char temp[20];
-    int i = lugar+2;
+    int i = 0;
     int k = 0;
     int n = 0;
-    int letra = 0;
+    int l;
     while (cadena[i] != '\0')
     {
         int j = 0;
-        int l = 0;
         while (cadena[k] != ' ' && cadena[k] != '\0')
         {
             temp[j] = cadena[k];
@@ -862,25 +888,17 @@ void nomClave(char cadena[], char clave[], int lugar)
             k++;
         }
         temp[j] = '\0';
-        while (strcmp(temp, contra[l]) == 1)
+
+        for (l = 0; l < 19; l++)
         {
-            l++;
             if (strcmp(temp, contra[l]) == 0)
             {
-                n = strlen(contra[l]);
-                letra += n + 1;
+                n += strlen(temp);
             }
         }
-        if (cadena[k] == ' ')
-        {
-            k++;
-        }
-
+        k++;
         i++;
     }
-    
-    if (letra > 0)
-    {
-        clave[3] = cadena[letra];
-    }
+
+    clave[3] = cadena[n + lugar];
 }
