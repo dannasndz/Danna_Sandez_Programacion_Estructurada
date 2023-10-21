@@ -18,8 +18,8 @@ typedef struct _datos
 {
     Tnombre nom;
     Tfecha nacimiento;
-    int sexo;
     int estado;
+    int sexo;
 
 } Tdatos;
 
@@ -27,13 +27,6 @@ typedef struct _datos
 Tdatos data_curp(void);
 void print_curp(Tdatos persona);
 /* Funciones auxiliares*/
-void cadena(char mnsj[], char destino[]);
-int dia_n(int mes, int anio);
-void print_est(int i);
-int consonante(char campo[]);
-void enie(char campo[]);
-void apeMa(char campo[]);
-void consCompuesto(char cadena[]);
 
 int main()
 {
@@ -50,7 +43,7 @@ int main()
         if (op == 1)
         {
             persona = data_curp();
-            printf("\n");
+            printf("\nTu CURP es: ");
             print_curp(persona);
             printf("\n");
             system("PAUSE");
@@ -62,19 +55,32 @@ int main()
     return 0;
 }
 
-/* Desarrollo de funciones */
-
 Tdatos data_curp(void)
 {
     Tdatos humano;
+
+    int op = 0;
     // nombre
     cadena("Apellido paterno: ", humano.nom.ap_paterno);
-    cadena("Apellido materno: ", humano.nom.ap_materno);
+    op = validar("Tienes apellido materno?\n1-Si\n2-No\nIngresa una opcion: ", 1, 2);
+    if (op == 1)
+    {
+        cadena("Apellido materno: ", humano.nom.ap_materno);
+    }
+
     cadena("Nombre: ", humano.nom.nombre);
 
     // fecha de nacimiento
-    humano.nacimiento.anio = validar("Año de nacimiento AAAA: ", 1930, 2023);
-    humano.nacimiento.mes = validar("Mes de nacimiento MM:  ", 1, 12);
+    humano.nacimiento.anio = validar("Año de nacimiento AAAA: ", 1893, 2023);
+    if (humano.nacimiento.anio == 2023)
+    {
+        humano.nacimiento.anio = validar("Mes de nacimiento MM: ", 1, 10);
+    }
+    else
+    {
+        humano.nacimiento.mes = validar("Mes de nacimiento MM:  ", 1, 12);
+    }
+
     humano.nacimiento.dia = dia_n(humano.nacimiento.mes, humano.nacimiento.anio);
     system("CLS");
     // sexo
@@ -83,60 +89,93 @@ Tdatos data_curp(void)
     // Estado
     printf("   ----ESTADO----\n");
     humano.estado = estados();
+    system("CLS");
 
     return humano;
 }
 
 void print_curp(Tdatos persona)
 {
+    int apComp1 = 0;
+    int apComp2 = 0;
+    int nomComp = 0;
+    char clave[10];
     // hace mayusuclas los nombres
     mayus(persona.nom.ap_paterno);
     mayus(persona.nom.nombre);
     mayus(persona.nom.ap_materno);
-    int apcomp = 0;
-    int apcomp2 = 0;
-    if (nomCompuesto(persona.nom.ap_paterno) == 1)
-    {
-        apcomp = 1;
 
-        apeCompuesto(persona.nom.ap_paterno);
-    }
-    else
+    // saber si tiene apellido compuesto
+    if (nomCompuesto(persona.nom.ap_paterno) == 1) // tiene ap compuesto
     {
-        ape(persona.nom.ap_paterno);
+        apComp1 = 1;
+        carctEspecial(persona.nom.ap_paterno, clave);
+        enie(persona.nom.ap_paterno);
+        dieresis(persona.nom.ap_paterno);
+        apeCompuesto(persona.nom.ap_paterno, clave);
+    }
+    else // no tiene apellido compuesto
+    {
+        carctEspecial(persona.nom.ap_paterno, clave);
+        ape(persona.nom.ap_paterno, clave);
     }
 
-    // apellido materno
-    apeMa(persona.nom.ap_materno);
-    if (nomCompuesto(persona.nom.ap_materno) == 1)
+    // imprimir letra inicial del segundo apellido
+    if (strlen(persona.nom.ap_materno) != 0) // checa si tiene apellido materno
     {
-        apcomp2 = 1;
-        apeCompuesto(persona.nom.ap_materno);
+        if (nomCompuesto(persona.nom.ap_materno) == 1) // tiene ap compuesto
+        {
+            apComp2 = 1;
+            carctEspecial(persona.nom.ap_materno, clave);
+            enie(persona.nom.ap_materno);
+            dieresis(persona.nom.ap_materno);
+            apeCompuestoMa(persona.nom.ap_materno, clave);
+        }
+        else // no tiene ap compuesto
+        {
+            apeMa(persona.nom.ap_materno, clave);
+        }
     }
     else
     {
-        ape(persona.nom.ap_materno);
+        clave[2] = 'X';
     }
-    // imprime la primer letra del apellido y la siguiente vocal, ya se valida enie aki
-    // ape(persona.nom.ap_paterno);
-    // imprime la primer letra del apellido materno y valida enie
-    // enie(persona.nom.ap_materno); hace que imprima dos veces x asi que no creo ponerla
-    //  nombre
-    if (nomCompuesto(persona.nom.nombre) == 1)
+
+    if (nomCompuesto(persona.nom.nombre) == 1) // tiene nombre compuesto
     {
-        // aki verifico si no se llama maria, jose, etc y tengo que cambiar la tercer posicion por la inicial del segundo nombre
-        mariajose(persona.nom.nombre);
-    }
-    else
-    {
-        dieresis(persona.nom.nombre);
-        carctEspecial(persona.nom.nombre);
+        nomComp = 1;
+        // carctEspecial(persona.nom.nombre, clave); AQUI KITE QUE VALIDE LOS CRT ESPECIALES
         enie(persona.nom.nombre);
+        dieresis(persona.nom.nombre);
+        mariajose(persona.nom.nombre, clave);
     }
-    // anio de nacimiento
+    else
+    {
+        carctEspecial(persona.nom.nombre, clave);
+        enie(persona.nom.nombre);
+        dieresis(persona.nom.nombre);
+        clave[3] = persona.nom.nombre[0];
+    }
+    // verificar si es una clave antisonante
+    if (antisonante(clave) == 1)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            printf("%c", clave[i]);
+        }
+    }
+    else
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            printf("%c", clave[i]);
+        }
+    }
+
+    // imprimir fecha de nacimiento
     printf("%02d%02d%02d", persona.nacimiento.anio % 100, persona.nacimiento.mes, persona.nacimiento.dia);
 
-    ////////////
+    // imprimir sexo
     if (persona.sexo == 1)
     {
         printf("%s", "M");
@@ -145,41 +184,59 @@ void print_curp(Tdatos persona)
     {
         printf("%s", "H");
     }
-    if (persona.estado < 33)
+
+    // imprimir estado
+    if (persona.estado < 32)
     {
         print_est(persona.estado);
     }
     else
     {
-        printf("%s", "X");
+        printf("%s", "NE");
     }
-    // print de consonates
-    if (apcomp == 1)
-    {
+    // imprimir consonantes del apellido1, apellido 2 y nombre
+    if (apComp1 == 1) // primer apellido
+    {                 // el appelido es compuesto
         consCompuesto(persona.nom.ap_paterno);
     }
     else
     {
-        do
-        {
-        } while (consonante(persona.nom.ap_paterno) != 1);
+        consonante(persona.nom.ap_paterno);
     }
-    // apellido materno
-    if (apcomp2 == 1)
+    // imprimir consonante de apellido materno
+    if (strlen(persona.nom.ap_materno) != 0)
     {
-        consCompuesto(persona.nom.ap_materno);
+        if (apComp2 == 1) // materno
+        {
+            consCompuesto(persona.nom.ap_materno);
+        }
+        else
+        {
+            if (consonante(persona.nom.ap_materno) == 0)
+            {
+                consNombre(persona.nom.ap_materno);
+            }
+        }
+    }
+    else // no tiene apellido materno
+    {
+        printf("%c", 'X');
+    }
+    // imprimir primer consonante del nombre
+    if (nomComp == 1) // nombre
+    {
+        consCompuesto(persona.nom.nombre);
     }
     else
     {
-        do
+        if (consonante(persona.nom.nombre) == 0)
         {
-        } while (consonante(persona.nom.ap_materno) != 1);
-    }
-    // nombre
-    do
-    {
-    } while (consonante(persona.nom.nombre) != 1);
 
+            consNombre(persona.nom.nombre);
+        }
+    }
+
+    // imprimir diferenciador de nacimiento
     if (persona.nacimiento.anio <= 1999)
     {
         printf("%d", 0);
@@ -189,144 +246,6 @@ void print_curp(Tdatos persona)
         printf("%s", "A");
     }
 
+    // imprimir digito verificador
     printf("%d", numAleatorio(0, 9));
-}
-
-/* Desarrollo de funciones auxiliares */
-
-void apeMa(char campo[])
-{
-    dieresis(campo);
-    carctEspecial(campo);
-    if (campo[0] == -92 || campo[0] == -91)
-    {
-        campo[0] = 'X';
-        printf("%c", campo[0]);
-    }
-    else
-    {
-        printf("%c", campo[0]);
-    }
-}
-
-int consonante(char campo[])
-{
-    int len = strlen(campo);
-    for (int i = 1; i < len; i++)
-    {
-        if (campo[i] != 'A' && campo[i] != 'E' && campo[i] != 'I' && campo[i] != 'O' && campo[i] != 'U')
-        {
-            printf("%c", campo[i]);
-            return 1;
-        }
-    }
-    return 0;
-}
-
-int dia_n(int mes, int anio)
-{
-    int diasMes;
-
-    switch (mes)
-    {
-    case 2:
-        if ((anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0))
-        {
-            diasMes = 29;
-        }
-        else
-        {
-            diasMes = 28;
-        }
-        break;
-    case 4:
-    case 6:
-    case 9:
-    case 11:
-        diasMes = 30;
-        break;
-    default:
-        diasMes = 31;
-        break;
-    }
-
-    return validar("Dia de nacimiento DD: ", 1, diasMes);
-}
-
-void cadena(char mnsj[], char destino[])
-{
-    int op;
-    do
-    {
-        printf("%s", mnsj);
-        fflush(stdin);
-        gets(destino);
-        system("CLS");
-        op = alfabetico(destino);
-    } while (op != 1);
-    mayus(destino);
-}
-
-void print_est(int i)
-{
-    for (int j = 0; j < 2; j++)
-    {
-        printf("%c", est[i].abre[j]);
-    }
-}
-
-void enie(char campo[])
-{
-    if (campo[0] == -92 || campo[0] == -91)
-    {
-        campo[0] = 'X';
-        printf("%c", campo[0]);
-    }
-    else
-    {
-        printf("%c", campo[0]);
-    }
-}
-
-void consCompuesto(char cadena[])
-{
-    char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
-    char temp[20];
-    int i = 0;
-    int k = 0;
-    int n = 0;
-    int lugar = 0;
-
-    while (cadena[i] != '\0')
-    {
-        int j = 0;
-        int l = 0;
-        while (cadena[k] != ' ' && cadena[k] != '\0')
-        {
-            temp[j] = cadena[k];
-            j++;
-            k++;
-        }
-        temp[j] = '\0';
-        while (strcmp(temp, contra[l]) == 1)
-        {
-            l++;
-            if (strcmp(temp, contra[l]) == 0)
-            {
-                n = strlen(contra[l]);
-                lugar += n + 1;
-            }
-        }
-        if (cadena[k] == ' ')
-        {
-            k++;
-        }
-
-        i++;
-    }
-
-    if (lugar > 0)
-    {
-        cons2(cadena, lugar + 1);
-    }
 }
