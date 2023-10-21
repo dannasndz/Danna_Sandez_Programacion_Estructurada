@@ -33,7 +33,7 @@ void print_est(int i);
 int consonante(char campo[]);
 void enie(char campo[]);
 void apeMa(char campo[]);
-void consCompuesto(char cadena[]);
+
 
 int main()
 {
@@ -93,33 +93,20 @@ void print_curp(Tdatos persona)
     mayus(persona.nom.ap_paterno);
     mayus(persona.nom.nombre);
     mayus(persona.nom.ap_materno);
-    int apcomp = 0;
-    int apcomp2 = 0;
+
     if (nomCompuesto(persona.nom.ap_paterno) == 1)
     {
-        apcomp = 1;
-
         apeCompuesto(persona.nom.ap_paterno);
     }
     else
     {
         ape(persona.nom.ap_paterno);
     }
-
-    // apellido materno
-    apeMa(persona.nom.ap_materno);
-    if (nomCompuesto(persona.nom.ap_materno) == 1)
-    {
-        apcomp2 = 1;
-        apeCompuesto(persona.nom.ap_materno);
-    }
-    else
-    {
-        ape(persona.nom.ap_materno);
-    }
+    
     // imprime la primer letra del apellido y la siguiente vocal, ya se valida enie aki
-    // ape(persona.nom.ap_paterno);
+    //ape(persona.nom.ap_paterno);
     // imprime la primer letra del apellido materno y valida enie
+    apeMa(persona.nom.ap_materno);
     // enie(persona.nom.ap_materno); hace que imprima dos veces x asi que no creo ponerla
     //  nombre
     if (nomCompuesto(persona.nom.nombre) == 1)
@@ -153,33 +140,17 @@ void print_curp(Tdatos persona)
     {
         printf("%s", "X");
     }
-    // print de consonates
-    if (apcomp == 1)
+    do
     {
-        consCompuesto(persona.nom.ap_paterno);
-    }
-    else
+    } while (consonante(persona.nom.ap_paterno) != 1);
+
+    do
     {
-        do
-        {
-        } while (consonante(persona.nom.ap_paterno) != 1);
-    }
-    // apellido materno
-    if (apcomp2 == 1)
-    {
-        consCompuesto(persona.nom.ap_materno);
-    }
-    else
-    {
-        do
-        {
-        } while (consonante(persona.nom.ap_materno) != 1);
-    }
-    // nombre
+    } while (consonante(persona.nom.ap_materno) != 1);
+
     do
     {
     } while (consonante(persona.nom.nombre) != 1);
-
     if (persona.nacimiento.anio <= 1999)
     {
         printf("%d", 0);
@@ -194,10 +165,10 @@ void print_curp(Tdatos persona)
 
 /* Desarrollo de funciones auxiliares */
 
+
 void apeMa(char campo[])
 {
     dieresis(campo);
-    carctEspecial(campo);
     if (campo[0] == -92 || campo[0] == -91)
     {
         campo[0] = 'X';
@@ -205,6 +176,7 @@ void apeMa(char campo[])
     }
     else
     {
+        carctEspecial(campo);
         printf("%c", campo[0]);
     }
 }
@@ -214,7 +186,7 @@ int consonante(char campo[])
     int len = strlen(campo);
     for (int i = 1; i < len; i++)
     {
-        if (campo[i] != 'A' && campo[i] != 'E' && campo[i] != 'I' && campo[i] != 'O' && campo[i] != 'U')
+        if (campo[i] != 'A' && campo[i] != 'E' && campo[i] != 'I' && campo[i] != 'O' && campo[i] != 'U' )
         {
             printf("%c", campo[i]);
             return 1;
@@ -285,48 +257,5 @@ void enie(char campo[])
     else
     {
         printf("%c", campo[0]);
-    }
-}
-
-void consCompuesto(char cadena[])
-{
-    char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
-    char temp[20];
-    int i = 0;
-    int k = 0;
-    int n = 0;
-    int lugar = 0;
-
-    while (cadena[i] != '\0')
-    {
-        int j = 0;
-        int l = 0;
-        while (cadena[k] != ' ' && cadena[k] != '\0')
-        {
-            temp[j] = cadena[k];
-            j++;
-            k++;
-        }
-        temp[j] = '\0';
-        while (strcmp(temp, contra[l]) == 1)
-        {
-            l++;
-            if (strcmp(temp, contra[l]) == 0)
-            {
-                n = strlen(contra[l]);
-                lugar += n + 1;
-            }
-        }
-        if (cadena[k] == ' ')
-        {
-            k++;
-        }
-
-        i++;
-    }
-
-    if (lugar > 0)
-    {
-        cons2(cadena, lugar + 1);
     }
 }

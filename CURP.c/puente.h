@@ -15,10 +15,24 @@ int alfabetico(char cadena[]);
 void mayus(char cadena[]);
 int estados(void);
 int numAleatorio(int ri, int rf);
-void mariajose(char text[]);
-int ape(char campo[]);
+int dia_n(int mes, int anio);
+void cadena(char mnsj[], char destino[]);
+void mariajose(char text[], char clave[]);
+void print_est(int i);
+int ape(char campo[], char clave[]);
+void apeMa(char campo[], char clave[]);
+void apeCompuesto(char cadena[], char clave[]);
+void apeCompuestoMa(char cadena[], char clave[]);
+void nomCompuesto2(char cadena[], char clave[]);
 void dieresis(char campo[]);
-void carctEspecial(char campo[]);
+void carctEspecial(char campo[], char clave[]);
+int cons2(char campo[], int lugar);
+void enie(char campo[]);
+void consCompuesto(char cadena[]);
+int consonante(char campo[]);
+int consNombre(char campo[]);
+int antisonante(char clave[]);
+void nomClave(char cadena[], char clave[], int lugar);
 
 testd est[] = {
     {"Aguascalientes", "AS"},
@@ -74,12 +88,6 @@ int validar(char mensj[], int ri, int rf)
     return num; // retorna el valor que haya tomado num, entre los rangos dados por el usuario
 }
 
-/*
-    Funcion para validar una cadena unicamente alfabetica, y con espacios sencillos.
-    Parametros: cadena a validar.
-    Valor de retonor: -1 si es incorrecta, 1 si es correcta
-*/
-
 int alfabetico(char cadena[])
 {
     int i = 0;
@@ -92,7 +100,7 @@ int alfabetico(char cadena[])
 
     while (cadena[i] != '\0')
     {
-        if (!((cadena[i] >= 'a' && cadena[i] <= 'z') || (cadena[i] >= 'A' && cadena[i] <= 'Z') || (cadena[i] == ' ' && cadena[i + 1] != ' ') || cadena[i] == '/' || cadena[i] == '-' || cadena[i] == '.' || cadena[i] == -92 || cadena[i] == -91 || (unsigned char)cadena[i] == 142 || (unsigned char)cadena[i] == 132 || (unsigned char)cadena[i] == 137 || (unsigned char)cadena[i] == 211 || (unsigned char)cadena[i] == 139 || (unsigned char)cadena[i] == 216 || (unsigned char)cadena[i] == 148 || (unsigned char)cadena[i] == 153 || (unsigned char)cadena[i] == 154 || (unsigned char)cadena[i] == 129))
+        if (!((cadena[i] >= 'a' && cadena[i] <= 'z') || (cadena[i] >= 'A' && cadena[i] <= 'Z') || (cadena[i] == ' ' && cadena[i + 1] != ' ') || cadena[i] == '/' || cadena[i] == '-' || cadena[i] == '.' || cadena[i] == -92 || cadena[i] == -91 || (unsigned char)cadena[i] == 142 || (unsigned char)cadena[i] == 132 || (unsigned char)cadena[i] == 137 || (unsigned char)cadena[i] == 211 || (unsigned char)cadena[i] == 139 || (unsigned char)cadena[i] == 216 || (unsigned char)cadena[i] == 148 || (unsigned char)cadena[i] == 153 || (unsigned char)cadena[i] == 154 || (unsigned char)cadena[i] == 129 || (unsigned char)cadena[i] == 132 || (unsigned char)cadena[i] == 137 || (unsigned char)cadena[i] == 139 || (unsigned char)cadena[i] == 148 || (unsigned char)cadena[i] == 129))
         {
             printf("ERROR\n");
             return -1;
@@ -127,13 +135,13 @@ void mayus(char cadena[]) // mayusculas
 int estados(void)
 {
     int est;
-    char estados[32][50] = {"AGUASCALIENTES", "BAJA CALIFORNIA", "BAJA CALIFORNIA SUR", "CAMPECHE", "COAHUILA", "COLIMA", "CHIAPAS", "CHIHUAHUA", "DISTRITO DE MEXICO", "DURANGO", "GUANAJUATO", "GUERRERO", "HIDALGO", "JALISCO", "MEXICO", "MICHOACAN", "MORELOS", "NAYARIT", "NUEVO LEON", "OAXACA", "PUEBLA", "QUERETARO", "QUINTANA ROO", "SAN LUIS POTOSI", "SINALOA", "SONORA", "TABASCO ", "TAMAULIPAS", "TLAXCALA", "VERACRUZ", "YUCATAN", "ZACATECAS"};
+    char estados[33][50] = {"AGUASCALIENTES", "BAJA CALIFORNIA", "BAJA CALIFORNIA SUR", "CAMPECHE", "COAHUILA", "COLIMA", "CHIAPAS", "CHIHUAHUA", "DISTRITO DE MEXICO", "DURANGO", "GUANAJUATO", "GUERRERO", "HIDALGO", "JALISCO", "MEXICO", "MICHOACAN", "MORELOS", "NAYARIT", "NUEVO LEON", "OAXACA", "PUEBLA", "QUERETARO", "QUINTANA ROO", "SAN LUIS POTOSI", "SINALOA", "SONORA", "TABASCO ", "TAMAULIPAS", "TLAXCALA", "VERACRUZ", "YUCATAN", "ZACATECAS", "EXTRANJERO"};
     int n = sizeof(estados) / sizeof(estados[0]);
     for (int i = 0; i < n; i++)
     {
         printf("%d- %s\n", i, estados[i]);
     }
-    est = validar("Ingrese una opcion NUMERICA: ", 0, 32);
+    est = validar("Ingrese una opcion NUMERICA: ", 0, 33);
 
     return est;
 }
@@ -143,6 +151,58 @@ int numAleatorio(int ri, int rf)
     int rango = (rf - ri + 1);
 
     return rand() % rango + ri;
+}
+
+void cadena(char mnsj[], char destino[])
+{
+    int op;
+    do
+    {
+        printf("%s", mnsj);
+        fflush(stdin);
+        gets(destino);
+        system("CLS");
+        op = alfabetico(destino);
+    } while (op != 1);
+    mayus(destino);
+}
+
+void print_est(int i)
+{
+    for (int j = 0; j < 2; j++)
+    {
+        printf("%c", est[i].abre[j]);
+    }
+}
+
+int dia_n(int mes, int anio)
+{
+    int diasMes;
+
+    switch (mes)
+    {
+    case 2:
+        if ((anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0))
+        {
+            diasMes = 29;
+        }
+        else
+        {
+            diasMes = 28;
+        }
+        break;
+    case 4:
+    case 6:
+    case 9:
+    case 11:
+        diasMes = 30;
+        break;
+    default:
+        diasMes = 31;
+        break;
+    }
+
+    return validar("Dia de nacimiento DD: ", 1, diasMes);
 }
 
 int nomCompuesto(char cadena[])
@@ -168,7 +228,7 @@ int nomCompuesto(char cadena[])
     return -1;
 }
 
-void mariajose(char text[])
+void mariajose(char text[], char clave[])
 {
     char temp2[20];
     int i = 0;
@@ -246,15 +306,17 @@ void mariajose(char text[])
 
     if (flag == 1)
     {
-        printf("%c", text[0]);
+        // clave[3]=text[0];
+        nomCompuesto2(text, clave);
     }
     else
     {
-        printf("%c", text[lugar]);
+        //clave[3] = text[lugar];
+        nomClave(text, clave, lugar);
     }
 }
 
-void apeCompuesto(char cadena[])
+void apeCompuesto(char cadena[], char clave[])
 {
     char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
     char temp[20];
@@ -280,7 +342,268 @@ void apeCompuesto(char cadena[])
             if (strcmp(temp, contra[l]) == 0)
             {
                 n = strlen(contra[l]);
-                lugar += n+1;
+                lugar += n + 1;
+            }
+        }
+        if (cadena[k] == ' ')
+        {
+            k++;
+        }
+
+        i++;
+    }
+
+    int len = strlen(cadena);
+    if (lugar > 0)
+    {
+        clave[0] = cadena[lugar];
+        for (int i = lugar; i < len; i++)
+        {
+            if (cadena[i] == 'A' || cadena[i] == 'E' || cadena[i] == 'I' || cadena[i] == 'O' || cadena[i] == 'U')
+            {
+                clave[1] = cadena[i];
+                return;
+            }
+        }
+    }
+
+    if (lugar == 0)
+    {
+        // system("PAUSE");
+        if (cadena[0] == -92 || cadena[0] == -91)
+        {
+            cadena[0] = 'X';
+            clave[0] = cadena[0];
+        }
+        else
+        {
+            clave[0] = cadena[0];
+        }
+
+        for (int i = 1; i < len; i++)
+        {
+            if (cadena[i] == 'A' || cadena[i] == 'E' || cadena[i] == 'I' || cadena[i] == 'O' || cadena[i] == 'U')
+            {
+                clave[1] = cadena[i];
+                return;
+            }
+        }
+    }
+}
+
+int ape(char campo[], char clave[])
+{
+    int len = strlen(campo);
+    carctEspecial(campo, clave);
+    dieresis(campo);
+    if (campo[0] == -92 || campo[0] == -91)
+    {
+        campo[0] = 'X';
+        clave[0] = campo[0];
+    }
+    else
+    {
+        clave[0] = campo[0];
+    }
+
+    int i = 1;
+    for (i = 1; i < len; i++)
+    {
+        if (campo[i] == 'A' || campo[i] == 'E' || campo[i] == 'I' || campo[i] == 'O' || campo[i] == 'U')
+        {
+            clave[1] = campo[i];
+            return 1;
+        }
+    }
+    if (campo[i - 1] != '\n')
+    {
+        if (campo[i - 1] != 'A' || campo[i - 1] != 'E' || campo[i - 1] != 'I' || campo[i - 1] != 'O' || campo[i - 1] != 'U')
+        {
+            campo[i - 1] = 'X';
+            clave[1] = campo[i - 1];
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+void apeMa(char campo[], char clave[])
+{
+    dieresis(campo);
+    carctEspecial(campo, clave);
+    if (campo[0] == -92 || campo[0] == -91)
+    {
+        campo[0] = 'X';
+        clave[2] = campo[0];
+    }
+    else
+    {
+        clave[2] = campo[0];
+    }
+}
+
+void enie(char campo[])
+{
+    if (campo[0] == -92 || campo[0] == -91)
+    {
+        campo[0] = 'X';
+    }
+}
+
+void carctEspecial(char campo[], char clave[])
+{
+    int n = strlen(campo);
+    for (int i = 0; i < n; i++)
+    {
+        if ((campo[i] == 47 || campo[i] == 45 || campo[i] == 46))
+        {
+            campo[i] = 'X';
+            printf("ola");
+            clave[i] = campo[i]; /// le agregue esto
+        }
+    }
+}
+
+void dieresis(char campo[])
+{
+    int len = strlen(campo);
+    int i;
+    for (i = 0; i < len; i++)
+    {
+        if ((unsigned char)campo[i] == 142 || (unsigned char)campo[i] == 132)
+        {
+            campo[i] = 'A';
+        }
+        else
+        {
+            if ((unsigned char)campo[i] == 211 || (unsigned char)campo[i] == 137)
+            {
+                campo[i] = 'E';
+            }
+            else
+            {
+                if ((unsigned char)campo[i] == 216 || (unsigned char)campo[i] == 139)
+                {
+                    campo[i] = 'I';
+                }
+                else
+                {
+                    if ((unsigned char)campo[i] == 153 || (unsigned char)campo[i] == 148)
+                    {
+                        campo[i] = 'O';
+                    }
+                    else
+                    {
+                        if ((unsigned char)campo[i] == 154 || (unsigned char)campo[i] == 129)
+                        {
+                            campo[i] = 'U';
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+int cons2(char campo[], int lugar)
+{
+    int len = strlen(campo);
+    for (int i = lugar; i < len; i++)
+    {
+        if (campo[i] != 'A' && campo[i] != 'E' && campo[i] != 'I' && campo[i] != 'O' && campo[i] != 'U')
+        {
+            printf("%c", campo[i]);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int consonante(char campo[])
+{
+    int len = strlen(campo);
+    int i = 1;
+    for (i = 1; i < len; i++)
+    {
+        if (campo[i] != 'A' && campo[i] != 'E' && campo[i] != 'I' && campo[i] != 'O' && campo[i] != 'U')
+        {
+            if (campo[i] == -92 || campo[i] == -91)
+            {
+                campo[i] = 'X';
+                printf("%c", campo[i]);
+                return 1;
+            }
+            else
+            {
+                printf("%c", campo[i]);
+                return 1;
+            }
+        }
+    }
+    if (campo[i - 1] != '\n')
+    {
+        if (campo[i - 1] == 'A' || campo[i - 1] == 'E' || campo[i - 1] == 'I' || campo[i - 1] == 'O' || campo[i - 1] == 'U')
+        {
+            campo[i - 1] = 'X';
+            printf("%c", campo[i - 1]);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int consNombre(char campo[])
+{
+    int len = strlen(campo);
+    int i = 0;
+    for (i = 0; i < len; i++)
+    {
+        if (campo[i] != 'A' && campo[i] != 'E' && campo[i] != 'I' && campo[i] != 'O' && campo[i] != 'U')
+        {
+            printf("%c", campo[i]);
+            return 1;
+        }
+    }
+    if (campo[i - 1] != '\0')
+    {
+        if (campo[i - 1] == 'A' || campo[i - 1] == 'E' || campo[i - 1] == 'I' || campo[i - 1] == 'O' || campo[i - 1] != 'U')
+        {
+            campo[i - 1] = 'X';
+            printf("%c", campo[i - 1]);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void consCompuesto(char cadena[])
+{
+    char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
+    char temp[20];
+    int i = 0;
+    int k = 0;
+    int n = 0;
+    int lugar = 0;
+
+    while (cadena[i] != '\0')
+    {
+        int j = 0;
+        int l = 0;
+        while (cadena[k] != ' ' && cadena[k] != '\0')
+        {
+            temp[j] = cadena[k];
+            j++;
+            k++;
+        }
+        temp[j] = '\0';
+        while (strcmp(temp, contra[l]) == 1)
+        {
+            l++;
+            if (strcmp(temp, contra[l]) == 0)
+            {
+                n = strlen(contra[l]);
+                lugar += n + 1;
             }
         }
         if (cadena[k] == ' ')
@@ -293,94 +616,271 @@ void apeCompuesto(char cadena[])
 
     if (lugar > 0)
     {
-        printf("%c", cadena[lugar]);
-        int len = strlen(cadena);
-        for (int i = lugar; i < len; i++)
+        cons2(cadena, lugar + 1);
+    }
+
+    int len = strlen(cadena);
+    int b1 = 0;
+    int b2 = 0;
+    int m = 0;
+    char jose[4] = "JOSE";
+    char maria[5] = "MARIA";
+
+    do
+    {
+        if (cadena[m] == jose[m])
         {
-            if (cadena[i] == 'A' || cadena[i] == 'E' || cadena[i] == 'I' || cadena[i] == 'O' || cadena[i] == 'U')
+            m++;
+        }
+        else
+        {
+            b1 = 1;
+        }
+    } while (b1 == 0 && m < 4);
+
+    if (b1 == 0)
+    {
+        for (int i = 5; i < len; i++)
+        {
+            if (cadena[i] != 'A' && cadena[i] != 'E' && cadena[i] != 'I' && cadena[i] != 'O' && cadena[i] != 'U')
             {
                 printf("%c", cadena[i]);
                 return;
             }
         }
     }
-}
-
-int ape(char campo[])
-{
-    int len = strlen(campo);
-    dieresis(campo);
-    if (campo[0] == -92 || campo[0] == -91)
+    int h = 0;
+    do
     {
-        campo[0] = 'X';
-        printf("%c", campo[0]);
-    }
-    else
-    {
-        carctEspecial(campo);
-        printf("%c", campo[0]);
-    }
-
-    for (int i = 1; i < len; i++)
-    {
-        if (campo[i] == 'a' || 'e' || 'i' || 'o' || 'u')
+        if (cadena[h] == maria[h])
         {
-            printf("%c", campo[i]);
-            return 1;
-        }
-    }
-
-    return 0;
-}
-
-void carctEspecial(char campo[])
-{
-    for (int i = 0; i < 2; i++)
-    {
-        if (campo[i] == '/' || campo[i] == '-' || campo[i] == '.')
-        {
-            campo[i] = 'X';
-        }
-    }
-}
-
-void dieresis(char campo[])
-{
-    int len = strlen(campo);
-    int i;
-    for (i = 0; i < len; i++)
-    {
-        if ((unsigned char)campo[i] == 142)
-        {
-            campo[i] = 'A';
+            h++;
         }
         else
         {
-            if ((unsigned char)campo[i] == 211)
+            b2 = 1;
+        }
+    } while (b2 == 0 && h < 5);
+
+    if (b2 == 0)
+    {
+        for (int i = 6; i < len; i++)
+        {
+            if (cadena[i] != 'A' && cadena[i] != 'E' && cadena[i] != 'I' && cadena[i] != 'O' && cadena[i] != 'U')
             {
-                campo[i] = 'E';
+                printf("%c", cadena[i]);
+                return;
+            }
+        }
+    }
+
+    if (b1 == 1 || b2 == 1)
+    {
+        int len = strlen(cadena);
+        int i = 1;
+        for (i = 1; i < len; i++)
+        {
+            if (cadena[i] != 'A' && cadena[i] != 'E' && cadena[i] != 'I' && cadena[i] != 'O' && cadena[i] != 'U')
+            {
+                printf("%c", cadena[i]);
+                return;
+            }
+        }
+        if (cadena[i - 1] != '\0')
+        {
+            if (cadena[i - 1] == 'A' || cadena[i - 1] == 'E' || cadena[i - 1] == 'I' || cadena[i - 1] == 'O' || cadena[i - 1] != 'U')
+            {
+                cadena[i - 1] = 'X';
+                printf("%c", cadena[i - 1]);
+                return;
+            }
+        }
+    }
+}
+
+void apeCompuestoMa(char cadena[], char clave[])
+{
+    char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
+    char temp[20];
+    int i = 0;
+    int k = 0;
+    int n = 0;
+    int lugar = 0;
+
+    while (cadena[i] != '\0')
+    {
+        int j = 0;
+        int l = 0;
+        while (cadena[k] != ' ' && cadena[k] != '\0')
+        {
+            temp[j] = cadena[k];
+            j++;
+            k++;
+        }
+        temp[j] = '\0';
+        while (strcmp(temp, contra[l]) == 1)
+        {
+            l++;
+            if (strcmp(temp, contra[l]) == 0)
+            {
+                n = strlen(contra[l]);
+                lugar += n + 1;
+            }
+        }
+        if (cadena[k] == ' ')
+        {
+            k++;
+        }
+
+        i++;
+    }
+
+    if (lugar > 0)
+    {
+        clave[2] = cadena[lugar];
+    }
+    if (lugar == 0)
+    {
+        if (cadena[0] == -92 || cadena[0] == -91)
+        {
+            cadena[0] = 'X';
+            clave[2] = cadena[0];
+        }
+        else
+        {
+            clave[2] = cadena[0];
+        }
+    }
+}
+
+void nomCompuesto2(char cadena[], char clave[])
+{
+    char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
+    char temp[20];
+    int i = 0;
+    int k = 0;
+    int n = 0;
+    int lugar = 0;
+
+    while (cadena[i] != '\0')
+    {
+        int j = 0;
+        int l = 0;
+        while (cadena[k] != ' ' && cadena[k] != '\0')
+        {
+            temp[j] = cadena[k];
+            j++;
+            k++;
+        }
+        temp[j] = '\0';
+        while (strcmp(temp, contra[l]) == 1)
+        {
+            l++;
+            if (strcmp(temp, contra[l]) == 0)
+            {
+                n = strlen(contra[l]);
+                lugar += n + 1;
+            }
+        }
+        if (cadena[k] == ' ')
+        {
+            k++;
+        }
+
+        i++;
+    }
+
+    if (lugar > 0)
+    {
+        clave[3] = cadena[lugar];
+    }
+    if (lugar == 0)
+    {
+        if (cadena[0] == -92 || cadena[0] == -91)
+        {
+            cadena[0] = 'X';
+            clave[3] = cadena[0];
+        }
+        else
+        {
+            clave[3] = cadena[0];
+        }
+    }
+}
+
+int antisonante(char clave[])
+{
+    char antisonante[81][5] = {"BACA", "BAKA", "BUEI", "BUEY", "CACA", "CACO", "CAGA", "CAGO", "CAKA", "CAKO", "COGE", "COGI", "COJA", "COJE", "COJI", "COJO", "COLA", "CULO", "FALO", "FETO", "GETA", "GUEI", "GUEY", "JETA", "JOTO", "KACA", "KACO", "KAGA", "KAGO", "KAKA", "KAKO", "KOGE", "KOGI", "KOJA", "KOJE", "KOJI", "KOJO", "KOLA", "KULO", "LILO", "LOCA", "LOCO", "LOKA", "LOKO", "MAME", "MAMO", "MEAR", "MEAS", "MEON", "MIAR", "MION", "MOCO", "MOKO", "MULA", "MULO", "NACA", "NACO", "PEDA", "PEDO", "PENE", "PIPI", "PITO", "POPO", "PUTA", "PUTO", "QULO", "RATA", "ROBA", "ROBE", "ROBO", "RUIN", "SENO", "TETA", "VACA", "VAGA", "VAGO", "VAKA", "VUEI", "VUEY", "WUEI", "WUEY"};
+
+    int i = 0;
+    int j = 0;
+    int letra = 0;
+    int encontrado;
+    do
+    {
+        encontrado = 0;
+        do
+        {
+            if (clave[j] == antisonante[i][j])
+            {
+                letra++;
+                j++;
             }
             else
             {
-                if ((unsigned char)campo[i] == 216)
-                {
-                    campo[i] = 'I';
-                }
-                else
-                {
-                    if ((unsigned char)campo[i] == 153)
-                    {
-                        campo[i] = 'O';
-                    }
-                    else
-                    {
-                        if ((unsigned char)campo[i] == 154)
-                        {
-                            campo[i] = 'U';
-                        }
-                    }
-                }
+                encontrado = 1;
+            }
+
+        } while (encontrado == 0 && j < 4);
+
+        if (letra == 4)
+        {
+            clave[1] = 'X';
+            return 1;
+        }
+
+        i++;
+    } while (encontrado == 1 && i < 81);
+}
+
+void nomClave(char cadena[], char clave[], int lugar)
+{
+    char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
+    char temp[20];
+    int i = lugar+2;
+    int k = 0;
+    int n = 0;
+    int letra = 0;
+    while (cadena[i] != '\0')
+    {
+        int j = 0;
+        int l = 0;
+        while (cadena[k] != ' ' && cadena[k] != '\0')
+        {
+            temp[j] = cadena[k];
+            j++;
+            k++;
+        }
+        temp[j] = '\0';
+        while (strcmp(temp, contra[l]) == 1)
+        {
+            l++;
+            if (strcmp(temp, contra[l]) == 0)
+            {
+                n = strlen(contra[l]);
+                letra += n + 1;
             }
         }
+        if (cadena[k] == ' ')
+        {
+            k++;
+        }
+
+        i++;
+    }
+    
+    if (letra > 0)
+    {
+        clave[3] = cadena[letra];
     }
 }
