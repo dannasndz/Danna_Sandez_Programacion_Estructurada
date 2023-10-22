@@ -327,7 +327,7 @@ void mariajose(char text[], char clave[])
     }
     else
     {
-        if (otronom == 1)
+        if (otronom == 1 && lugar > 0)
         {
             if (nomCompuesto(text) == 1)
             {
@@ -574,7 +574,7 @@ int consonante(char campo[])
     {
         if (campo[i] != 'A' && campo[i] != 'E' && campo[i] != 'I' && campo[i] != 'O' && campo[i] != 'U')
         {
-            if (campo[i] == -92 || campo[i] == -91 || campo[i] == 47 || campo[i] == 45 || campo[i] == 39 ||(unsigned char) campo[i] == 239)
+            if (campo[i] == -92 || campo[i] == -91 || campo[i] == 47 || campo[i] == 45 || campo[i] == 39 || (unsigned char)campo[i] == 239)
             {
                 campo[i] = 'X';
                 printf("%c", campo[i]);
@@ -898,7 +898,7 @@ int antisonante(char clave[])
 
 void nomClave(char cadena[], char clave[], int lugar)
 {
-    char contra[23][4] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
+    char contra[19][5] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
     char temp[20];
     int i = 0;
     int k = 0;
@@ -919,7 +919,7 @@ void nomClave(char cadena[], char clave[], int lugar)
         {
             if (strcmp(temp, contra[l]) == 0)
             {
-                n += strlen(temp);
+                n += strlen(temp) + 1;
             }
         }
         k++;

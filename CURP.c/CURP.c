@@ -175,7 +175,6 @@ void print_curp(Tdatos persona)
     if (nomCompuesto(persona.nom.nombre) == 1) // tiene nombre compuesto
     {
         nomComp = 1;
-        // carctEspecial(persona.nom.nombre, clave); AQUI KITE QUE VALIDE LOS CRT ESPECIALES
         enie(persona.nom.nombre);
         dieresis(persona.nom.nombre);
         mariajose(persona.nom.nombre, clave);
