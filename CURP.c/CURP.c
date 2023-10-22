@@ -1,3 +1,8 @@
+/*
+    Danna Sandez Islas 373080
+    Actividad: CURP
+*/
+
 #include "puente.h"
 
 typedef struct _nombre
@@ -60,13 +65,31 @@ Tdatos data_curp(void)
     Tdatos humano;
 
     int op = 0;
+    int op2 = 0;
     // nombre
-    cadena("Apellido paterno: ", humano.nom.ap_paterno);
-    op = validar("Tienes apellido materno?\n1-Si\n2-No\nIngresa una opcion: ", 1, 2);
+    op = validar("Tienes apellido paterno?\n1-Si\n2-No\nIngresa una opcion: ", 1, 2);
     if (op == 1)
+    {
+        cadena("Apellido paterno: ", humano.nom.ap_paterno);
+    }
+    else
+    {
+        noAP(humano.nom.ap_paterno);
+    }
+
+    system("CLS");
+
+    op2 = validar("Tienes apellido materno?\n1-Si\n2-No\nIngresa una opcion: ", 1, 2);
+    if (op2 == 1)
     {
         cadena("Apellido materno: ", humano.nom.ap_materno);
     }
+    else
+    {
+        noAP(humano.nom.ap_materno);
+    }
+
+    system("CLS");
 
     cadena("Nombre: ", humano.nom.nombre);
 
@@ -99,25 +122,33 @@ void print_curp(Tdatos persona)
     int apComp1 = 0;
     int apComp2 = 0;
     int nomComp = 0;
-    char clave[10];
+    char clave[4];
     // hace mayusuclas los nombres
     mayus(persona.nom.ap_paterno);
     mayus(persona.nom.nombre);
     mayus(persona.nom.ap_materno);
 
     // saber si tiene apellido compuesto
-    if (nomCompuesto(persona.nom.ap_paterno) == 1) // tiene ap compuesto
+    if (strlen(persona.nom.ap_paterno) != 0)
     {
-        apComp1 = 1;
-        carctEspecial(persona.nom.ap_paterno, clave);
-        enie(persona.nom.ap_paterno);
-        dieresis(persona.nom.ap_paterno);
-        apeCompuesto(persona.nom.ap_paterno, clave);
+        if (nomCompuesto(persona.nom.ap_paterno) == 1) // tiene ap compuesto
+        {
+            apComp1 = 1;
+            carctEspecial(persona.nom.ap_paterno, clave);
+            enie(persona.nom.ap_paterno);
+            dieresis(persona.nom.ap_paterno);
+            apeCompuesto(persona.nom.ap_paterno, clave);
+        }
+        else // no tiene apellido compuesto
+        {
+            // carctEspecial(persona.nom.ap_paterno, clave);
+            ape(persona.nom.ap_paterno, clave);
+        }
     }
-    else // no tiene apellido compuesto
+    else
     {
-        carctEspecial(persona.nom.ap_paterno, clave);
-        ape(persona.nom.ap_paterno, clave);
+        clave[0] = 'X';
+        clave[1] = 'X';
     }
 
     // imprimir letra inicial del segundo apellido
@@ -194,14 +225,22 @@ void print_curp(Tdatos persona)
     {
         printf("%s", "NE");
     }
-    // imprimir consonantes del apellido1, apellido 2 y nombre
-    if (apComp1 == 1) // primer apellido
-    {                 // el appelido es compuesto
-        consCompuesto(persona.nom.ap_paterno);
+    // imprimir consonantes del apellido paterno
+
+    if (strlen(persona.nom.ap_paterno) != 0)
+    {
+        if (apComp1 == 1) // primer apellido
+        {                 // el appelido es compuesto
+            consCompuesto(persona.nom.ap_paterno);
+        }
+        else
+        {
+            consonante(persona.nom.ap_paterno);
+        }
     }
     else
     {
-        consonante(persona.nom.ap_paterno);
+        printf("%c", 'X');
     }
     // imprimir consonante de apellido materno
     if (strlen(persona.nom.ap_materno) != 0)

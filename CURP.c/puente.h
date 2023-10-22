@@ -33,6 +33,7 @@ int consonante(char campo[]);
 int consNombre(char campo[]);
 int antisonante(char clave[]);
 void nomClave(char cadena[], char clave[], int lugar);
+void noAP(char destino[]);
 
 testd est[] = {
     {"Aguascalientes", "AS"},
@@ -100,7 +101,7 @@ int alfabetico(char cadena[])
 
     while (cadena[i] != '\0')
     {
-        if (!((cadena[i] >= 'a' && cadena[i] <= 'z') || (cadena[i] >= 'A' && cadena[i] <= 'Z') || (cadena[i] == ' ' && cadena[i + 1] != ' ') || cadena[i] == '/' || cadena[i] == '-' || cadena[i] == '.' || cadena[i] == -92 || cadena[i] == -91 || (unsigned char)cadena[i] == 142 || (unsigned char)cadena[i] == 132 || (unsigned char)cadena[i] == 137 || (unsigned char)cadena[i] == 211 || (unsigned char)cadena[i] == 139 || (unsigned char)cadena[i] == 216 || (unsigned char)cadena[i] == 148 || (unsigned char)cadena[i] == 153 || (unsigned char)cadena[i] == 154 || (unsigned char)cadena[i] == 129 || (unsigned char)cadena[i] == 132 || (unsigned char)cadena[i] == 137 || (unsigned char)cadena[i] == 139 || (unsigned char)cadena[i] == 148 || (unsigned char)cadena[i] == 129))
+        if (!((cadena[i] >= 'a' && cadena[i] <= 'z') || (cadena[i] >= 'A' && cadena[i] <= 'Z') || (cadena[i] == ' ' && cadena[i + 1] != ' ') || cadena[i] == '/' || cadena[i] == '-' || cadena[i] == '.' || cadena[i] == -92 || cadena[i] == -91 || (unsigned char)cadena[i] == 142 || (unsigned char)cadena[i] == 132 || (unsigned char)cadena[i] == 137 || (unsigned char)cadena[i] == 211 || (unsigned char)cadena[i] == 139 || (unsigned char)cadena[i] == 216 || (unsigned char)cadena[i] == 148 || (unsigned char)cadena[i] == 153 || (unsigned char)cadena[i] == 154 || (unsigned char)cadena[i] == 129 || (unsigned char)cadena[i] == 132 || (unsigned char)cadena[i] == 137 || (unsigned char)cadena[i] == 139 || (unsigned char)cadena[i] == 148 || (unsigned char)cadena[i] == 129 || (unsigned char)cadena[i] == 160 || (unsigned char)cadena[i] == 181 || (unsigned char)cadena[i] == 130 || (unsigned char)cadena[i] == 144 || (unsigned char)cadena[i] == 161 || (unsigned char)cadena[i] == 214 || (unsigned char)cadena[i] == 162 || (unsigned char)cadena[i] == 224 || (unsigned char)cadena[i] == 163 || (unsigned char)cadena[i] == 233 || cadena[i] == 39 || (unsigned char)cadena[i] == 239))
         {
             printf("ERROR\n");
             return -1;
@@ -165,6 +166,11 @@ void cadena(char mnsj[], char destino[])
         op = alfabetico(destino);
     } while (op != 1);
     mayus(destino);
+}
+
+void noAP(char destino[])
+{
+    destino[0] = '\0';
 }
 
 void print_est(int i)
@@ -237,16 +243,19 @@ void mariajose(char text[], char clave[])
     int lugar = 0;
     int flag2 = 0;
     int nombre = 0;
+    int otronom;
 
     while (text[i] != '\0' && flag2 == 0)
     {
         int j = 0;
         nombre = 0;
+        otronom = 0;
         while (text[k] != ' ' && text[k] != '\0')
         {
             temp2[j] = text[k];
             j++;
             k++;
+            otronom = 1;
         }
         temp2[j] = '\0';
 
@@ -314,20 +323,22 @@ void mariajose(char text[], char clave[])
 
     if (flag == 1)
     {
-        // clave[3]=text[0];
         nomCompuesto2(text, clave);
     }
     else
     {
-        if (nombre == 1)
-        {
-            clave[3] = text[lugar];
-        }
-        else
+        if (otronom == 1)
         {
             if (nomCompuesto(text) == 1)
             {
                 nomClave(text, clave, lugar);
+            }
+        }
+        else
+        {
+            if (nombre == 1)
+            {
+                clave[3] = text[lugar];
             }
         }
     }
@@ -335,7 +346,7 @@ void mariajose(char text[], char clave[])
 
 void apeCompuesto(char cadena[], char clave[])
 {
-    char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
+    char contra[23][4] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
     char temp[20];
     int i = 0;
     int k = 0;
@@ -353,14 +364,14 @@ void apeCompuesto(char cadena[], char clave[])
             k++;
         }
         temp[j] = '\0';
-        while (strcmp(temp, contra[l]) == 1)
+        while (l < 19)
         {
-            l++;
             if (strcmp(temp, contra[l]) == 0)
             {
                 n = strlen(contra[l]);
                 lugar += n + 1;
             }
+            l++;
         }
         if (cadena[k] == ' ')
         {
@@ -411,7 +422,8 @@ void apeCompuesto(char cadena[], char clave[])
 int ape(char campo[], char clave[])
 {
     int len = strlen(campo);
-    carctEspecial(campo, clave);
+    mayus(campo);
+    // carctEspecial(campo, clave);
     dieresis(campo);
     if (campo[0] == -92 || campo[0] == -91)
     {
@@ -431,10 +443,18 @@ int ape(char campo[], char clave[])
             clave[1] = campo[i];
             return 1;
         }
+        else
+        {
+            if (campo[i] == 39 || (unsigned char)campo[i] == 239 || campo[i] == 47 || campo[i] == 45)
+            {
+                clave[1] = 'X';
+                return 1;
+            }
+        }
     }
-    
-    clave[1] = 'X';
-    /*if (campo[i - 1] != '\0')
+
+    // clave[1] = 'X';
+    if (campo[i - 1] != '\0')
     {
         if (campo[i - 1] != 'A' || campo[i - 1] != 'E' || campo[i - 1] != 'I' || campo[i - 1] != 'O' || campo[i - 1] != 'U')
         {
@@ -442,7 +462,7 @@ int ape(char campo[], char clave[])
             clave[1] = campo[i - 1];
             return 1;
         }
-    }*/
+    }
     return 1;
 }
 
@@ -481,9 +501,9 @@ void carctEspecial(char cadena[], char clave[])
          }
      }*/
     int i = 0;
-    for (i = 0; cadena[i] != '\0'; i++)
+    for (i = 0; i < 2; i++)
     {
-        if (cadena[i] == '/' || cadena[i] == '-')
+        if (cadena[i] == '/' || cadena[i] == '-' || cadena[i] == 39 || (unsigned char)cadena[i] == 239)
         {
             cadena[i] = 'X';
             clave[i] = cadena[i];
@@ -497,31 +517,31 @@ void dieresis(char campo[])
     int i;
     for (i = 0; i < len; i++)
     {
-        if ((unsigned char)campo[i] == 142 || (unsigned char)campo[i] == 132)
+        if ((unsigned char)campo[i] == 142 || (unsigned char)campo[i] == 132 || (unsigned char)campo[i] == 160 || (unsigned char)campo[i] == 181)
         {
             campo[i] = 'A';
         }
         else
         {
-            if ((unsigned char)campo[i] == 211 || (unsigned char)campo[i] == 137)
+            if ((unsigned char)campo[i] == 211 || (unsigned char)campo[i] == 137 || (unsigned char)campo[i] == 130 || (unsigned char)campo[i] == 144)
             {
                 campo[i] = 'E';
             }
             else
             {
-                if ((unsigned char)campo[i] == 216 || (unsigned char)campo[i] == 139)
+                if ((unsigned char)campo[i] == 216 || (unsigned char)campo[i] == 139 || (unsigned char)campo[i] == 161 || (unsigned char)campo[i] == 214)
                 {
                     campo[i] = 'I';
                 }
                 else
                 {
-                    if ((unsigned char)campo[i] == 153 || (unsigned char)campo[i] == 148)
+                    if ((unsigned char)campo[i] == 153 || (unsigned char)campo[i] == 148 || (unsigned char)campo[i] == 162 || (unsigned char)campo[i] == 224)
                     {
                         campo[i] = 'O';
                     }
                     else
                     {
-                        if ((unsigned char)campo[i] == 154 || (unsigned char)campo[i] == 129)
+                        if ((unsigned char)campo[i] == 154 || (unsigned char)campo[i] == 129 || (unsigned char)campo[i] == 163 || (unsigned char)campo[i] == 233)
                         {
                             campo[i] = 'U';
                         }
@@ -554,7 +574,7 @@ int consonante(char campo[])
     {
         if (campo[i] != 'A' && campo[i] != 'E' && campo[i] != 'I' && campo[i] != 'O' && campo[i] != 'U')
         {
-            if (campo[i] == -92 || campo[i] == -91)
+            if (campo[i] == -92 || campo[i] == -91 || campo[i] == 47 || campo[i] == 45 || campo[i] == 39 ||(unsigned char) campo[i] == 239)
             {
                 campo[i] = 'X';
                 printf("%c", campo[i]);
@@ -605,7 +625,7 @@ int consNombre(char campo[])
 
 void consCompuesto(char cadena[])
 {
-    char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
+    char contra[27][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y", "MA.", "MA", "J", "J."};
     char temp[20];
     int i = 0;
     int k = 0;
@@ -623,15 +643,21 @@ void consCompuesto(char cadena[])
             k++;
         }
         temp[j] = '\0';
-        while (strcmp(temp, contra[l]) == 1)
+        while (l < 23)
         {
-            l++;
             if (strcmp(temp, contra[l]) == 0)
             {
                 n = strlen(contra[l]);
                 lugar += n + 1;
             }
+            l++;
         }
+        if (cadena[k] == '.')
+        {
+            k++;
+            k++;
+        }
+
         if (cadena[k] == ' ')
         {
             k++;
@@ -781,7 +807,7 @@ void apeCompuestoMa(char cadena[], char clave[])
 
 void nomCompuesto2(char cadena[], char clave[])
 {
-    char contra[23][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
+    char contra[23][4] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
     char temp[20];
     int i = 0;
     int k = 0;
@@ -799,14 +825,14 @@ void nomCompuesto2(char cadena[], char clave[])
             k++;
         }
         temp[j] = '\0';
-        while (strcmp(temp, contra[l]) == 1)
+        while (l < 19)
         {
-            l++;
             if (strcmp(temp, contra[l]) == 0)
             {
                 n = strlen(contra[l]);
                 lugar += n + 1;
             }
+            l++;
         }
         if (cadena[k] == ' ')
         {
