@@ -68,6 +68,7 @@ Tdatos data_curp(void)
     int op2 = 0;
     // nombre
     op = validar("Tienes apellido paterno?\n1-Si\n2-No\nIngresa una opcion: ", 1, 2);
+    system("CLS");
     if (op == 1)
     {
         cadena("Apellido paterno: ", humano.nom.ap_paterno);
@@ -80,6 +81,7 @@ Tdatos data_curp(void)
     system("CLS");
 
     op2 = validar("Tienes apellido materno?\n1-Si\n2-No\nIngresa una opcion: ", 1, 2);
+    system("CLS");
     if (op2 == 1)
     {
         cadena("Apellido materno: ", humano.nom.ap_materno);
@@ -95,6 +97,7 @@ Tdatos data_curp(void)
 
     // fecha de nacimiento
     humano.nacimiento.anio = validar("Año de nacimiento AAAA: ", 1893, 2023);
+    system("CLS");
     if (humano.nacimiento.anio == 2023)
     {
         humano.nacimiento.anio = validar("Mes de nacimiento MM: ", 1, 10);

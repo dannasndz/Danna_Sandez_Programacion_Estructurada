@@ -346,6 +346,7 @@ void mariajose(char text[], char clave[])
 
 void apeCompuesto(char cadena[], char clave[])
 {
+    mayus(cadena);
     char contra[23][4] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y"};
     char temp[20];
     int i = 0;
@@ -397,7 +398,6 @@ void apeCompuesto(char cadena[], char clave[])
 
     if (lugar == 0)
     {
-        // system("PAUSE");
         if (cadena[0] == -92 || cadena[0] == -91)
         {
             cadena[0] = 'X';
@@ -625,7 +625,8 @@ int consNombre(char campo[])
 
 void consCompuesto(char cadena[])
 {
-    char contra[27][3] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y", "MA.", "MA", "J", "J."};
+    mayus(cadena);
+    char contra[23][4] = {"DA", "DAS", "DE", "DEL", "DER", "DI", "DIE", "DD", "EL", "LA", "LOS", "LAS", "LE", "LES", "MAC", "MC", "VAN", "VON", "Y", "MA.", "MA", "J", "J."};
     char temp[20];
     int i = 0;
     int k = 0;
@@ -652,11 +653,11 @@ void consCompuesto(char cadena[])
             }
             l++;
         }
-        if (cadena[k] == '.')
+        /*if (cadena[k] == '.')
         {
             k++;
             k++;
-        }
+        }*/
 
         if (cadena[k] == ' ')
         {
@@ -669,6 +670,7 @@ void consCompuesto(char cadena[])
     if (lugar > 0)
     {
         cons2(cadena, lugar + 1);
+        return;
     }
 
     int len = strlen(cadena);
@@ -729,7 +731,7 @@ void consCompuesto(char cadena[])
     if (b1 == 1 || b2 == 1)
     {
         int len = strlen(cadena);
-        int i = 1;
+        int i;
         for (i = 1; i < len; i++)
         {
             if (cadena[i] != 'A' && cadena[i] != 'E' && cadena[i] != 'I' && cadena[i] != 'O' && cadena[i] != 'U')
