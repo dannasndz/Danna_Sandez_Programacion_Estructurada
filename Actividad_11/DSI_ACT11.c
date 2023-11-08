@@ -113,7 +113,7 @@ int main()
                 encontrado = busq_binaria(registro, 300000, 399999, mat);
                 if (encontrado != -1)
                 {
-                    printf("MATRICULA: %d\nNOMBRE: %s\nAPELLIDO PATERNO: %s\nAPELLIDO MATERNO: %s\nFECHA DE NACIMIENTO: %02d/%02d/%d\nEDAD: %d\nSEXO: %s\nLUGAR DE NACIMIENTO: %s\nCURP: %s", registro[encontrado].matricula, registro[encontrado].nom.nombre, registro[encontrado].nom.ap_paterno, registro[encontrado].nom.ap_materno, registro[encontrado].nacimiento.dia, registro[encontrado].nacimiento.mes, registro[encontrado].nacimiento.anio, registro[encontrado].edad, (registro[encontrado].sexo == 1 ? "M" : "H"), registro[encontrado].estado, registro[encontrado].curp);
+                    printf("MATRICULA: %d\nNOMBRE: %s\nAPELLIDO PATERNO: %s\nAPELLIDO MATERNO: %s\nFECHA DE NACIMIENTO: %02d/%02d/%d\nEDAD: %d\nSEXO: %s\nLUGAR DE NACIMIENTO: %s\nCURP: %s\n", registro[encontrado].matricula, registro[encontrado].nom.nombre, registro[encontrado].nom.ap_paterno, registro[encontrado].nom.ap_materno, registro[encontrado].nacimiento.dia, registro[encontrado].nacimiento.mes, registro[encontrado].nacimiento.anio, registro[encontrado].edad, (registro[encontrado].sexo == 1 ? "M" : "H"), registro[encontrado].estado, registro[encontrado].curp);
                     printf("\n\n1nDeseas eliminar al usuario %d?", registro[encontrado].matricula);
                     op2 = validar("\n1-Si\n2-No\n", 1, 2);
                     system("CLS");
@@ -133,7 +133,7 @@ int main()
                 encontrado = busq_seq(registro, i, mat);
                 if (encontrado != -1) // si se encuentra la matricula en los registros
                 {
-                    printf("MATRICULA: %d\nNOMBRE: %s\nAPELLIDO PATERNO: %s\nAPELLIDO MATERNO: %s\nFECHA DE NACIMIENTO: %02d/%02d/%d\nEDAD: %d\nSEXO: %s\nLUGAR DE NACIMIENTO: %s\nCURP: %s", registro[encontrado].matricula, registro[encontrado].nom.nombre, registro[encontrado].nom.ap_paterno, registro[encontrado].nom.ap_materno, registro[encontrado].nacimiento.dia, registro[encontrado].nacimiento.mes, registro[encontrado].nacimiento.anio, registro[encontrado].edad, (registro[encontrado].sexo == 1 ? "M" : "H"), registro[encontrado].estado, registro[encontrado].curp);
+                    printf("MATRICULA: %d\nNOMBRE: %s\nAPELLIDO PATERNO: %s\nAPELLIDO MATERNO: %s\nFECHA DE NACIMIENTO: %02d/%02d/%d\nEDAD: %d\nSEXO: %s\nLUGAR DE NACIMIENTO: %s\nCURP: %s\n", registro[encontrado].matricula, registro[encontrado].nom.nombre, registro[encontrado].nom.ap_paterno, registro[encontrado].nom.ap_materno, registro[encontrado].nacimiento.dia, registro[encontrado].nacimiento.mes, registro[encontrado].nacimiento.anio, registro[encontrado].edad, (registro[encontrado].sexo == 1 ? "M" : "H"), registro[encontrado].estado, registro[encontrado].curp);
                     printf("\n\n1nDeseas eliminar al usuario %d?", registro[encontrado].matricula);
                     op2 = validar("\n1-Si\n2-No\n", 1, 2);
                     system("CLS");
@@ -183,7 +183,7 @@ int main()
                     }
                     else // alumno activo, SI hay matricula
                     {
-                        printf("MATRICULA: %d\nNOMBRE: %s\nAPELLIDO PATERNO: %s\nAPELLIDO MATERNO: %s\nFECHA DE NACIMIENTO: %02d/%02d/%d\nEDAD: %d\nSEXO: %s\nLUGAR DE NACIMIENTO: %s\nCURP: %s", registro[encontrado].matricula, registro[encontrado].nom.nombre, registro[encontrado].nom.ap_paterno, registro[encontrado].nom.ap_materno, registro[encontrado].nacimiento.dia, registro[encontrado].nacimiento.mes, registro[encontrado].nacimiento.anio, registro[encontrado].edad, (registro[encontrado].sexo == 1 ? "M" : "H"), registro[encontrado].estado, registro[encontrado].curp);
+                        printf("MATRICULA: %d\nNOMBRE: %s\nAPELLIDO PATERNO: %s\nAPELLIDO MATERNO: %s\nFECHA DE NACIMIENTO: %02d/%02d/%d\nEDAD: %d\nSEXO: %s\nLUGAR DE NACIMIENTO: %s\nCURP: %s\n", registro[encontrado].matricula, registro[encontrado].nom.nombre, registro[encontrado].nom.ap_paterno, registro[encontrado].nom.ap_materno, registro[encontrado].nacimiento.dia, registro[encontrado].nacimiento.mes, registro[encontrado].nacimiento.anio, registro[encontrado].edad, (registro[encontrado].sexo == 1 ? "M" : "H"), registro[encontrado].estado, registro[encontrado].curp);
                     }
                 }
                 else // no se encuentra la matricula
