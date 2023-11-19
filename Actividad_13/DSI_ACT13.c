@@ -24,7 +24,7 @@ int mnsj(void);
 Tdatos gen_per(void);
 void buscar(Tdatos registro[], int i, int flag);
 void eliminar(Tdatos registro[], int i, int flag, char nom_arch[20]);
-void editar(Tdatos registro[], int i, int flag);
+void editar(Tdatos registro[], int i, int flag, char nom_bin[]);
 void cambiar(int op, Tdatos registro[], int i, int flag);
 
 int busq_binaria(Tdatos registro[], int rf, int mat);
@@ -38,8 +38,13 @@ int ordOpt(Tdatos registro[], int n);
 
 void gen_nom_arch(char nom_arch[]);
 void gen_arch(char nomArchivo[], Tdatos vect[], int n);
-void imprimir(Tdatos vect[], int n);
+void imprimir(Tdatos vect[], int n, int status);
 int carg_arch(char nomArchivo[], Tdatos registro[], int *n);
+void mostrar_arch(Tdatos vect[], int n, char nom_arch[]);
+
+int gen_arch_bin(Tdatos registro[], int n, char nom_bin[]);
+void respaldo(char nom[]);
+int cargar_bin(Tdatos registro[], int *i, int max, char nom[]);
 void act_arch(Tdatos registro[], int i, char nom_arch[]);
 
 #define N 5000
@@ -49,8 +54,8 @@ int main()
 {
     Tdatos registro[N], empleado;
     int op;
-    int i = 0, ord = 0;
-    char nom_arch[20];
+    int i = 0, ord = 0, carg = 0;
+    char nom_arch[20], nom_bin[20];
     srand(time(NULL));
     do
     {
@@ -79,10 +84,10 @@ int main()
             ord = 0;
             break;
         case 2: /* editar el registro de empleados  */
-            editar(registro, i, ord);
+            editar(registro, i, ord, nom_bin);
             break;
         case 3: /* eliminar empleado del registro */
-            eliminar(registro, i, ord, nom_arch);
+            eliminar(registro, i, ord, nom_bin);
             break;
         case 4: /* buscar empleado */
             buscar(registro, i, ord);
@@ -96,10 +101,13 @@ int main()
             {
                 ord = ordOpt(registro, i);
                 printf("Ordenado\n");
+                system("PAUSE");
+                system("CLS");
+                act_arch(registro, i, nom_bin);
             }
             break;
         case 6: /* imprimir registros  */
-            imprimir(registro, i);
+            imprimir(registro, i, 1);
             break;
         case 7: /* generar archivo de texto */
             gen_nom_arch(nom_arch);
@@ -107,13 +115,26 @@ int main()
             printf("Tarea realizada exitosamente!\n");
             break;
         case 8: /* mostrar archivo de texto */
-
+            mostrar_arch(registro, i, nom_arch);
             break;
         case 9: /* crear archivo binario */
+            gen_nom_arch(nom_bin);
+            gen_arch_bin(registro, i, nom_bin);
+            respaldo(nom_bin);
+            printf("Tarea realizada exitosamente!\n");
             break;
         case 10: /* cargar archivo binario */
+            if (carg)
+            {
+                printf("El archivo ya se encuentra cargado\n");
+            }
+            else
+            {
+                carg = cargar_bin(registro, &i, N, nom_bin);
+            }
             break;
         case 11: /*mostrar borrados */
+            imprimir(registro, i, 0);
             break;
         }
         system("PAUSE");
@@ -211,7 +232,7 @@ void eliminar(Tdatos registro[], int i, int flag, char nom_arch[20])
     }
 }
 
-void editar(Tdatos registro[], int i, int flag)
+void editar(Tdatos registro[], int i, int flag, char nom_bin[])
 {
     int mat, op, op2;
     mat = validar("Ingrese la matricula a editar: ", 300000, 399999);
@@ -227,6 +248,7 @@ void editar(Tdatos registro[], int i, int flag)
             cambiar(op2, registro, op, flag);
             system("CLS");
         } while (op2 != 0);
+        act_arch(registro, i, nom_bin);
     }
     else
     {
@@ -476,10 +498,7 @@ void gen_arch(char nomArchivo[], Tdatos vect[], int n)
             if (vect[i].status == 1)
             {
                 fprintf(fa, "%4d.-  %6ld      %-10s      %-10s      %-10s          %2d      %-7s", cont, vect[i].key, vect[i].nom, vect[i].ap_pat, vect[i].ap_mat, vect[i].edad, vect[i].sexo);
-                if (i < n - 1)
-                {
-                    fprintf(fa, "\n");
-                }
+                fprintf(fa, "\n");
                 cont++;
             }
         }
@@ -491,7 +510,7 @@ void gen_arch(char nomArchivo[], Tdatos vect[], int n)
     fclose(fa);
 }
 
-void imprimir(Tdatos vect[], int n)
+void imprimir(Tdatos vect[], int n, int status)
 {
     int activos, i;
 
@@ -500,11 +519,123 @@ void imprimir(Tdatos vect[], int n)
     printf("------------------------------------------------------------------------------------------\n");
     for (i = 0, activos = 0; i < n; i++)
     {
-        if (vect[i].status == 1)
+        if (vect[i].status == status)
         {
             printf("%4d.-  %6ld      %-10s      %-10s      %-10s          %2d      %-7s\n", activos + 1, vect[i].key, vect[i].nom, vect[i].ap_pat, vect[i].ap_mat, vect[i].edad, vect[i].sexo);
             activos++;
         }
+    }
+}
+
+void mostrar_arch(Tdatos vect[], int n, char nom_arch[])
+{
+    char temp[20];
+    int cont = 0;
+    gen_nom_arch(temp);
+    strcat(temp, "_activos.txt");
+    if (strcmp(temp, nom_arch))
+    {
+        printf("------------------------------------------------------------------------------------------\n");
+        printf("  No  | MATRICULA | NOMBRE        | APELLIDO P.  |  APELLIDO MAT.     | EDAD  | SEXO \n");
+        printf("------------------------------------------------------------------------------------------\n");
+        for (int i = 0; i < n; i++)
+        {
+            if (vect[i].status == 1)
+            {
+                printf("%4d.-  %6ld      %-10s      %-10s      %-10s          %2d      %-7s", cont, vect[i].key, vect[i].nom, vect[i].ap_pat, vect[i].ap_mat, vect[i].edad, vect[i].sexo);
+                printf("\n");
+
+                cont++;
+            }
+        }
+    }
+    else
+    {
+        printf("El archivo que buscas no existe\n");
+    }
+}
+
+// Funciones archivo binario
+
+int gen_arch_bin(Tdatos registro[], int n, char nom[])
+{
+    Tdatos reg;
+    FILE *fa;
+    int i;
+    char temp[20];
+    strcpy(temp, nom);
+    strcat(temp, ".dll");
+    fa = fopen(temp, "ab");
+    if (fa == NULL)
+    {
+        printf("No hay registros por guardar\n");
+        return 0;
+    }
+    else
+    {
+        if (fa)
+        {
+            for (i = 0; i < n; i++)
+            {
+                reg = registro[i];
+                fwrite(&reg, sizeof(Tdatos), 1, fa);
+            }
+            fclose(fa);
+        }
+    }
+
+    return 1;
+}
+
+void respaldo(char nom[])
+{
+    FILE *fa;
+    FILE *resp;
+    Tdatos reg;
+    char nom2[20];
+    strcpy(nom2, nom);
+    strcat(nom2, ".dll");
+    fa = fopen(nom2, "rb");
+    if (fa)
+    {
+        strcat(nom, ".tmp");
+        resp = fopen(nom, "wb");
+        while (fread(&reg, sizeof(Tdatos), 1, fa))
+        {
+            fwrite(&reg, sizeof(Tdatos), 1, resp);
+        }
+        fclose(fa);
+        fclose(resp);
+    }
+}
+
+int cargar_bin(Tdatos registro[], int *i, int max, char nom[])
+{
+    Tdatos reg;
+    FILE *fa;
+    FILE *crg;
+    char nom2[20];
+    fa = fopen(nom, "rb");
+    if (fa)
+    {
+        strcpy(nom2, "datos.dll");
+        crg = fopen(nom2, "wb");
+        while (fread(&reg, sizeof(Tdatos), 1, crg))
+        {
+            if ((*i) <= max)
+            {
+                registro[(*i)++] = reg;
+            }
+        }
+        fclose(fa);
+        fclose(crg);
+        printf("Archivo cargado exitosamente\n");
+        return 1;
+    }
+    else
+    {
+        printf("Al parecer ha ocurrido un error\n");
+        return 0;
     }
 }
 
@@ -516,7 +647,7 @@ void act_arch(Tdatos registro[], int i, char nom_arch[])
     system("CLS");
     if (op == 1)
     {
-        gen_arch(nom_arch, registro, i);
+        gen_arch_bin(registro, i, nom_arch);
         printf("Archivo actualizado\n");
     }
 }
