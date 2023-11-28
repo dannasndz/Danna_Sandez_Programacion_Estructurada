@@ -47,11 +47,14 @@ void gen_nom_arch(char nom_arch[]);
 void gen_arch_ord(char nom[], Tindice index[], Tdatos reg[], int i);
 void gen_arch_norm(char nom[], Tdatos reg[], int i);
 
+void merge(Tindice arr[], int l, int m, int r);
+int mergeSort(Tindice arr[], int l, int r);
+int burbuja(Tindice registro[], int n);
+
 int busq_seq(Tindice index[], int n, int num);
 int busq_binaria(Tindice index[], int rf, int key);
 int busq_opt(Tindice index[], int n, int key, int flag);
 
-int burbuja(Tindice registro[], int n);
 /*********************** Funcion principal **********************/
 int main()
 {
@@ -64,7 +67,7 @@ int main()
     Tindice indice[N];
     Tdatos registros[N], temp;
     /* cargar archivo BINARIO */
-    int cargado = crg_bin(registros, indice, &i, N);
+    crg_bin(registros, indice, &i, N);
     /* banderas */
     int ord;
     do
@@ -118,7 +121,7 @@ int main()
     return 0;
 }
 
-/**************************************** Desarrollo de funciones  ********************************************/
+/**************************************** DESARROLLO DE FUNCIONES  ********************************************/
 int mnsj(void)
 {
     int op;
@@ -221,15 +224,13 @@ int cont_reg(char nomArchivo[])
 int crg_bin(Tdatos registro[], Tindice index[], int *i, int N)
 {
     FILE *fa;
-    Tdatos temp;
     fa = fopen("datos.dat", "rb");
     if (fa)
     {
-        while (fread(&temp, sizeof(Tdatos), 1, fa))
+        while (fread(&registro[(*i)], sizeof(Tdatos), 1, fa))
         {
             if ((*i) <= N)
             {
-                registro[(*i)] = temp;
                 if (registro[*i].status == 1)
                 {
                     index[(*i)].noempleado = registro[(*i)].enrollment;
@@ -318,8 +319,9 @@ void buscar(Tindice index[], Tdatos registros[], int i, int ord)
         fread(&registros, sizeof(Tdatos), 1, fa);
         if (registros[enc].status == 1)
         {
-            printf("Nombre: %s\n Apellidos: %s %s\nEdad: %d\nSexo: %s\nEstado: %s\nPuesto: %s\nMatricula: %d\nCelular: %d\n", registros[enc].name, registros[enc].LastName1, registros[enc].LastName2, registros[enc].age, registros[enc].sex, registros[enc].state, registros[enc].JobPstion, registros[enc].enrollment, registros[enc].cellPhone);
+            printf("Nombre: %s\n Apellidos: %s %s\nEdad: %d\nSexo: %s\nEstado: %s\nPuesto: %s\nMatricula: %d\nCelular: %d\n", registros[index[enc].indice].name, registros[index[enc].indice].LastName1, registros[index[enc].indice].LastName2, registros[index[enc].indice].age, registros[index[enc].indice].sex, registros[index[enc].indice].state, registros[index[enc].indice].JobPstion, registros[index[enc].indice].enrollment, registros[index[enc].indice].cellPhone);
         }
+        fclose(fa);
     }
     else
     {
@@ -332,7 +334,7 @@ int ordenar(Tindice index[], int i, int ord)
 
     if (ord == 1) // ya esta ordenado
     {
-        // meterle otro metodo de ordenamiento
+        ord= mergeSort(index, 0, i - 1);
     }
     else
     {
@@ -421,12 +423,10 @@ void gen_arch_ord(char nom[], Tindice index[], Tdatos reg[], int i)
         {
             if (reg[j].status == 1)
             {
-                rewind(fa);
-                fseek(fa, index[j].indice * sizeof(Tdatos), SEEK_SET);
-                fread(&reg[index[j].indice], sizeof(fa), 1, fa);
-                fprintf(fa, "%d  %d  %s  %s  %s  %d  %s  %s  %s  %d", j + 1, reg[index[j].indice].enrollment, reg[index[j].indice].name, reg[index[j].indice].LastName1, reg[index[j].indice].LastName2, reg[index[j].indice].age, reg[index[j].indice].sex, reg[index[j].indice].JobPstion, reg[index[j].indice].state, reg[index[j].indice].cellPhone);
+                fprintf(fa, "%-9d  %-11d  %-15s  %-20s  %-17s  %-7d  %-13s  %-18s  %-13s  %d\n", j + 1, reg[index[j].indice].enrollment, reg[index[j].indice].name, reg[index[j].indice].LastName1, reg[index[j].indice].LastName2, reg[index[j].indice].age, reg[index[j].indice].sex, reg[index[j].indice].JobPstion, reg[index[j].indice].state, reg[index[j].indice].cellPhone);
             }
         }
+        printf("Archivo generado con exito\n");
         fclose(fa);
     }
     else
@@ -438,7 +438,9 @@ void gen_arch_ord(char nom[], Tindice index[], Tdatos reg[], int i)
 void gen_arch_norm(char nom[], Tdatos reg[], int i)
 {
     FILE *fa;
-    fa = fopen(nom, ".txt");
+
+    fa = fopen(nom, "w");
+
     if (fa)
     {
         fprintf(fa, "------------------------------------------------------------------------------------------------------------------------------------------------------\n");
@@ -448,12 +450,10 @@ void gen_arch_norm(char nom[], Tdatos reg[], int i)
         {
             if (reg[j].status == 1)
             {
-                rewind(fa);
-                fseek(fa, j * sizeof(Tdatos), SEEK_SET);
-                fread(&reg, j * sizeof(Tdatos), 1, fa);
-                printf("%d  %d  %s  %s  %s  %d  %s  %s  %s  %d", j + 1, reg[j].enrollment, reg[j].name, reg[j].LastName1, reg[j].LastName2, reg[j].age, reg[j].sex, reg[j].JobPstion, reg[j].state, reg[j].cellPhone);
+                fprintf(fa, "%-9d  %-11d  %-15s  %-20s  %-17s  %-7d  %-13s  %-18s  %-13s  %d\n", j + 1, reg[j].enrollment, reg[j].name, reg[j].LastName1, reg[j].LastName2, reg[j].age, reg[j].sex, reg[j].JobPstion, reg[j].state, reg[j].cellPhone);
             }
         }
+        printf("Archivo generado con exito\n");
         fclose(fa);
     }
     else
@@ -462,7 +462,75 @@ void gen_arch_norm(char nom[], Tdatos reg[], int i)
     }
 }
 
-// funcion de ordenamiento
+/****************************************  Funciones de ordenamiento   ********************************************/
+
+void merge(Tindice arr[], int l, int m, int r)
+{
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+
+    // Crear arreglos temporales
+    int L[n1], R[n2];
+
+    // Copiar datos a los arreglos temporales L[] y R[]
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i].noempleado;
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j].noempleado;
+
+    // Fusionar los arreglos temporales de vuelta en arr[l..r]
+    i = 0; // Índice inicial del primer subarreglo
+    j = 0; // Índice inicial del segundo subarreglo
+    k = l; // Índice inicial del arreglo fusionado
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+        {
+            arr[k].noempleado = L[i];
+            i++;
+        }
+        else
+        {
+            arr[k].noempleado = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    // Copiar los elementos restantes de L[], si hay alguno
+    while (i < n1)
+    {
+        arr[k].llave = L[i];
+        i++;
+        k++;
+    }
+
+    // Copiar los elementos restantes de R[], si hay alguno
+    while (j < n2)
+    {
+        arr[k].llave = R[j];
+        j++;
+        k++;
+    }
+}
+
+// Función recursiva que implementa el algoritmo Merge Sort
+int mergeSort(Tindice arr[], int l, int r)
+{
+    if (l < r)
+    {
+        int m = l + (r - l) / 2; // Encuentra el punto medio
+
+        // Ordena la primera y la segunda mitad
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+
+        // Fusiona las mitades ordenadas
+        merge(arr, l, m, r);
+    }
+    return 1;
+}
 
 int burbuja(Tindice registro[], int n)
 {
@@ -483,9 +551,9 @@ int burbuja(Tindice registro[], int n)
     return 1;
 }
 
-// funciones de busqueda
+/****************************************  Funciones de busqueda   *********************************************/
 
-int busq_seq(Tindice index[], int n, int num) // registro no ordenado
+int busq_seq(Tindice index[], int n, int num) 
 {
     int i;
     for (i = 0; i < n; i++)
