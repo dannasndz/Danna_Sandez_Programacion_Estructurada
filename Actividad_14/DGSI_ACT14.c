@@ -31,11 +31,13 @@ typedef struct _datos
 /**************** Prototipo de funciones  ********************/
 int mnsj(void);
 Tdatos gen_per(void);
-void imprimir(Tdatos registros[], Tindice index[], int i);
 void agregar(Tdatos registro[], int i);
+void imprimir(Tdatos registros[], Tindice index[], int i);
 void eliminar(Tdatos registros[], Tindice index[], int i, int ord);
 void buscar(Tindice index[], Tdatos registros[], int i, int ord);
 int ordenar(Tindice index[], int i, int ord);
+void archivo_txt(Tindice index[], Tdatos reg[], int i);
+void empaquetar(Tdatos registro[], int i);
 
 int crg_bin(Tdatos registro[], Tindice index[], int *i, int N);
 int cont_reg(char nomArchivo[]);
@@ -43,6 +45,7 @@ void print_ord(Tindice index[], Tdatos registros[], int i);
 void print_norm(Tdatos reg[], int i);
 void gen_nom_arch(char nom_arch[]);
 void gen_arch_ord(char nom[], Tindice index[], Tdatos reg[], int i);
+void gen_arch_norm(char nom[], Tdatos reg[], int i);
 
 int busq_seq(Tindice index[], int n, int num);
 int busq_binaria(Tindice index[], int rf, int key);
@@ -52,6 +55,7 @@ int burbuja(Tindice registro[], int n);
 /*********************** Funcion principal **********************/
 int main()
 {
+    srand(time(NULL));
     int op;
     /* datos pal arch */
     int N = cont_reg("datos.dat");
@@ -83,6 +87,7 @@ int main()
                 agregar(registros, i); // agregar al binario
                 i++;
             }
+            printf("Persona agregada exitosamente!\n");
             ord = 0;
             break;
         case 2: // eliminar
@@ -98,10 +103,13 @@ int main()
             imprimir(registros, indice, i);
             break;
         case 6:
+            imprimir(registros, indice, i);
             break;
-        case 7:
+        case 7: // generar archivo de texto
+            archivo_txt(indice, registros, i);
             break;
-        case 8:
+        case 8: // empaquetar
+            empaquetar(registros, i);
             break;
         }
         system("PAUSE");
@@ -110,7 +118,7 @@ int main()
     return 0;
 }
 
-/************************* Desarrollo de funciones  *******************************/
+/**************************************** Desarrollo de funciones  ********************************************/
 int mnsj(void)
 {
     int op;
@@ -137,7 +145,7 @@ Tdatos gen_per(void)
     per.enrollment = numAleatorio(300000, 399999);
     gen_nom(per.name, per.sex, per.LastName1, per.LastName2);
     per.age = numAleatorio(18, 40);
-    per.cellPhone = numAleatorio(1000000000, 1410065407);
+    per.cellPhone = numAleatorio(1000000, 1410065);
     estado(per.state);
     job(per.JobPstion);
     return per;
@@ -147,6 +155,7 @@ void imprimir(Tdatos registros[], Tindice index[], int i)
 {
     int op;
     op = validar("1-Ordenado\n2-Normal\nSelecciona una opcion: ", 1, 2);
+    system("CLS");
     if (op == 1)
     {
         print_ord(index, registros, i);
@@ -164,20 +173,45 @@ void archivo_txt(Tindice index[], Tdatos reg[], int i)
     strcat(nom, ".txt");
     int op;
     op = validar("1-Ordenado\n2-Normal\nSelecciona una opcion: ", 1, 2);
+    system("CLS");
     if (op == 1)
     {
+        strcat(nom, "_ord");
         gen_arch_ord(nom, index, reg, i);
+    }
+    else
+    {
+        gen_arch_norm(nom, reg, i);
     }
 }
 
-/**** funciones archivo binario ****/
+void empaquetar(Tdatos registro[], int i)
+{
+    FILE *fa;
+    char nom[11] = "datos.bak";
+    fa = fopen(nom, "wb");
+    if (fa)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            fwrite(registro, sizeof(Tdatos), 1, fa);
+        }
+
+        fclose(fa);
+    }
+    else
+    {
+        printf("Error al abrir archivo\n");
+    }
+}
+
+/**************************************** Funciones archivo binario *****************************************/
 int cont_reg(char nomArchivo[])
 {
     int cont;
     char cmd[50];
 
     system("mingw32-gcc-6.3.0.exe cont_reg.c -o cont_reg");
-    system("PAUSE");
     sprintf(cmd, "cont_reg.exe %s ", nomArchivo);
     cont = system(cmd);
 
@@ -221,8 +255,7 @@ void agregar(Tdatos registro[], int i)
     fa = fopen("datos.dat", "ab");
     if (fa)
     {
-        fseek(fa, i * sizeof(Tdatos), SEEK_END);
-        fwrite(&registro, sizeof(Tdatos), 1, fa);
+        fwrite(&registro[i], sizeof(Tdatos), 1, fa);
         fclose(fa);
     }
     else
@@ -239,7 +272,7 @@ void eliminar(Tdatos registros[], Tindice index[], int i, int ord)
     enc = busq_opt(index, i, mat, ord);
     if (enc != -1)
     {
-        printf("Nombre: %s\n Apellidos: %s %s\nEdad: %d\nSexo: %s\nEstado: %s\nPuesto: %s\nMatricula: %d\nCelular: %d\n", registros[enc].name, registros[enc].LastName1, registros[enc].LastName2, registros[enc].age, registros[enc].sex, registros[enc].state, registros[enc].JobPstion, registros[enc].enrollment, registros[enc].cellPhone);
+        printf("Nombre: %s\nApellidos: %s %s\nEdad: %d\nSexo: %s\nEstado: %s\nPuesto: %s\nMatricula: %d\nCelular: %d\n\n", registros[enc].name, registros[enc].LastName1, registros[enc].LastName2, registros[enc].age, registros[enc].sex, registros[enc].state, registros[enc].JobPstion, registros[enc].enrollment, registros[enc].cellPhone);
         op = validar("Desea eliminar el registro?\n1-Si\n2-No\nIngrese una opcion: ", 1, 2);
         system("CLS");
         if (op == 1)
@@ -247,8 +280,9 @@ void eliminar(Tdatos registros[], Tindice index[], int i, int ord)
             fa = fopen("datos.dat", "r+b");
             if (fa)
             {
+                rewind(fa);
                 fseek(fa, sizeof(Tdatos) * index[enc].indice, SEEK_SET);
-                fread(&registros, sizeof(Tdatos), 1, fa);
+                fread(&registros[index[enc].indice], sizeof(Tdatos), 1, fa);
                 registros[enc].status = 0;
                 fseek(fa, sizeof(Tdatos) * index[enc].indice, SEEK_SET);
                 fwrite(&registros, sizeof(Tdatos), 1, fa);
@@ -307,7 +341,7 @@ int ordenar(Tindice index[], int i, int ord)
     return ord;
 }
 
-void print_ord(Tindice index[], Tdatos registros[], int i)
+void print_ord(Tindice index[], Tdatos reg[], int i)
 {
     FILE *fa;
     printf("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
@@ -319,12 +353,12 @@ void print_ord(Tindice index[], Tdatos registros[], int i)
     {
         for (int j = 0; j < i; j++)
         {
-            if (registros[j].status == 1)
+            if (reg[j].status == 1)
             {
                 rewind(fa);
                 fseek(fa, index[j].indice * sizeof(Tdatos), SEEK_SET);
-                fread(&registros[index[j].indice], sizeof(Tdatos), 1, fa);
-                printf("%d  %d  %s  %s  %s  %d  %s  %s  %s  %d", j + 1, registros[index[j].indice].enrollment, registros[index[j].indice].name, registros[index[j].indice].LastName1, registros[index[j].indice].LastName2, registros[index[j].indice].age, registros[index[j].indice].sex, registros[index[j].indice].JobPstion, registros[index[j].indice].state, registros[index[j].indice].cellPhone);
+                fread(&reg[index[j].indice], sizeof(Tdatos), 1, fa);
+                printf("%-9d  %-11d  %-15s  %-20s  %-17s  %-7d  %-13s  %-18s  %-13s  %d\n", j + 1, reg[j].enrollment, reg[j].name, reg[j].LastName1, reg[j].LastName2, reg[j].age, reg[j].sex, reg[j].JobPstion, reg[j].state, reg[j].cellPhone);
             }
         }
         fclose(fa);
@@ -349,10 +383,9 @@ void print_norm(Tdatos reg[], int i)
         {
             if (reg[j].status == 1)
             {
-                rewind(fa);
-                fseek(fa, j * sizeof(Tdatos), SEEK_SET);
-                fread(&reg, j * sizeof(Tdatos), 1, fa);
-                printf("%d  %d  %s  %s  %s  %d  %s  %s  %s  %d", j + 1, reg[j].enrollment, reg[j].name, reg[j].LastName1, reg[j].LastName2, reg[j].age, reg[j].sex, reg[j].JobPstion, reg[j].state, reg[j].cellPhone);
+                fseek(fa, i * sizeof(Tdatos), SEEK_SET);
+                fread(&reg[j], i * sizeof(Tdatos), 1, fa);
+                printf("%-9d  %-11d  %-15s  %-20s  %-17s  %-7d  %-13s  %-18s  %-13s  %d\n", j + 1, reg[j].enrollment, reg[j].name, reg[j].LastName1, reg[j].LastName2, reg[j].age, reg[j].sex, reg[j].JobPstion, reg[j].state, reg[j].cellPhone);
             }
         }
 
@@ -386,10 +419,13 @@ void gen_arch_ord(char nom[], Tindice index[], Tdatos reg[], int i)
         fprintf(fa, "------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         for (int j = 0; j < i; j++)
         {
-            rewind(fa);
-            fseek(fa, index[j].indice * sizeof(Tdatos), SEEK_SET);
-            fread(&reg[index[j].indice], sizeof(fa), 1, fa);
-            fprintf(fa, "%d  %d  %s  %s  %s  %d  %s  %s  %s  %d", j + 1, reg[index[j].indice].enrollment, reg[index[j].indice].name, reg[index[j].indice].LastName1, reg[index[j].indice].LastName2, reg[index[j].indice].age, reg[index[j].indice].sex, reg[index[j].indice].JobPstion, reg[index[j].indice].state, reg[index[j].indice].cellPhone);
+            if (reg[j].status == 1)
+            {
+                rewind(fa);
+                fseek(fa, index[j].indice * sizeof(Tdatos), SEEK_SET);
+                fread(&reg[index[j].indice], sizeof(fa), 1, fa);
+                fprintf(fa, "%d  %d  %s  %s  %s  %d  %s  %s  %s  %d", j + 1, reg[index[j].indice].enrollment, reg[index[j].indice].name, reg[index[j].indice].LastName1, reg[index[j].indice].LastName2, reg[index[j].indice].age, reg[index[j].indice].sex, reg[index[j].indice].JobPstion, reg[index[j].indice].state, reg[index[j].indice].cellPhone);
+            }
         }
         fclose(fa);
     }
@@ -399,7 +435,7 @@ void gen_arch_ord(char nom[], Tindice index[], Tdatos reg[], int i)
     }
 }
 
-void gen_arch_norm(char nom[], Tindice index[], Tdatos reg[], int i)
+void gen_arch_norm(char nom[], Tdatos reg[], int i)
 {
     FILE *fa;
     fa = fopen(nom, ".txt");
@@ -408,8 +444,17 @@ void gen_arch_norm(char nom[], Tindice index[], Tdatos reg[], int i)
         fprintf(fa, "------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         fprintf(fa, "  No.  | MATRICULA |     NOMBRE     |   APELLIDO P.   |     APELLIDO MAT.     |  EDAD  |   SEXO   |      PUESTO      |      ESTADO      |   CELULAR   \n");
         fprintf(fa, "------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-        
-        
+        for (int j = 0; j < i; j++)
+        {
+            if (reg[j].status == 1)
+            {
+                rewind(fa);
+                fseek(fa, j * sizeof(Tdatos), SEEK_SET);
+                fread(&reg, j * sizeof(Tdatos), 1, fa);
+                printf("%d  %d  %s  %s  %s  %d  %s  %s  %s  %d", j + 1, reg[j].enrollment, reg[j].name, reg[j].LastName1, reg[j].LastName2, reg[j].age, reg[j].sex, reg[j].JobPstion, reg[j].state, reg[j].cellPhone);
+            }
+        }
+        fclose(fa);
     }
     else
     {

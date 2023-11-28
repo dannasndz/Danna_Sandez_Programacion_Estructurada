@@ -13,7 +13,7 @@ void job(char puesto[]);
 
 /**** Desarrollo de funciones****/
 int validar(char mensj[], int ri, int rf)
-{   
+{
     int num;
     char cadena[20];
     do
@@ -111,7 +111,42 @@ void mayus(char cadena[]) // mayusculas
 
 void estado(char estado[])
 {
-    char estados[33][50] = {"AGUASCALIENTES", "BAJA CALIFORNIA", "BAJA CALIFORNIA SUR", "CAMPECHE", "COAHUILA", "COLIMA", "CHIAPAS", "CHIHUAHUA", "DISTRITO DE MEXICO", "DURANGO", "GUANAJUATO", "GUERRERO", "HIDALGO", "JALISCO", "MEXICO", "MICHOACAN", "MORELOS", "NAYARIT", "NUEVO LEON", "OAXACA", "PUEBLA", "QUERETARO", "QUINTANA ROO", "SAN LUIS POTOSI", "SINALOA", "SONORA", "TABASCO ", "TAMAULIPAS", "TLAXCALA", "VERACRUZ", "YUCATAN", "ZACATECAS", "EXTRANJERO"};
+    char estados[33][3] = {
+        "AG", // Aguascalientes
+        "BC", // Baja California
+        "BS", // Baja California Sur
+        "CC", // Campeche
+        "CL", // Coahuila de Zaragoza
+        "CM", // Colima
+        "CS", // Chiapas
+        "CH", // Chihuahua
+        "DF", // Ciudad de México
+        "DG", // Durango
+        "GT", // Guanajuato
+        "GR", // Guerrero
+        "HG", // Hidalgo
+        "JC", // Jalisco
+        "MC", // México
+        "MN", // Michoacán de Ocampo
+        "MS", // Morelos
+        "NT", // Nayarit
+        "NL", // Nuevo León
+        "OC", // Oaxaca
+        "PL", // Puebla
+        "QT", // Querétaro
+        "QR", // Quintana Roo
+        "SP", // San Luis Potosí
+        "SL", // Sinaloa
+        "SR", // Sonora
+        "TC", // Tabasco
+        "TS", // Tamaulipas
+        "TL", // Tlaxcala
+        "VZ", // Veracruz de Ignacio de la Llave
+        "YN", // Yucatán
+        "ZS", // Zacatecas
+        "NE"  // Foreign"
+    };
+
     strcpy(estado, estados[rand() % 33]);
 }
 
