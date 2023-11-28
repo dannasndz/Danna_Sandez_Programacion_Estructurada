@@ -13,7 +13,7 @@ void job(char puesto[]);
 
 /**** Desarrollo de funciones****/
 int validar(char mensj[], int ri, int rf)
-{
+{   
     int num;
     char cadena[20];
     do
