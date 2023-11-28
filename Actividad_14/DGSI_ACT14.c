@@ -69,7 +69,7 @@ int main()
     /* cargar archivo BINARIO */
     crg_bin(registros, indice, &i, N);
     /* banderas */
-    int ord;
+    int ord = 0;
     do
     {
         system("CLS");
@@ -100,7 +100,8 @@ int main()
             buscar(indice, registros, i, ord);
             break;
         case 4: // ordenar
-            ord = ordenar(indice, i, ord);
+            ordenar(indice, i, ord);
+            ord = 1;
             break;
         case 5: // mostrar datos
             imprimir(registros, indice, i);
@@ -316,10 +317,10 @@ void buscar(Tindice index[], Tdatos registros[], int i, int ord)
     {
         fa = fopen("datos.dat", "rb");
         fseek(fa, sizeof(Tdatos) * index[enc].indice, SEEK_SET);
-        fread(&registros, sizeof(Tdatos), 1, fa);
+        fread(&registros[enc], sizeof(Tdatos), 1, fa);
         if (registros[enc].status == 1)
         {
-            printf("Nombre: %s\n Apellidos: %s %s\nEdad: %d\nSexo: %s\nEstado: %s\nPuesto: %s\nMatricula: %d\nCelular: %d\n", registros[index[enc].indice].name, registros[index[enc].indice].LastName1, registros[index[enc].indice].LastName2, registros[index[enc].indice].age, registros[index[enc].indice].sex, registros[index[enc].indice].state, registros[index[enc].indice].JobPstion, registros[index[enc].indice].enrollment, registros[index[enc].indice].cellPhone);
+            printf("Nombre: %s\nApellidos: %s %s\nEdad: %d\nSexo: %s\nEstado: %s\nPuesto: %s\nMatricula: %d\nCelular: %d\n", registros[index[enc].indice].name, registros[index[enc].indice].LastName1, registros[index[enc].indice].LastName2, registros[index[enc].indice].age, registros[index[enc].indice].sex, registros[index[enc].indice].state, registros[index[enc].indice].JobPstion, registros[index[enc].indice].enrollment, registros[index[enc].indice].cellPhone);
         }
         fclose(fa);
     }
@@ -334,7 +335,7 @@ int ordenar(Tindice index[], int i, int ord)
 
     if (ord == 1) // ya esta ordenado
     {
-        ord= mergeSort(index, 0, i - 1);
+        ord = mergeSort(index, 0, i - 1);
     }
     else
     {
@@ -359,7 +360,7 @@ void print_ord(Tindice index[], Tdatos reg[], int i)
             {
                 rewind(fa);
                 fseek(fa, index[j].indice * sizeof(Tdatos), SEEK_SET);
-                fread(&reg[index[j].indice], sizeof(Tdatos), 1, fa);
+                fread(&reg[j], sizeof(Tdatos), 1, fa);
                 printf("%-9d  %-11d  %-15s  %-20s  %-17s  %-7d  %-13s  %-18s  %-13s  %d\n", j + 1, reg[j].enrollment, reg[j].name, reg[j].LastName1, reg[j].LastName2, reg[j].age, reg[j].sex, reg[j].JobPstion, reg[j].state, reg[j].cellPhone);
             }
         }
@@ -501,7 +502,7 @@ void merge(Tindice arr[], int l, int m, int r)
     // Copiar los elementos restantes de L[], si hay alguno
     while (i < n1)
     {
-        arr[k].llave = L[i];
+        arr[k].noempleado = L[i];
         i++;
         k++;
     }
@@ -509,7 +510,7 @@ void merge(Tindice arr[], int l, int m, int r)
     // Copiar los elementos restantes de R[], si hay alguno
     while (j < n2)
     {
-        arr[k].llave = R[j];
+        arr[k].noempleado = R[j];
         j++;
         k++;
     }
@@ -553,7 +554,7 @@ int burbuja(Tindice registro[], int n)
 
 /****************************************  Funciones de busqueda   *********************************************/
 
-int busq_seq(Tindice index[], int n, int num) 
+int busq_seq(Tindice index[], int n, int num)
 {
     int i;
     for (i = 0; i < n; i++)
