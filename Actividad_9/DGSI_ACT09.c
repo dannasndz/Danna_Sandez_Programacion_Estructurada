@@ -14,7 +14,7 @@ void llenarVect(int vector[], int n, int ri, int rf);
 int repetidoVect(int num, int i, int vector[]);
 void llenarMatriz4x4(int matriz[][M], int n, int m, int vect[]);
 void printVect(int vector[], int n);
-void printMatriz(int n, int m, int matriz[][m]);
+void printMatriz(int n, int m, int matriz[][M]);
 void ordenar(int vector[], int n);
 int busq_seq(int vector[], int n,int ri, int rf);
 

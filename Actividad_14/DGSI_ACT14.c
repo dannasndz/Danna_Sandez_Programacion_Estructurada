@@ -61,13 +61,13 @@ int main()
     srand(time(NULL));
     int op;
     /* datos pal arch */
-    int N = cont_reg("datos.dat");
+    int n = cont_reg("datos.dat");
     int i = 0;
-    N *= 1.25;
-    Tindice indice[N];
-    Tdatos registros[N], temp;
+    n *= 1.25;
+    Tindice indice[n];
+    Tdatos registros[n], temp;
     /* cargar archivo BINARIO */
-    crg_bin(registros, indice, &i, N);
+    crg_bin(registros, indice, &i, n);
     /* banderas */
     int ord = 0;
     do
@@ -77,7 +77,7 @@ int main()
         switch (op)
         {
         case 1: // agregar
-            if ((i + 1) <= N)
+            if ((i + 1) <= n)
             {
                 temp = gen_per();
                 while (busq_opt(indice, i, temp.enrollment, ord) != -1)
